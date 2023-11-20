@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="template">
+<head>
+  <title>Авиакомпании</title>
+  <link th:href="@{/css/genStyles.css}" rel="stylesheet">
+  <script type="text/javascript" src="../js/airlines.js" th:src="@{/js/airlines.js}"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+<div layout:fragment="content1">
+  <div class="container mt-3">
+    <div class="card">
+      <div class="card-header head">Список авиакомпаний</div>
+      <div class="card-body">
+        <div class="search">
+          <form id="formSearch" method="get" th:action="@{index}">
+            <input id="searchField" type="text" class="col-11" name="keyword"
+                   placeholder="   Введите название авиакомпании" th:value="${keyword}">
+            <button type="submit"/>
+          </form>
+        </div>
+        <div></div>
+        <div id="inline">
+          <form id="formBtns">
+            <a id="importBtn" class="btn"
+               th:href="@{/airlines/import}">Импортировать</a>
+            <a id="reload" class="btn" th:href="@{/airlines/index}"></a>
+          </form>
+        </div>
+        <div class="table-responsive">
+        <table style="table-layout: fixed;" class="table">
+          <thead class="line">
+          <tr class="text-center">
+            <th><a id="sortedFieldByName" class="nav-link dropdown-toggle menu"
+                   th:href="@{/airlines/sortByAirlineName}">Название</a></th>
+            <th style="width: 290px;"><a id="sortedFieldByRating" class="nav-link dropdown-toggle menu"
+                   th:href="@{/airlines/sortByRating}">Полное название (плательщик)</a></th>
+            <th style="width: 120px">Код страны</th>
+            <th>Адрес</th>
+            <th>Номер телефона</th>
+            <th>email</th>
+            <th style="width: 120px">Действие</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr class="text-center">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+              <a class="btn btn-primary output"></a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

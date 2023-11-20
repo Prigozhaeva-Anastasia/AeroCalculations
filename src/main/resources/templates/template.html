@@ -2,54 +2,57 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
-    <link th:href="@{/css/templates.css}" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/5.1.3/css/bootstrap.min.css">
-    <script type="text/javascript" src="../js/template.js" th:src="@{/js/template.js}"></script>
-    <script src="/webjars/bootstrap/5.1.3/js/bootstrap.bundle.js"></script>
+    <link th:href="@{/css/template.css}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v6/css/all.css"/>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
 </head>
 <body>
 <div class="main-container d-flex">
     <div class="sidebar" id="side_nav">
-        <div class="header-box px-2 pt-3 pb-4 d-flex justify-content-between">
-            <h1 class="fs-4"><span class="bg-white text-dark rounded shadow px-2 me-2">CL</span> <span
-                    class="text-white">Coding League</span></h1>
+        <div class="header-box px-4 pt-3 pb-4 d-flex justify-content-between">
+            <img width="200px" height="110px" src="/images/logo.png">
         </div>
-
         <ul class="list-unstyled px-2">
-            <li class="active"><a href="#" class="text-decoration-none px-3 py-2 d-block"><i
-                    class="fal fa-home"></i> Dashboard</a></li>
-            <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block"><i class="fal fa-list"></i>
-                Projects</a></li>
-            <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block d-flex justify-content-between">
-                <span><i class="fal fa-comment"></i> Messages</span>
-                <span class="bg-dark rounded-pill text-white py-0 px-2">02</span>
-            </a>
-            </li>
-            <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block"><i
-                    class="fal fa-envelope-open-text"></i> Services</a></li>
+            <li class=""><a th:href="@{/}" class="text-decoration-none px-3 py-2 d-block"><i class="fal fa-home"></i> Главная</a></li>
+            <li class=""><a th:href="@{/airlines/index}" class="text-decoration-none px-3 py-2 d-block"><i class="fas fa-warehouse"></i>   Авиакомпании</a></li>
+            <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block"><i class="fal fa-plane"></i> Воздушные судна</a></li>
+            <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block"><i class="fab fa-fantasy-flight-games"></i><span style="margin-left: 8px;">Рейсы</span></a></li>
+            <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block"><i class="fal fa-list"></i><span style="margin-left: 8px;">Услуги</span></a></li>
             <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block"><i class="fal fa-users"></i>
-                Customers</a></li>
-        </ul>
-        <hr class="h-color mx-2">
-
-        <ul class="list-unstyled px-2">
-            <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block"><i class="fal fa-bars"></i>
-                Settings</a></li>
-            <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block"><i class="fal fa-bell"></i>
-                Notifications</a></li>
-
+                Сотрудники</a></li>
+            <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block"><i class="fal fa-file-invoice"></i><span style="margin-left: 13px;">Счета</span></a></li>
+            <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block"><i class="fal fa-folder"></i><span style="margin-left: 9px;">Архив счетов</span></a></li>
         </ul>
 
     </div>
     <div class="content">
-        <nav class="navbar navbar-expand-md navbar-light bg-light">
+        <nav class="navbar navbar-expand-md navbar-light profileLine">
             <div class="container-fluid">
                 <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Profile</a>
+                            <a class="btn user" th:href="@{/mainForUser/personalData}"></a>
+                            <a class="btn logout" data-bs-toggle="modal" data-bs-target="#exampleModalCenterForLogout"></a>
+                            <div class="modal fade" id="exampleModalCenterForLogout" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content bg-dark">
+                                        <div>
+                                            <button type="button" class="close later" data-bs-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h6 class="modal-title" id="exampleModalLongTitleForLogout">Вы уверены, что хотите выйти из аккаунта?</h6>
+                                            <form id="formForModal" method="get" th:action="@{/login}">
+                                                <button id="out" type="submit" class="btn btn-primary out">Да</button>
+                                                <button type="button" class="btn btn-secondary out" data-bs-dismiss="modal">Нет</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </li>
-
                     </ul>
 
                 </div>
@@ -60,5 +63,8 @@
         </div>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript" src="../js/template.js" th:src="@{/js/template.js}"></script>
 </body>
 </html>

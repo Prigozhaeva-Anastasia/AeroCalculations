@@ -1,0 +1,250 @@
+#searchField {
+    height: 40px;
+    border-radius: 15px;
+    border: 0;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+}
+form {
+    position: relative;
+    width: 300px;
+    margin: 0 auto;
+}
+.search:after {content:""; clear:both; display:table}
+.search form {
+    width: auto;
+    margin-right: 30px;
+}
+.search input {
+    width: 100%;
+    height: 42px;
+    padding-left: 15px;
+    border-radius: 42px;
+    border: 2px solid #324b4e;
+    background: white;
+    outline: none;
+    position: relative;
+}
+.search button {
+    width: 42px;
+    height: 42px;
+    border: none;
+    position: absolute;
+    top: -2px;
+    right: 0;
+    background-color: #B8DAD3;
+    border-radius: 0px 15px 15px 0px;
+}
+.search button:before{
+    content: "\f002";
+    font-family: FontAwesome;
+    color: black;
+}
+.search button:hover{
+    background-color: #97BFB7;
+    border-radius: 0px 15px 15px 0px;
+}
+#logo {
+    display: none;
+}
+.error {
+    box-shadow: 0 0 5px rgba(255, 63, 63, 0.7);
+}
+#formSearch {
+    margin-bottom: 20px;
+    margin-right: 10px;
+}
+@charset "UTF-8";
+.errorLabel {
+    color: red;
+}
+#errorLabel {
+    display: none;
+}
+#errorLabelTransfer {
+    display: none;
+}
+#nameOfCityError {
+    display: none;
+}
+#transferError {
+    display: none;
+}
+.btn-danger {
+    background-color: rgba(272, 77, 77);
+}
+.output{
+    background-color: #B8DAD3;
+    border-color: #B8DAD3;
+}
+.output:hover {
+    background-color: #97BFB7;
+    border-color: #97BFB7;
+}
+.btn-danger:before{
+    content: "\f014";
+    font-family: FontAwesome;
+    font-size: 20px;
+    color: black;
+}
+.output:before{
+    content: "\f040";
+    font-family: FontAwesome;
+    font-size: 20px;
+    color: black;
+}
+.btn-outline-dark {
+    height: 44px;
+}
+#form {
+    margin-bottom: 20px;
+}
+#transfersLabel {
+    font-size: 30px;
+}
+.mainFont {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+.head {
+    color: white;
+    font-family: Georgia;
+    background-color: black;
+}
+#createBtn:before{
+    content: "\f067";
+    font-family: FontAwesome;
+    font-size: 20px;
+    color: black;
+}
+#createBtn, #importBtn{
+    margin-left: -132px;
+    text-decoration: none;
+    border-color: black;
+    height: 43px;
+}
+#createBtn:hover, #importBtn:hover {
+    background-color: #A6A5A5;
+    border-radius: 5px;
+}
+#create, #createTransitFlight, #next {
+    background-color: #A358E0;
+    border-color: transparent;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0);
+}
+#create:hover, #createTransitFlight:hover, #next:hover {
+    background-color: #7C44AA;
+}
+#update {
+    background-color: #A358E0;
+    border-color: transparent;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0);
+}
+#update:hover {
+    background-color: #7C44AA;
+}
+#sortedFieldByName, #sortedFieldByRating,#sortedFieldByData, #sortedFieldByLastName{
+    position: relative;
+    top: 7px;
+    text-decoration: none;
+    color:black;
+}
+#filterForAirlines:before{
+    content: '';
+    background-image: url("../images/filter.png");
+    background-size: cover;
+    width: 34px;
+    height: 34px;
+    position: absolute;
+    top: 5px;
+    left: 78px;
+}
+#filterForAirlines{
+    text-decoration: none;
+    width: 44px;
+    height: 44px;
+    border-color: black;
+    border-radius: 5px;
+}
+#filterForAirlines:hover {
+    background-color: rgba(166, 165, 165, 0.6);
+}
+#rating1, #rating2 {
+    width: 50px;
+    height: 30px;
+    margin: 0 10px 5px 0px;
+}
+#date1, #date2, #time1, #time2 {
+    margin: 0 10px 5px 0px;
+}
+#ratingLabel, #ratingLabel2 {
+    font-family: Georgia;
+    font-size: 17px;
+    padding-bottom: 5px;
+}
+.inputs {
+    display: flex;
+}
+#applyBtn, #applyBtn2 {
+    background-color: transparent;
+    border: none;
+    color: #A12BF0;
+    margin-left: -4px;
+}
+#applyBtn:hover, #applyBtn2:hover {
+    background-color: rgba(166, 165, 165, 0.6);
+    border-radius: 5px;
+}
+#inline {
+    display: flex;
+}
+#formFilter, #formFilter2 {
+    display: none;
+    position: relative;
+    top: -5px;
+    left: -640px;
+}
+#reload:before{
+    content: '';
+    background-image: url("../images/reload.png");
+    background-size: cover;
+    width: 28px;
+    height: 28px;
+    position: absolute;
+    top: 7px;
+    left: 23px;
+}
+#reload{
+    width: 44px;
+    height: 44px;
+    border-color: black;
+    border-radius: 5px;
+}
+#reload:hover {
+    background-color: rgba(166, 165, 165, 0.6);
+}
+#formBtns {
+    position: relative;
+    left: -315px;
+}
+#filterForDirectFlight:before{
+    content: '';
+    background-image: url("../images/filter.png");
+    background-size: cover;
+    width: 34px;
+    height: 34px;
+    position: absolute;
+    top: 3px;
+    left: 3px;
+}
+#filterForDirectFlight{
+    position: relative;
+    top: -4px;
+    text-decoration: none;
+    width: 44px;
+    height: 44px;
+    border-color: black;
+    border-radius: 5px;
+    background-color: white;
+}
+#filterForDirectFlight:hover {
+    background-color: rgba(166, 165, 165, 0.6);
+}
