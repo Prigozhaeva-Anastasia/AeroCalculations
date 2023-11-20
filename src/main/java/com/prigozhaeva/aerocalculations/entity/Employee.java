@@ -1,0 +1,32 @@
+package com.prigozhaeva.aerocalculations.entity;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Table(name = "users")
+@Data
+@NoArgsConstructor
+@EqualsAndHashCode(exclude={"user"})
+public class Employee {
+    @Id
+    @Column(name = "id")
+    private Long id;
+    private String firstName;
+    private String lastName;
+    private String patronymic;
+    private String phoneNumber;
+    @ToString.Exclude
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+    @ToString.Exclude
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    private List<Invoice> invoices = new ArrayList<>();
+}
