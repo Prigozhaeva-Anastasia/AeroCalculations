@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="template">
+<head>
+  <title>Авиакомпании</title>
+  <link th:href="@{/css/styles.css}" rel="stylesheet">
+  <script type="text/javascript" src="../js/airlines.js" th:src="@{/js/airlines.js}"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body class="mainFont">
+<div layout:fragment="content1">
+  <div class="container mt-3">
+    <div class="card">
+      <div class="card-header head">Список авиакомпаний</div>
+      <div class="card-body">
+        <div class="search">
+          <form id="formSearch" method="get" th:action="@{index}">
+            <input id="searchField" type="text" class="col-11" name="keyword"
+                   placeholder="   Введите название авиакомпании" th:value="${keyword}">
+            <button type="submit"/>
+          </form>
+        </div>
+        <div></div>
+        <div id="inline">
+          <form id="formBtns">
+            <a id="createBtn" onclick="localStorage.clear()" class="btn"
+               th:href="@{/airlines/formCreate}"></a>
+            <a id="reload" class="btn" th:href="@{/airlines/index}"></a>
+            <button type="button" id="filterForAirlines" class="btn"></button>
+          </form>
+          <form id="formFilter" method="post" th:action="@{/airlines/filterByRating}">
+            <label id="ratingLabel">Рейтинг:</label>
+            <div class="inputs">
+              <input id="rating1" class="form-control" type="text" name="rating1" placeholder="от">
+              <input id="rating2" class="form-control" type="text" name="rating2" placeholder="до">
+            </div>
+            <div><button id="applyBtn" type="submit">Применить</button></div>
+          </form>
+        </div>
+        <table class="table">
+          <thead class="line">
+          <tr class="text-center">
+            <th>Изображение</th>
+            <th><a id="sortedFieldByName" class="nav-link dropdown-toggle menu"
+                   th:href="@{/airlines/sortByAirlineName}">Название авиакомпании</a></th>
+            <th><a id="sortedFieldByRating" class="nav-link dropdown-toggle menu"
+                   th:href="@{/airlines/sortByRating}">Рейтинг</a></th>
+            <th>Действия</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr class="text-center" th:each="airline:${listAirlines}">
+            <td>
+              <img width="110" th:src="${airline.getPathToImg()}" alt="Изображение">
+            </td>
+            <td th:text="${airline.getAirlineName()}"></td>
+            <td th:text="${airline.getRating()}"></td>
+            <td>
+              <a class="btn btn-danger"
+                 onclick="return confirm('Вы действительно хотите удалить выбранную авиакомпанию?')"
+                 th:href="@{/airlines/delete(airlineId=${airline.getId()}, keyword=${keyword})}"></a>
+              <a class="btn btn-primary output" onclick="localStorage.clear()"
+                 th:href="@{/airlines/formUpdate(airlineId=${airline.getId()})}"></a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

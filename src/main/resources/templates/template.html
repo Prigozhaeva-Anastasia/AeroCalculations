@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/templates.css}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/5.1.3/css/bootstrap.min.css">
+    <script type="text/javascript" src="../js/template.js" th:src="@{/js/template.js}"></script>
+    <script src="/webjars/bootstrap/5.1.3/js/bootstrap.bundle.js"></script>
+</head>
+<body>
+<div class="main-container d-flex">
+    <div class="sidebar" id="side_nav">
+        <div class="header-box px-2 pt-3 pb-4 d-flex justify-content-between">
+            <h1 class="fs-4"><span class="bg-white text-dark rounded shadow px-2 me-2">CL</span> <span
+                    class="text-white">Coding League</span></h1>
+        </div>
+
+        <ul class="list-unstyled px-2">
+            <li class="active"><a href="#" class="text-decoration-none px-3 py-2 d-block"><i
+                    class="fal fa-home"></i> Dashboard</a></li>
+            <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block"><i class="fal fa-list"></i>
+                Projects</a></li>
+            <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block d-flex justify-content-between">
+                <span><i class="fal fa-comment"></i> Messages</span>
+                <span class="bg-dark rounded-pill text-white py-0 px-2">02</span>
+            </a>
+            </li>
+            <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block"><i
+                    class="fal fa-envelope-open-text"></i> Services</a></li>
+            <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block"><i class="fal fa-users"></i>
+                Customers</a></li>
+        </ul>
+        <hr class="h-color mx-2">
+
+        <ul class="list-unstyled px-2">
+            <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block"><i class="fal fa-bars"></i>
+                Settings</a></li>
+            <li class=""><a href="#" class="text-decoration-none px-3 py-2 d-block"><i class="fal fa-bell"></i>
+                Notifications</a></li>
+
+        </ul>
+
+    </div>
+    <div class="content">
+        <nav class="navbar navbar-expand-md navbar-light bg-light">
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                    <ul class="navbar-nav mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Profile</a>
+                        </li>
+
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+        <div class="dashboard-content px-3 pt-4">
+            <section layout:fragment="content1"></section>
+        </div>
+    </div>
+</div>
+</body>
+</html>
