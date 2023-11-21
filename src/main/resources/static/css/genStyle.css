@@ -209,8 +209,8 @@ form {
     width: 28px;
     height: 28px;
     position: absolute;
-    top: 7px;
-    left: 23px;
+    top: 9px;
+    left: 13px;
 }
 #reload{
     width: 44px;
@@ -246,5 +246,24 @@ form {
     background-color: white;
 }
 #filterForDirectFlight:hover {
+    background-color: rgba(166, 165, 165, 0.6);
+}
+input[type="file"]{
+    display: none;
+}
+label{
+    display: inline-block;
+    text-align: center;
+    border: 1px solid black;
+    border-radius: 3px;
+    background-color: white;
+    color: black;
+    padding: 10px 10px;
+    font-size: 15px;
+    user-select: none;
+    cursor: pointer;
+    margin-left: -130px;
+}
+label:hover{
     background-color: rgba(166, 165, 165, 0.6);
 }
