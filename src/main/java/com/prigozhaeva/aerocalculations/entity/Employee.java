@@ -16,6 +16,7 @@ import java.util.List;
 @EqualsAndHashCode(exclude={"user"})
 public class Employee {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
     private String firstName;
