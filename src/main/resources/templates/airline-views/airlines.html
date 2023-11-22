@@ -12,7 +12,7 @@
 <body>
 <div layout:fragment="content1">
   <div class="container mt-3">
-    <div class="card">
+    <div class="card mb">
       <div class="card-header head">Список авиакомпаний</div>
       <div class="card-body">
         <div class="search">
@@ -31,30 +31,30 @@
           </form>
         </div>
         <div class="table-responsive">
-        <table style="table-layout: fixed;" class="table">
+        <table class="table">
           <thead class="line">
           <tr class="text-center">
             <th><a id="sortedFieldByName" class="nav-link dropdown-toggle menu"
                    th:href="@{/airlines/sortByAirlineName}">Название</a></th>
-            <th style="width: 290px;"><a id="sortedFieldByRating" class="nav-link dropdown-toggle menu"
+            <th id="payerNameTH"><a id="sortedFieldByRating" class="nav-link dropdown-toggle menu"
                    th:href="@{/airlines/sortByRating}">Полное название (плательщик)</a></th>
-            <th style="width: 120px">Код страны</th>
+            <th id="countryCodeTH">Код страны</th>
             <th>Адрес</th>
             <th>Номер телефона</th>
             <th>email</th>
-            <th style="width: 120px">Действие</th>
+            <th id="actionTH">Действие</th>
           </tr>
           </thead>
           <tbody>
-          <tr class="text-center">
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+          <tr class="text-center" th:each="airline:${listAirlines}">
+            <td th:text="${airline.getName()}"></td>
+            <td th:text="${airline.getPayerName()}"></td>
+            <td th:text="${airline.getCountryCode()}"></td>
+            <td th:text="${airline.getAddress()}"></td>
+            <td th:text="${airline.getPhone_number()}"></td>
+            <td th:text="${airline.getEmail()}"></td>
             <td>
-              <a class="btn btn-primary output"></a>
+              <a class="btn btn-primary output" th:href="@{/airlines/formUpdate(airlineId=${airline.getId()})}"></a>
             </td>
           </tr>
           </tbody>

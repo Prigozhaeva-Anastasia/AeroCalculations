@@ -116,7 +116,7 @@ form {
     color: black;
 }
 #createBtn, #importBtn{
-    margin-left: -132px;
+    position: absolute;
     text-decoration: none;
     border-color: black;
     height: 43px;
@@ -209,14 +209,16 @@ form {
     width: 28px;
     height: 28px;
     position: absolute;
-    top: 9px;
-    left: 13px;
+    top: 7px;
+    left: 7px;
 }
 #reload{
     width: 44px;
     height: 44px;
     border-color: black;
     border-radius: 5px;
+    position: relative;
+    left: 15px;
 }
 #reload:hover {
     background-color: rgba(166, 165, 165, 0.6);
@@ -262,8 +264,36 @@ label{
     font-size: 15px;
     user-select: none;
     cursor: pointer;
-    margin-left: -130px;
+    position: absolute;
+    left: -122px;
 }
 label:hover{
     background-color: rgba(166, 165, 165, 0.6);
+}
+.table {
+    table-layout: fixed;
+}
+.mb {
+    margin-bottom: 20px;
+}
+#actionTH, #countryCodeTH {
+    width: 120px;
+}
+#payerNameTH{
+    width: 290px;
+}
+#flightIcon, #serviceIcon {
+    margin-left: 8px;
+}
+#invoiceIcon {
+    margin-left: 13px;
+}
+#archiveIcon {
+    margin-left: 9px;
+}
+table td {
+    text-align: left;
+}
+table td:nth-child(7) {
+    text-align: center;
 }
