@@ -25,4 +25,9 @@ public class AirlineServiceImpl implements AirlineService {
             airlineRepository.saveAll(airlines);
         }
     }
+
+    @Override
+    public List<Airline> findAirlinesByAirlineName(String name) {
+        return airlineRepository.findAirlinesByNameContains(name);
+    }
 }
