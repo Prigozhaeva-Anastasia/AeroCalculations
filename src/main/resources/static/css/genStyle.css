@@ -134,12 +134,14 @@ form {
     background-color: #7C44AA;
 }
 #update {
-    background-color: #A358E0;
+    background-color: #97BFB7;
     border-color: transparent;
     box-shadow: 0px 0px 8px rgba(0, 0, 0);
+    margin-top:10px;
+    margin-bottom: 15px;
 }
 #update:hover {
-    background-color: #7C44AA;
+    background-color: #7BAFA5;
 }
 #sortedFieldByName, #sortedFieldByRating,#sortedFieldByData, #sortedFieldByLastName{
     position: relative;
@@ -253,7 +255,7 @@ form {
 input[type="file"]{
     display: none;
 }
-label{
+.importLabel{
     display: inline-block;
     text-align: center;
     border: 1px solid black;
@@ -267,7 +269,7 @@ label{
     position: absolute;
     left: -122px;
 }
-label:hover{
+.importLabel:hover{
     background-color: rgba(166, 165, 165, 0.6);
 }
 .table {

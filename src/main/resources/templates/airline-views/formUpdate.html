@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="template">
+<head>
+  <title>Обновление данных об авиакомпаниях</title>
+  <link th:href="@{/css/genStyle.css}" rel="stylesheet">
+</head>
+<body class="mainFont">
+<div layout:fragment="content1">
+  <div class="col-md-6 offset-3 mt-3">
+    <form class="form-control mb" method="post" th:action="@{update}" th:object="${airline}">
+      <input type="text" name="id" th:value="${airline.getId()}" hidden>
+      <div class="mb-3 mt-3">
+        <label for="airlineName" class="form-label">Название авиакомпании:</label>
+        <input id="airlineName" type="text" name="name" class="form-control" th:errorClass="error" th:value="${airline.name}">
+        <div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="${airline.name}">Error</div>
+      </div>
+      <div class="mb-3 mt-3">
+        <label for="payerName" class="form-label">Полное название (плательщик):</label>
+        <input id="payerName" type="text" name="payerName" class="form-control" th:errorClass="error" th:value="${airline.getPayerName()}">
+        <div class="text-danger" th:if="${#fields.hasErrors('payerName')}" th:errors="${airline.payerName}">Error</div>
+      </div>
+      <div class="mb-3 mt-3">
+        <label for="countryCode" class="form-label">Код страны:</label>
+        <input id="countryCode" type="text" name="countryCode" class="form-control" th:errorClass="error" th:value="${airline.getCountryCode()}">
+        <div class="text-danger" th:if="${#fields.hasErrors('countryCode')}" th:errors="${airline.countryCode}">Error</div>
+      </div>
+      <div class="mb-3 mt-3">
+        <label for="address" class="form-label">Адрес:</label>
+        <input id="address" type="text" name="address" class="form-control" th:errorClass="error" th:value="${airline.getAddress()}">
+        <div class="text-danger" th:if="${#fields.hasErrors('address')}" th:errors="${airline.address}">Error</div>
+      </div>
+      <div class="mb-3 mt-3">
+        <label for="phone_number" class="form-label">Номер телефона:</label>
+        <input id="phone_number" type="text" name="phone_number" class="form-control" th:errorClass="error" th:value="${airline.getPhone_number()}">
+        <div class="text-danger" th:if="${#fields.hasErrors('phone_number')}" th:errors="${airline.phone_number}">Error</div>
+      </div>
+      <div class="mb-3 mt-3">
+        <label for="email" class="form-label">Email:</label>
+        <input id="email" type="text" name="email" class="form-control" th:errorClass="error" th:value="${airline.getEmail()}">
+        <div class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="${airline.email}">Error</div>
+      </div>
+      <button id="update" type="submit" class="btn btn-primary">Обновить</button>
+    </form>
+  </div>
+</div>
+</body>
+</html>
