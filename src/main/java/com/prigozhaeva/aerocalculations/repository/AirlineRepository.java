@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface AirlineRepository extends JpaRepository<Airline, Long> {
     List<Airline> findAirlinesByNameContains(String name);
+    Airline findAirlineByName(String name);
 }

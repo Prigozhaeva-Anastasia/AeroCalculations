@@ -6,6 +6,7 @@ import com.prigozhaeva.aerocalculations.repository.AirlineRepository;
 import com.prigozhaeva.aerocalculations.service.AirlineService;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -30,4 +31,20 @@ public class AirlineServiceImpl implements AirlineService {
     public List<Airline> findAirlinesByAirlineName(String name) {
         return airlineRepository.findAirlinesByNameContains(name);
     }
+
+    @Override
+    public Airline findAirlineById(Long id) {
+        return airlineRepository.findById(id)
+                .orElseThrow(()->new EntityNotFoundException("Airline with id " + id + " Not Found"));
+    }
+
+    @Override
+    public Airline findAirlineByAirlineName(String name) {
+        return airlineRepository.findAirlineByName(name);
+    }
+
+    public Airline createOrUpdateAirline(Airline airline) {
+        return airlineRepository.save(airline);
+    }
+
 }
