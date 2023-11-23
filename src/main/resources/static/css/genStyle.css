@@ -143,7 +143,7 @@ form {
 #update:hover {
     background-color: #7BAFA5;
 }
-#sortedFieldByName, #sortedFieldByRating,#sortedFieldByData, #sortedFieldByLastName{
+#sortedFieldByName, #sortedFieldByPayerName,#sortedFieldByData, #sortedFieldByLastName{
     position: relative;
     top: 7px;
     text-decoration: none;
