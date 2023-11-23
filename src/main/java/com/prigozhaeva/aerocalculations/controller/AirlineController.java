@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -49,5 +51,21 @@ public class AirlineController {
         if (bindingResult.hasErrors()) return "airline-views/formUpdate";
         airlineService.createOrUpdateAirline(airline);
         return "redirect:/airlines/index";
+    }
+
+    @GetMapping(value = "/sortByName")
+    public String sortByAirlineName(Model model) {
+        List<Airline> airlines = airlineService.fetchAll();
+        Collections.sort(airlines, Comparator.comparing(Airline::getName));
+        model.addAttribute(LIST_AIRLINES, airlines);
+        return "airline-views/airlines";
+    }
+
+    @GetMapping(value = "/sortByPayerName")
+    public String sortByPayerName(Model model) {
+        List<Airline> airlines = airlineService.fetchAll();
+        Collections.sort(airlines, Comparator.comparing(Airline::getPayerName));
+        model.addAttribute(LIST_AIRLINES, airlines);
+        return "airline-views/airlines";
     }
 }

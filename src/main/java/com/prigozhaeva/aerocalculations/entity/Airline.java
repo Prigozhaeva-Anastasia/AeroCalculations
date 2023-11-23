@@ -29,7 +29,7 @@ public class Airline {
     private String countryCode;
     @Column(name="address")
     private String address;
-    @Pattern(regexp = "^$|^(\\+375|80)(29|25|44|33)(\\d{3})(\\d{2})(\\d{2})$", message = "Поле должно быть введено в формате +375(29)(44)(33)(25)_______")
+    @Pattern(regexp = "^$|^(\\+\\d{9,20})$", message = "Поле должно содержать символ + и количество цифр в диапазоне 9-20")
     @Column(name="phone_number")
     private String phone_number;
     @NotBlank(message = "Поле не должно быть пустым")

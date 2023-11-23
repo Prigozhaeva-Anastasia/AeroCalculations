@@ -10,4 +10,5 @@ public interface AirlineService {
     Airline findAirlineById(Long id);
     Airline findAirlineByAirlineName(String name);
     Airline createOrUpdateAirline(Airline airline);
+    List<Airline> fetchAll();
 }

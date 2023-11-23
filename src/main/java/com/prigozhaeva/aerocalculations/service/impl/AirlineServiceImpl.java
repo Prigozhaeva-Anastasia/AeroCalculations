@@ -29,7 +29,9 @@ public class AirlineServiceImpl implements AirlineService {
 
     @Override
     public List<Airline> findAirlinesByAirlineName(String name) {
-        return airlineRepository.findAirlinesByNameContains(name);
+        List<Airline> airlines = airlineRepository.findAirlinesByNameContainsIgnoreCase(name);
+        if (airlines.size() != 0) return  airlines;
+        else return airlineRepository.findAirlinesByPayerNameContainsIgnoreCase(name);
     }
 
     @Override
@@ -43,8 +45,15 @@ public class AirlineServiceImpl implements AirlineService {
         return airlineRepository.findAirlineByName(name);
     }
 
+    @Override
     public Airline createOrUpdateAirline(Airline airline) {
         return airlineRepository.save(airline);
     }
+
+    @Override
+    public List<Airline> fetchAll() {
+        return airlineRepository.findAll();
+    }
+
 
 }
