@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="template">
+<head>
+  <meta charset="UTF-8">
+  <title>Авиакомпании</title>
+  <link th:href="@{/css/genStyle.css}" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+  <script type="text/javascript" src="../js/aircrafts.js" th:src="@{/js/aircrafts.js}"></script>
+</head>
+<body>
+<div layout:fragment="content1">
+  <div class="container mt-3">
+    <div class="card mb">
+      <div class="card-header head">Список воздушных судов</div>
+      <div class="card-body">
+        <div class="search">
+          <form id="formSearch" method="get" th:action="@{index}">
+            <input id="searchField" type="text" class="col-11" name="keyword"
+                   placeholder="   Введите номер воздушного судна" th:value="${keyword}">
+            <button type="submit"/>
+          </form>
+        </div>
+        <div></div>
+        <div id="inline">
+          <form id="formBtns">
+            <input id="importBtn" type="file" accept="import/*, .xml" name="path" class="btn" onchange="getPathOfImportFile(this.files)">
+            <label for="importBtn" class="importLabel">Импортировать</label>
+            <a id="reload" class="btn" th:href="@{/aircrafts/index}"></a>
+          </form>
+        </div>
+        <div class="table-responsive">
+          <table class="table aircraft">
+            <thead class="line">
+            <tr class="text-center">
+              <th>Номер ВС</th>
+              <th>Тип ВС</th>
+              <th>Пассажировместимость</th>
+              <th>MTOW</th>
+              <th>Авиакомпания</th>
+              <th id="actionTH">Действие</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="text-center" th:each="aircraft:${listAircrafts}">
+              <td th:text="${aircraft.getTailNumber()}"></td>
+              <td th:text="${aircraft.getAircraftType()}"></td>
+              <td th:text="${aircraft.getPassengerCapacity()}"></td>
+              <td th:text="${aircraft.getMTOW()}"></td>
+              <td th:text="${aircraft.getAirline().getName()}"></td>
+              <td>
+                <a class="btn btn-primary output" th:href="@{/aircrafts/formUpdate(aircraftId=${aircraft.getId()})}"></a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
