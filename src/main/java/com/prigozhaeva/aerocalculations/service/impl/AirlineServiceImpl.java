@@ -1,7 +1,6 @@
 package com.prigozhaeva.aerocalculations.service.impl;
 
 import com.prigozhaeva.aerocalculations.entity.Airline;
-import com.prigozhaeva.aerocalculations.parser.STAXParser;
 import com.prigozhaeva.aerocalculations.repository.AirlineRepository;
 import com.prigozhaeva.aerocalculations.service.AirlineService;
 import org.springframework.stereotype.Service;
@@ -37,14 +36,14 @@ public class AirlineServiceImpl implements AirlineService {
     @Override
     public List<Airline> findAirlinesByAirlineName(String name) {
         List<Airline> airlines = airlineRepository.findAirlinesByNameContainsIgnoreCase(name);
-        if (airlines.size() != 0) return  airlines;
+        if (airlines.size() != 0) return airlines;
         else return airlineRepository.findAirlinesByPayerNameContainsIgnoreCase(name);
     }
 
     @Override
     public Airline findAirlineById(Long id) {
         return airlineRepository.findById(id)
-                .orElseThrow(()->new EntityNotFoundException("Airline with id " + id + " Not Found"));
+                .orElseThrow(() -> new EntityNotFoundException("Airline with id " + id + " Not Found"));
     }
 
     @Override
@@ -114,12 +113,7 @@ public class AirlineServiceImpl implements AirlineService {
                     }
                 }
                 if (reader.getEventType() == XMLEvent.END_ELEMENT) {
-                    Airline fAirline = airline;
-                    boolean elementExists = airlines.stream()
-                            .anyMatch(obj -> obj.getId().equals(fAirline.getId()));
-                    if (!elementExists) {
-                        airlines.add(fAirline);
-                    }
+                    airlines.add(airline);
                 }
             }
         } catch (XMLStreamException e) {

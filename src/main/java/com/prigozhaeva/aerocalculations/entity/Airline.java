@@ -32,7 +32,6 @@ public class Airline {
     @Pattern(regexp = "^$|^(\\+\\d{9,20})$", message = "Поле должно содержать символ + и количество цифр в диапазоне 9-20")
     @Column(name="phone_number")
     private String phone_number;
-    @NotBlank(message = "Поле не должно быть пустым")
     @Pattern(regexp = "^$|^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,8})+$", message = "Поле должно содержать локальное имя, символ '@' и имя домена(2-8)")
     @Column(name="email")
     private String email;
