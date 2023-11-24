@@ -42,6 +42,16 @@ public class AircraftServiceImpl implements AircraftService {
         }
     }
 
+    @Override
+    public Aircraft findAircraftByTailNumber(String tailNumber) {
+        return aircraftRepository.findAircraftByTailNumber(tailNumber);
+    }
+
+    @Override
+    public Aircraft createOrUpdateAircraft(Aircraft aircraft) {
+        return aircraftRepository.save(aircraft);
+    }
+
     public List<Aircraft> parse(String path) {
         List<Aircraft> aircrafts;
         try {
