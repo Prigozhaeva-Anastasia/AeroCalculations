@@ -34,7 +34,7 @@
           <table class="table aircraft">
             <thead class="line">
             <tr class="text-center">
-              <th>Номер ВС</th>
+              <th>Бортовой номер</th>
               <th>Тип ВС</th>
               <th>Пассажировместимость</th>
               <th>MTOW</th>
@@ -50,7 +50,7 @@
               <td th:text="${aircraft.getMTOW()}"></td>
               <td th:text="${aircraft.getAirline().getName()}"></td>
               <td>
-                <a class="btn btn-primary output" th:href="@{/aircrafts/formUpdate(aircraftId=${aircraft.getTailNumber()})}"></a>
+                <a class="btn btn-primary output" th:href="@{/aircrafts/formUpdate(tailNumber=${aircraft.getTailNumber()})}"></a>
               </td>
             </tr>
             </tbody>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="template">
+<head>
+  <title>Обновление данных о воздушных суднах</title>
+  <link th:href="@{/css/genStyle.css}" rel="stylesheet">
+  <script type="text/javascript" src="../js/aircrafts.js" th:src="@{/js/aircrafts.js}"></script>
+</head>
+<body class="mainFont">
+<div layout:fragment="content1">
+  <div class="col-md-6 offset-3 mt-3">
+    <form id="form" class="form-control mb" method="post" th:action="@{update}" th:object="${aircraft}">
+      <div class="mb-3 mt-3">
+        <label for="tailNumber" class="form-label">Бортовой номер:</label>
+        <input id="tailNumber" type="text" name="tailNumber" class="form-control" th:value="${aircraft.getTailNumber()}" readonly="readonly">
+      </div>
+      <div class="mb-3 mt-3">
+        <label for="aircraftType" class="form-label">Тип ВС:</label>
+        <input id="aircraftType" type="text" name="aircraftType" class="form-control" th:errorClass="error" th:value="${aircraft.getAircraftType()}">
+        <div class="text-danger" th:if="${#fields.hasErrors('aircraftType')}" th:errors="${aircraft.aircraftType}">Error</div>
+      </div>
+      <div class="mb-3 mt-3">
+        <label for="passengerCapacity" class="form-label">Пассажировмсетимость:</label>
+        <input id="passengerCapacity" type="text" name="passengerCapacity" class="form-control" th:errorClass="error" th:value="${aircraft.getPassengerCapacity()}">
+        <div class="text-danger" th:if="${#fields.hasErrors('passengerCapacity')}" th:errors="${aircraft.passengerCapacity}">Error</div>
+      </div>
+      <div class="mb-3 mt-3">
+        <label for="MTOW" class="form-label">MTOW:</label>
+        <input id="MTOW" type="text" name="MTOW" class="form-control" th:errorClass="error" th:value="${aircraft.getMTOW()}">
+        <div class="text-danger" th:if="${#fields.hasErrors('MTOW')}" th:errors="${aircraft.MTOW}">Error</div>
+      </div>
+      <div class="mb-3 mt-3">
+        <label for="airlines" class="form-label">Авиакомпания:</label>
+        <select id="airlines" class="form-select" aria-label="Disabled select example" th:field="${aircraft.airline}">
+          <option th:each="airline :${listAirlines}" th:value="${airline.id}" th:text="${airline.name}"}></option>
+        </select>
+      </div>
+      <button id="update" type="submit" class="btn btn-primary">Обновить</button>
+    </form>
+  </div>
+</div>
+</body>
+</html>
