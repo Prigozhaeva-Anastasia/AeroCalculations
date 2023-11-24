@@ -30,16 +30,16 @@ public class AircraftServiceImpl implements AircraftService {
     }
 
     @Override
-    public List<Aircraft> fetchAll() {
-        return aircraftRepository.findAll();
-    }
-
-    @Override
     public void importAircrafts(String path) {
         List<Aircraft> aircrafts = parse(path);
         if (aircrafts != null && aircrafts.size() != 0) {
             aircraftRepository.saveAll(aircrafts);
         }
+    }
+
+    @Override
+    public List<Aircraft> findAircraftsByTailNumber(String tailNumber) {
+        return aircraftRepository.findAircraftsByTailNumberContains(tailNumber);
     }
 
     @Override

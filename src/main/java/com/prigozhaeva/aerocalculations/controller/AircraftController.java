@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -29,9 +30,10 @@ public class AircraftController {
     }
 
     @GetMapping(value = "/index")
-    public String aircrafts(Model model) {
-        List<Aircraft> aircraftList = new CopyOnWriteArrayList<>(aircraftService.fetchAll());
+    public String aircrafts(Model model, @RequestParam(name = KEYWORD, defaultValue = "") String keyword) {
+        List<Aircraft> aircraftList = new CopyOnWriteArrayList<>(aircraftService.findAircraftsByTailNumber(keyword));
         model.addAttribute(LIST_AIRCRAFTS, aircraftList);
+        model.addAttribute(KEYWORD, keyword);
         return "aircraft-views/aircrafts";
     }
 
