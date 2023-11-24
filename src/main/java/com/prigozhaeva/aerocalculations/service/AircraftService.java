@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface AircraftService {
     List<Aircraft> fetchAll();
+    void importAircrafts(String path);
 }
