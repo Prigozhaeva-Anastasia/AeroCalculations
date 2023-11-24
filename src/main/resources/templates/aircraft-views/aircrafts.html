@@ -50,7 +50,7 @@
               <td th:text="${aircraft.getMTOW()}"></td>
               <td th:text="${aircraft.getAirline().getName()}"></td>
               <td>
-                <a class="btn btn-primary output" th:href="@{/aircrafts/formUpdate(aircraftId=${aircraft.getId()})}"></a>
+                <a class="btn btn-primary output" th:href="@{/aircrafts/formUpdate(aircraftId=${aircraft.getTailNumber()})}"></a>
               </td>
             </tr>
             </tbody>

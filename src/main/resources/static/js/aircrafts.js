@@ -8,8 +8,8 @@ function getPathOfImportFile() {
         success: () => {
             location.reload()
         },
-        error: (err) => {
-            alert(err);
+        error: () => {
+            alert("При импорте произошла ошибка, проверьте xml-файл!");
         }
     });
 }
