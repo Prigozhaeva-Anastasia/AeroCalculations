@@ -36,8 +36,10 @@
             <tr class="text-center">
               <th>Бортовой номер</th>
               <th>Тип ВС</th>
-              <th>Пассажировместимость</th>
-              <th>MTOW</th>
+              <th><a id="sortedFieldByPassengerCapacity" class="nav-link dropdown-toggle menu"
+                     th:href="@{/aircrafts/sortByPassengerCapacity}">Пассажировместимость</a></th>
+              <th><a id="sortedFieldByMTOW" class="nav-link dropdown-toggle menu"
+                     th:href="@{/aircrafts/sortByMTOW}">MTOW</a></th>
               <th>Авиакомпания</th>
               <th id="actionTH">Действие</th>
             </tr>
