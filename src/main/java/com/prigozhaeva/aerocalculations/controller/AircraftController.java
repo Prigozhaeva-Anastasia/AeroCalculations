@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -53,5 +55,21 @@ public class AircraftController {
         }
         aircraftService.createOrUpdateAircraft(aircraft);
         return "redirect:/aircrafts/index";
+    }
+
+    @GetMapping(value = "/sortByPassengerCapacity")
+    public String sortByPassengerCapacity(Model model) {
+        List<Aircraft> aicrafts = aircraftService.fetchAll();
+        Collections.sort(aicrafts, Comparator.comparing(Aircraft::getPassengerCapacity));
+        model.addAttribute(LIST_AIRCRAFTS, aicrafts);
+        return "aircraft-views/aircrafts";
+    }
+
+    @GetMapping(value = "/sortByMTOW")
+    public String sortByMTOW(Model model) {
+        List<Aircraft> aicrafts = aircraftService.fetchAll();
+        Collections.sort(aicrafts, Comparator.comparing(Aircraft::getMTOW));
+        model.addAttribute(LIST_AIRCRAFTS, aicrafts);
+        return "aircraft-views/aircrafts";
     }
 }

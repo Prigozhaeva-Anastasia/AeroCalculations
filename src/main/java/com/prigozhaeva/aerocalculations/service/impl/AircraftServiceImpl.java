@@ -52,6 +52,12 @@ public class AircraftServiceImpl implements AircraftService {
         return aircraftRepository.save(aircraft);
     }
 
+    @Override
+    public List<Aircraft> fetchAll() {
+        return aircraftRepository.findAll();
+    }
+
+
     public List<Aircraft> parse(String path) {
         List<Aircraft> aircrafts;
         try {

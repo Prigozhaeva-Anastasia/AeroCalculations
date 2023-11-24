@@ -10,4 +10,5 @@ public interface AircraftService {
     List<Aircraft> findAircraftsByTailNumber(String tailNumber);
     Aircraft findAircraftByTailNumber(String tailNumber);
     Aircraft createOrUpdateAircraft(Aircraft aircraft);
+    List<Aircraft> fetchAll();
 }
