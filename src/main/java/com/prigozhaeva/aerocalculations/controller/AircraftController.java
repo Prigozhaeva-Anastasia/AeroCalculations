@@ -7,16 +7,15 @@ import com.prigozhaeva.aerocalculations.service.AirlineService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
 
 import static com.prigozhaeva.aerocalculations.constant.Constant.*;
 
@@ -34,8 +33,10 @@ public class AircraftController {
     @GetMapping(value = "/index")
     public String aircrafts(Model model, @RequestParam(name = KEYWORD, defaultValue = "") String keyword) {
         List<Aircraft> aircraftList = new CopyOnWriteArrayList<>(aircraftService.findAircraftsByTailNumber(keyword));
+        List<Airline> airlines = airlineService.fetchAll();
         model.addAttribute(LIST_AIRCRAFTS, aircraftList);
         model.addAttribute(KEYWORD, keyword);
+        model.addAttribute(LIST_AIRLINES, airlines);
         return "aircraft-views/aircrafts";
     }
 
@@ -70,6 +71,16 @@ public class AircraftController {
         List<Aircraft> aicrafts = aircraftService.fetchAll();
         Collections.sort(aicrafts, Comparator.comparing(Aircraft::getMTOW));
         model.addAttribute(LIST_AIRCRAFTS, aicrafts);
+        return "aircraft-views/aircrafts";
+    }
+
+    @PostMapping(value = "/filterByAirline")
+    public String filterByAirline(Model model, String airlineId) {
+        List<Aircraft> aircrafts;
+        aircrafts = aircraftService.fetchAll().stream()
+                .filter(element->element.getAirline().getId().equals(Long.parseLong(airlineId)))
+                .collect(Collectors.toList());
+        model.addAttribute(LIST_AIRCRAFTS, aircrafts);
         return "aircraft-views/aircrafts";
     }
 }
