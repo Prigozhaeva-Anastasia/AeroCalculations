@@ -2,12 +2,12 @@
 <html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="template">
 <head>
   <meta charset="UTF-8">
-  <title>Авиакомпании</title>
+  <title>Воздушные судна</title>
   <link th:href="@{/css/genStyle.css}" rel="stylesheet">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
-  <script type="text/javascript" src="../js/aircrafts.js" th:src="@{/js/aircrafts.js}"></script>
+  <script type="text/javascript" src="../js/aircraft.js" th:src="@{/js/aircrafts.js}"></script>
 </head>
 <body>
 <div layout:fragment="content1">
@@ -28,6 +28,14 @@
             <input id="importBtn" type="file" accept="import/*, .xml" name="path" class="btn" onchange="getPathOfImportFile(this.files)">
             <label for="importBtn" class="importLabel">Импортировать</label>
             <a id="reload" class="btn" th:href="@{/aircrafts/index}"></a>
+            <button type="button" id="filterForAircrafts" class="btn"></button>
+          </form>
+          <form id="formFilter" method="post" th:action="@{/aircrafts/filterByAirline}">
+            <label id="airlineLabel">Авиакомпания:</label>
+            <select id="airlines" class="form-select" aria-label="Disabled select example" name="airlineId">
+              <option th:each="airline :${listAirlines}" th:value="${airline.id}" th:text="${airline.name}"}></option>
+            </select>
+            <div><button id="applyBtn" type="submit">Применить</button></div>
           </form>
         </div>
         <div class="table-responsive">
@@ -52,7 +60,7 @@
               <td th:text="${aircraft.getMTOW()}"></td>
               <td th:text="${aircraft.getAirline().getName()}"></td>
               <td>
-                <a class="btn btn-primary output" th:href="@{/aircrafts/formUpdate(tailNumber=${aircraft.getTailNumber()})}"></a>
+                <a class="btn btn-primary output" th:href="@{/aircrafts/formUpdate(tailNumber=${aircraft.getTailNumber()})}" onclick="clearLocalStorage()"></a>
               </td>
             </tr>
             </tbody>

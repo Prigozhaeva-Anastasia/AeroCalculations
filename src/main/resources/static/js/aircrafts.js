@@ -1,25 +1,47 @@
-window.onload = function () {
-    let airlines = document.querySelector("select");
-    let form = document.getElementById('form');
+function getPathOfImportFile() {
+    let chooseFile = document.getElementById('importBtn');
+    let pathOfImportFile = "D:/diploma/import/" + chooseFile.files[0].name;
+    $.ajax({
+        url: "/api/aircrafts/import",
+        type: 'POST',
+        data: {"path": pathOfImportFile},
+        success: () => {
+            location.reload()
+        },
+        error: () => {
+            alert("При импорте произошла ошибка, проверьте xml-файл!");
+        }
+    });
+}
 
-    form.addEventListener('click', function (e) {
+function clearLocalStorage() {
+    localStorage.removeItem("airlines");
+    localStorage.removeItem("airline");
+}
+window.onload = function () {
+    let formFilter = document.getElementById('formFilter');
+    let filterForAircrafts = document.getElementById('filterForAircrafts');
+    let formBtns = document.getElementById('formBtns');
+    let airlines = document.querySelector("select");
+
+    formFilter.addEventListener('click', function (e) {
         let arr = [];
         for(let option of airlines.options) {
             arr.push(option.value);
             arr.push(option.text);
         }
         let airline = airlines.options[airlines.selectedIndex].value;
-        localStorage.setItem('airlines', JSON.stringify(arr));
-        localStorage.setItem('airline', airline);
+        localStorage.setItem('airlinesFilter', JSON.stringify(arr));
+        localStorage.setItem('airlineFilter', airline);
     });
 
-    if(localStorage.getItem('airlines')) {
-        let array = JSON.parse(localStorage.getItem("airlines"));
+    if(localStorage.getItem('airlinesFilter')) {
+        let array = JSON.parse(localStorage.getItem("airlinesFilter"));
         for(let i = 0; i < array.length; i++) {
             let option = document.createElement('option');
             option.value = array[i];
             option.text = array[i+1];
-            if(option.value === localStorage.getItem('airline')) {
+            if(option.value === localStorage.getItem('airlineFilter')) {
                 option.selected = true;
             }
             ++i;
@@ -27,19 +49,8 @@ window.onload = function () {
         }
     }
 
-    function getPathOfImportFile() {
-        let chooseFile = document.getElementById('importBtn');
-        let pathOfImportFile = "D:/diploma/import/" + chooseFile.files[0].name;
-        $.ajax({
-            url: "/api/aircrafts/import",
-            type: 'POST',
-            data: {"path": pathOfImportFile},
-            success: () => {
-                location.reload()
-            },
-            error: () => {
-                alert("При импорте произошла ошибка, проверьте xml-файл!");
-            }
-        });
-    }
+    filterForAircrafts.addEventListener('click', function (event) {
+        formFilter.style.display = 'block';
+        formBtns.style.left = '-20px';
+    });
 }

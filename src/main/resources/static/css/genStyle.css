@@ -149,7 +149,7 @@ form {
     text-decoration: none;
     color:black;
 }
-#filterForAirlines:before{
+#filterForAircrafts:before{
     content: '';
     background-image: url("../images/filter.png");
     background-size: cover;
@@ -157,16 +157,18 @@ form {
     height: 34px;
     position: absolute;
     top: 5px;
-    left: 78px;
+    left: 4px;
 }
-#filterForAirlines{
+#filterForAircrafts{
     text-decoration: none;
     width: 44px;
     height: 44px;
     border-color: black;
     border-radius: 5px;
+    position: relative;
+    left: 16px;
 }
-#filterForAirlines:hover {
+#filterForAircrafts:hover {
     background-color: rgba(166, 165, 165, 0.6);
 }
 #rating1, #rating2 {
@@ -186,13 +188,15 @@ form {
     display: flex;
 }
 #applyBtn, #applyBtn2 {
-    background-color: transparent;
-    border: none;
-    color: #A12BF0;
-    margin-left: -4px;
+    background-color: #B8DAD3;
+    border-radius: 6px;
+    border-color: #B8DAD3;
+    color: white;
+    position: relative;
+    top: 7px;
 }
 #applyBtn:hover, #applyBtn2:hover {
-    background-color: rgba(166, 165, 165, 0.6);
+    background-color: #A5C8C1;
     border-radius: 5px;
 }
 #inline {
@@ -202,7 +206,7 @@ form {
     display: none;
     position: relative;
     top: -5px;
-    left: -640px;
+    left: -475px;
 }
 #reload:before{
     content: '';
