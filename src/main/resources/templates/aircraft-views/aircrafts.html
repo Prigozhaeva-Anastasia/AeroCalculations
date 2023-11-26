@@ -54,12 +54,12 @@
             </thead>
             <tbody>
             <tr class="text-center" th:each="aircraft:${listAircrafts}">
-              <td th:text="${aircraft.getTailNumber()}"></td>
-              <td th:text="${aircraft.getAircraftType()}"></td>
-              <td th:text="${aircraft.getPassengerCapacity()}"></td>
-              <td th:text="${aircraft.getMTOW()}"></td>
+              <td class="center" th:text="${aircraft.getTailNumber()}"></td>
+              <td class="center" th:text="${aircraft.getAircraftType()}"></td>
+              <td class="center" th:text="${aircraft.getPassengerCapacity()}"></td>
+              <td class="center" th:text="${aircraft.getMTOW()}"></td>
               <td th:text="${aircraft.getAirline().getName()}"></td>
-              <td>
+              <td class="center">
                 <a class="btn btn-primary output" th:href="@{/aircrafts/formUpdate(tailNumber=${aircraft.getTailNumber()})}" onclick="clearLocalStorage()"></a>
               </td>
             </tr>

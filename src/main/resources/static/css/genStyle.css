@@ -300,9 +300,6 @@ input[type="file"]{
 table td {
     text-align: left;
 }
-table.airline td:nth-child(7) {
-    text-align: center;
-}
-table.aircraft td:nth-child(6) {
+.center {
     text-align: center;
 }

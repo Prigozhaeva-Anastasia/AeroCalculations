@@ -49,11 +49,11 @@
           <tr class="text-center" th:each="airline:${listAirlines}">
             <td th:text="${airline.getName()}"></td>
             <td th:text="${airline.getPayerName()}"></td>
-            <td th:text="${airline.getCountryCode()}"></td>
+            <td class="center" th:text="${airline.getCountryCode()}"></td>
             <td th:text="${airline.getAddress()}"></td>
             <td th:text="${airline.getPhone_number()}"></td>
             <td th:text="${airline.getEmail()}"></td>
-            <td>
+            <td class="center">
               <a class="btn btn-primary output" th:href="@{/airlines/formUpdate(airlineId=${airline.getId()})}" onclick="qwer()"></a>
             </td>
           </tr>
