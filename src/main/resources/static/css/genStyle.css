@@ -285,6 +285,9 @@ input[type="file"]{
 #actionTH, #countryCodeTH {
     width: 120px;
 }
+#actionWithMore {
+    width: 180px;
+}
 #payerNameTH{
     width: 290px;
 }

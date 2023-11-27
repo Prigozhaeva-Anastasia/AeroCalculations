@@ -2,7 +2,7 @@
 <html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="template">
 <head>
   <meta charset="UTF-8">
-  <title>Рейчы</title>
+  <title>Рейcы</title>
   <link th:href="@{/css/genStyle.css}" rel="stylesheet">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -42,19 +42,19 @@
               <th>Город посадки</th>
               <th>Дата</th>
               <th>Время</th>
-              <th id="actionTH">Действие</th>
+              <th id="actionWithMore">Действие</th>
             </tr>
             </thead>
             <tbody>
             <tr class="text-center" th:each="flight:${listFlights}">
               <td class="center" th:text="${flight.getFlightNumber()}"></td>
               <td class="center" th:text="${flight.getFlightDirection()}"></td>
-              <td class="center" th:text="${flight.getFlightType()}"></td>
+              <td th:text="${flight.getFlightType()}"></td>
               <td class="center" th:text="${flight.getDepCity()}"></td>
-              <td th:text="${flight.getArrCity()}"></td>
-              <td th:text="${flight.getDepDate()}"></td>
-              <td th:text="${flight.getDepTime()}"></td>
-              <td class="center">
+              <td class="center" th:text="${flight.getArrCity()}"></td>
+              <td class="center" th:text="${flight.getDepDate()}"></td>
+              <td class="center" th:text="${flight.getDepTime()}"></td>
+              <td>
                 <a class="btn btn-primary output" th:href="@{/flights/formUpdate(flightNumber=${flight.getFlightNumber()})}" onclick="clearLocalStorage()"></a>
                 <a class="btn btn-outline-dark" th:href="@{/flights/formMoreDetails(flightNumber=${flight.getFlightNumber()})}">Подробнее</a>
               </td>
