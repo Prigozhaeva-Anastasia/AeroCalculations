@@ -1,7 +1,6 @@
 package com.prigozhaeva.aerocalculations.controller;
 
-import com.prigozhaeva.aerocalculations.entity.Airline;
-import com.prigozhaeva.aerocalculations.entity.Flight;
+import com.prigozhaeva.aerocalculations.dto.FlightDTO;
 import com.prigozhaeva.aerocalculations.service.FlightService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +24,7 @@ public class FlightController {
 
     @GetMapping(value = "/index")
     public String flights(Model model, @RequestParam(name = KEYWORD, defaultValue = "") String keyword) {
-        List<Flight> flightList = new CopyOnWriteArrayList<>(flightService.findFlightsByFlightNumber(keyword));
+        List<FlightDTO> flightList = new CopyOnWriteArrayList<>(flightService.findFlightsByFlightNumber(keyword));
         model.addAttribute(LIST_FLIGHTS, flightList);
         model.addAttribute(KEYWORD, keyword);
         return "flight-views/flights";
