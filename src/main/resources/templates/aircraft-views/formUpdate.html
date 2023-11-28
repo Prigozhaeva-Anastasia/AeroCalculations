@@ -19,7 +19,7 @@
         <div class="text-danger" th:if="${#fields.hasErrors('aircraftType')}" th:errors="${aircraft.aircraftType}">Error</div>
       </div>
       <div class="mb-3 mt-3">
-        <label for="passengerCapacity" class="form-label">Пассажировмсетимость:</label>
+        <label for="passengerCapacity" class="form-label">Пассажировместимость:</label>
         <input id="passengerCapacity" type="text" name="passengerCapacity" class="form-control" th:errorClass="error" th:value="${aircraft.getPassengerCapacity()}">
         <div class="text-danger" th:if="${#fields.hasErrors('passengerCapacity')}" th:errors="${aircraft.passengerCapacity}">Error</div>
       </div>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="template">
+<head>
+    <meta charset="UTF-8">
+    <title>Обновление данных о рейсах</title>
+    <link th:href="@{/css/genStyle.css}" rel="stylesheet">
+    <script type="text/javascript" src="../js/flightFormUpdate.js" th:src="@{/js/flightFormUpdate.js}"></script>
+</head>
+<body class="mainFont">
+<div layout:fragment="content1">
+    <div class="col-md-6 offset-3 mt-3">
+        <form id="form" class="form-control mb" method="post" th:action="@{update}" th:object="${flight}">
+            <div class="mb-3 mt-3">
+                <label for="flightNumber" class="form-label">Номер рейса:</label>
+                <input id="flightNumber" type="text" name="flightNumber" class="form-control"
+                       th:value="${flight.getFlightNumber()}" readonly="readonly">
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="flightDirection" class="form-label">Направление:</label>
+                <select id="flightDirection" class="form-select" aria-label="Disabled select example"
+                        th:field="${flight.flightDirection}">
+                    <option value="B">вылет</option>
+                    <option value="П">посадка</option>
+                </select>
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="flightType" class="form-label">Тип:</label>
+                <select id="flightType" class="form-select" aria-label="Disabled select example"
+                        th:field="${flight.flightType}">
+                    <option value="Чартерный рейс">Чартерный рейс</option>
+                    <option value="Регулярный рейс">Регулярный рейс</option>
+                    <option value="Прочие нерегулярные рейсы">Прочие нерегулярные рейсы</option>
+                </select>
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="depCity" class="form-label">Город взлета:</label>
+                <select id="depCity" class="form-select" aria-label="Disabled select example" th:field="${flight.depCity}">
+                    <option th:each="city :${cityCodeMap}" th:value="${city.key}" th:text="${city.value}"></option>
+                </select>
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="arrCity" class="form-label">Город посадки:</label>
+                <select id="arrCity" class="form-select" aria-label="Disabled select example" th:field="${flight.arrCity}">
+                    <option th:each="city :${cityCodeMap}" th:value="${city.key}" th:text="${city.value}"></option>
+                </select>
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="depDate" class="form-label">Дата взлета:</label>
+                <input id="depDate" type="date" name="depDate" class="form-control" th:errorClass="error" th:value="${flight.depDate}">
+                <div class="text-danger" th:if="${#fields.hasErrors('depDate')}" th:errors="${flight.depDate}">Error</div>
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="arrDate" class="form-label">Дата посадки:</label>
+                <input id="arrDate" type="date" name="arrDate" class="form-control" th:errorClass="error" th:value="${flight.arrDate}">
+                <div class="text-danger" th:if="${#fields.hasErrors('arrDate')}" th:errors="${flight.arrDate}">Error</div>
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="depTime" class="form-label">Время взлета:</label>
+                <input id="depTime" type="time" name="depTime" class="form-control" th:errorClass="error" th:value="${#temporals.format(flight.depTime, 'HH:mm')}">
+                <div class="text-danger" th:if="${#fields.hasErrors('depTime')}" th:errors="${flight.depTime}">Error</div>
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="arrTime" class="form-label">Время посадки:</label>
+                <input id="arrTime" type="time" name="arrTime" class="form-control" th:errorClass="error" th:value="${#temporals.format(flight.arrTime, 'HH:mm')}">
+                <div class="text-danger" th:if="${#fields.hasErrors('arrTime')}" th:errors="${flight.arrTime}">Error</div>
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="luggageWeight" class="form-label">Вес багажа:</label>
+                <input id="luggageWeight" type="text" name="luggageWeight" class="form-control" th:errorClass="error"
+                       th:value="${flight.getLuggageWeight()}">
+                <div class="text-danger" th:if="${#fields.hasErrors('luggageWeight')}" th:errors="${flight.luggageWeight}">Error
+                </div>
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="numOfAdults" class="form-label">Количество взрослых пассажиров:</label>
+                <input id="numOfAdults" type="text" name="numOfAdults" class="form-control" th:errorClass="error"
+                       th:value="${flight.getNumOfAdults()}">
+                <div class="text-danger" th:if="${#fields.hasErrors('numOfAdults')}" th:errors="${flight.numOfAdults}">Error
+                </div>
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="numOfChildren" class="form-label">Количество детей:</label>
+                <input id="numOfChildren" type="text" name="numOfChildren" class="form-control" th:errorClass="error"
+                       th:value="${flight.getNumOfChildren()}">
+                <div class="text-danger" th:if="${#fields.hasErrors('numOfChildren')}" th:errors="${flight.numOfChildren}">Error
+                </div>
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="numOfBabies" class="form-label">Количество младенцев:</label>
+                <input id="numOfBabies" type="text" name="numOfBabies" class="form-control" th:errorClass="error"
+                       th:value="${flight.getNumOfBabies()}">
+                <div class="text-danger" th:if="${#fields.hasErrors('numOfBabies')}" th:errors="${flight.numOfBabies}">Error
+                </div>
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="aircrafts" class="form-label">Воздушное судно:</label>
+                <select id="aircrafts" class="form-select" aria-label="Disabled select example" th:field="${flight.aircraft}">
+                    <option th:each="aircraft :${listAircrafts}" th:value="${aircraft.tailNumber}" th:text="${aircraft.tailNumber}">hgjhg</option>
+                </select>
+            </div>
+            <button id="update" type="submit" class="btn btn-primary">Обновить</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
