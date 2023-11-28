@@ -37,7 +37,7 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     public List<FlightDTO> findFlightsByFlightNumber(String flightNumber) {
-        return flightRepository.findFlightsByFlightNumberContains(flightNumber).stream()
+        return flightRepository.findFlightsByFlightNumberContainsIgnoreCase(flightNumber).stream()
                 .map(mappingUtils::mapToFlightDTO)
                 .collect(Collectors.toList());
     }
@@ -49,6 +49,17 @@ public class FlightServiceImpl implements FlightService {
             flightRepository.saveAll(flights);
         }
     }
+
+    @Override
+    public Flight findFlightByFlightNumber(String flightNumber) {
+        return flightRepository.findFlightByFlightNumberIgnoreCase(flightNumber);
+    }
+
+    @Override
+    public Flight createOrUpdateFlight(Flight flight) {
+        return flightRepository.save(flight);
+    }
+
 
     public List<Flight> parse(String path) {
         List<Flight> flights;
@@ -116,7 +127,7 @@ public class FlightServiceImpl implements FlightService {
                         case "bort":
                             reader.next();
                             if (reader.getEventType() == XMLEvent.CHARACTERS) {
-                                Aircraft aircraft = aircraftRepository.findAircraftByTailNumber(reader.getText());
+                                Aircraft aircraft = aircraftRepository.findAircraftByTailNumberIgnoreCase(reader.getText());
                                 flight.setAircraft(aircraft);
                             }
                             break;

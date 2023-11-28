@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface AircraftRepository extends JpaRepository<Aircraft, String> {
-    Aircraft findAircraftByTailNumber(String tailNumber);
-    List<Aircraft> findAircraftsByTailNumberContains(String tailNumber);
+    Aircraft findAircraftByTailNumberIgnoreCase(String tailNumber);
+    List<Aircraft> findAircraftsByTailNumberContainsIgnoreCase(String tailNumber);
 }

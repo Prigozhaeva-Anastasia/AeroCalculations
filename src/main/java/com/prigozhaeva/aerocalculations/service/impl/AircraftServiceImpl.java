@@ -39,12 +39,12 @@ public class AircraftServiceImpl implements AircraftService {
 
     @Override
     public List<Aircraft> findAircraftsByTailNumber(String tailNumber) {
-        return aircraftRepository.findAircraftsByTailNumberContains(tailNumber);
+        return aircraftRepository.findAircraftsByTailNumberContainsIgnoreCase(tailNumber);
     }
 
     @Override
     public Aircraft findAircraftByTailNumber(String tailNumber) {
-        return aircraftRepository.findAircraftByTailNumber(tailNumber);
+        return aircraftRepository.findAircraftByTailNumberIgnoreCase(tailNumber);
     }
 
     @Override

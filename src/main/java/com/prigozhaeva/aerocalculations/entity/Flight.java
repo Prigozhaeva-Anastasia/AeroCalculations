@@ -4,8 +4,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -28,12 +32,20 @@ public class Flight {
     private String depCity;
     @Column(name="arr_city")
     private String arrCity;
+    @NotNull(message = "Поле не должно быть пустым")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name="dep_date")
     private LocalDate depDate;
+    @NotNull(message = "Поле не должно быть пустым")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name="arr_date")
     private LocalDate arrDate;
+    @NotNull(message = "Поле не должно быть пустым")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     @Column(name="dep_time")
     private LocalTime depTime;
+    @NotNull(message = "Поле не должно быть пустым")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     @Column(name="arr_time")
     private LocalTime arrTime;
     @Column(name="luggage_weight")
