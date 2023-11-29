@@ -15,10 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
 
 import static com.prigozhaeva.aerocalculations.constant.Constant.*;
 
@@ -64,6 +68,22 @@ public class FlightController {
     public String sortByDate(Model model) {
         List<Flight> flights = flightService.fetchAll();
         Collections.sort(flights, Comparator.comparing(Flight::getDepDate));
+        model.addAttribute(LIST_FLIGHTS, flights);
+        return "flight-views/flights";
+    }
+
+    @PostMapping(value = "/filter")
+    public String filter(Model model, String flightDirection, String flightType, String date1, String date2, String time1,
+                         String time2) {
+        List<Flight> flights = flightService.fetchAll().stream()
+                .filter(flight ->
+                        (flightDirection.isEmpty() || flight.getFlightDirection().equals(flightDirection)) &&
+                        (flightType.isEmpty() || flight.getFlightType().equals(flightType)) &&
+                                (date1.isEmpty() || flight.getDepDate().compareTo(LocalDate.parse(date1)) >= 0) &&
+                                (date2.isEmpty() || flight.getDepDate().compareTo(LocalDate.parse(date2)) <= 0) &&
+                                (time1.isEmpty() || flight.getDepTime().compareTo(LocalTime.parse(time1)) >= 0) &&
+                                (time2.isEmpty() || flight.getDepTime().compareTo(LocalTime.parse(time2)) <= 0))
+                .collect(Collectors.toList());
         model.addAttribute(LIST_FLIGHTS, flights);
         return "flight-views/flights";
     }

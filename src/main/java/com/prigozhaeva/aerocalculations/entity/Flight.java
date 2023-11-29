@@ -7,9 +7,7 @@ import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -19,7 +17,7 @@ import java.util.List;
 @Table(name = "flights")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(exclude={"aircraft", "providedServices", "invoices"})
+//@EqualsAndHashCode(exclude={"aircraft", "providedServices", "invoices"})
 public class Flight {
     @Id
     @Column(name="flight_number")
