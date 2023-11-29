@@ -1,9 +1,6 @@
 package com.prigozhaeva.aerocalculations.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -16,8 +13,10 @@ import java.util.List;
 @Entity
 @Table(name = "flights")
 @Data
+@Builder
 @NoArgsConstructor
-//@EqualsAndHashCode(exclude={"aircraft", "providedServices", "invoices"})
+@AllArgsConstructor
+@EqualsAndHashCode(exclude={"aircraft", "providedServices", "invoices"})
 public class Flight {
     @Id
     @Column(name="flight_number")

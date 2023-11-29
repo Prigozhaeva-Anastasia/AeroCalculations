@@ -1,9 +1,6 @@
 package com.prigozhaeva.aerocalculations.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -15,7 +12,9 @@ import java.util.List;
 @Entity
 @Table(name = "aircrafts")
 @Data
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(exclude={"airline", "flights"})
 public class Aircraft {
     @Id

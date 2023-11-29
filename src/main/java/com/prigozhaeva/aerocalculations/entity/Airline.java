@@ -11,6 +11,8 @@ import java.util.List;
 @Entity
 @Table(name = "airlines")
 @Data
+@Builder
+@NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(exclude={"aircrafts"})
 public class Airline {
@@ -38,8 +40,4 @@ public class Airline {
     @ToString.Exclude
     @OneToMany(mappedBy = "airline", cascade = CascadeType.ALL)
     private List<Aircraft> aircrafts = new ArrayList<>();
-
-    public Airline() {
-
-    }
 }

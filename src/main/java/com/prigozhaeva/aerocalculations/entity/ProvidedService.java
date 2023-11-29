@@ -1,9 +1,6 @@
 package com.prigozhaeva.aerocalculations.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,7 +12,9 @@ import java.util.List;
 @Entity
 @Table(name = "provided_services")
 @Data
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(exclude={"flights"})
 public class ProvidedService extends  Service {
     @Column(name="amount")

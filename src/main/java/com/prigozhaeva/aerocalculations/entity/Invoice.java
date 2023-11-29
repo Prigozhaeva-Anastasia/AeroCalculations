@@ -1,9 +1,6 @@
 package com.prigozhaeva.aerocalculations.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -12,7 +9,9 @@ import java.util.Currency;
 @Entity
 @Table(name = "invoices")
 @Data
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(exclude={"flight", "employee"})
 public class Invoice {
     @Id

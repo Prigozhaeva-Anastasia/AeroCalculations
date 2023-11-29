@@ -8,7 +8,9 @@ import javax.persistence.*;
 @Table(name = "services")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Data
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class Service {
     @Id
     @Column(name="id")

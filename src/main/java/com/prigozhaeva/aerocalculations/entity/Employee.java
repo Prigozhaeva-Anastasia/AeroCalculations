@@ -1,9 +1,6 @@
 package com.prigozhaeva.aerocalculations.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,7 +9,9 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 @Data
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(exclude={"user"})
 public class Employee {
     @Id
