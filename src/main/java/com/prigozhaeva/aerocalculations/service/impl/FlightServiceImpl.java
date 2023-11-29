@@ -60,6 +60,10 @@ public class FlightServiceImpl implements FlightService {
         return flightRepository.save(flight);
     }
 
+    @Override
+    public List<Flight> fetchAll() {
+        return flightRepository.findAll();
+    }
 
     public List<Flight> parse(String path) {
         List<Flight> flights;

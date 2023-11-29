@@ -4,7 +4,6 @@ import com.prigozhaeva.aerocalculations.dto.FlightDTO;
 import com.prigozhaeva.aerocalculations.entity.Aircraft;
 import com.prigozhaeva.aerocalculations.entity.Flight;
 import com.prigozhaeva.aerocalculations.service.AircraftService;
-import com.prigozhaeva.aerocalculations.service.AirlineService;
 import com.prigozhaeva.aerocalculations.service.FlightService;
 import com.prigozhaeva.aerocalculations.util.CityCodeMap;
 import org.springframework.stereotype.Controller;
@@ -16,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -57,5 +58,13 @@ public class FlightController {
         }
         flightService.createOrUpdateFlight(flight);
         return "redirect:/flights/index";
+    }
+
+    @GetMapping(value = "/sortByDate")
+    public String sortByDate(Model model) {
+        List<Flight> flights = flightService.fetchAll();
+        Collections.sort(flights, Comparator.comparing(Flight::getDepDate));
+        model.addAttribute(LIST_FLIGHTS, flights);
+        return "flight-views/flights";
     }
 }
