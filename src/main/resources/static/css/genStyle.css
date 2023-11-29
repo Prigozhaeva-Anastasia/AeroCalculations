@@ -335,3 +335,26 @@ table td {
 .actionWithMore {
     width:180px;
 }
+#mainContentForMoreDetails {
+    width: 500px;
+    height: 970px;
+    border-radius: 25px;
+    background-color: rgba(0, 0, 0, 0.8);
+    position: relative;
+    top: 480px;
+    left: 50%;
+    margin-bottom: 15px;
+    color: white;
+    transform: translate(-50%, -50%);
+}
+#formMoreDetailDiv {
+    margin-left: 30px;
+    padding-top: 20px;
+}
+.divForFlightField {
+    margin-bottom: 10px;
+}
+.labelForFlightField {
+    font-size: 19px;
+    color: #ABFBEB;
+}

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="template">
+<head>
+    <meta charset="UTF-8">
+    <title>Рейсы</title>
+    <link th:href="@{/css/genStyle.css}" rel="stylesheet">
+</head>
+<body>
+<div layout:fragment="content1">
+    <div id="mainContentForMoreDetails">
+        <div id="formMoreDetailDiv">
+            <div class="divForFlightField">
+                <div class="labelForFlightField">Номер рейса:</div>
+                <div th:text="${flight.getFlightNumber()}"></div>
+            </div>
+            <div class="divForFlightField">
+                <div class="labelForFlightField">Номер ВС:</div>
+                <div th:text="${flight.getTailNumber()}"></div>
+            </div>
+            <div class="divForFlightField">
+                <div class="labelForFlightField">Авиакомпания:</div>
+                <div th:text="${flight.getAirlineName()}"></div>
+            </div>
+            <div class="divForFlightField">
+                <div class="labelForFlightField">Направление:</div>
+                <div th:text="${flight.getFlightDirection()}"></div>
+            </div>
+            <div class="divForFlightField">
+                <div class="labelForFlightField">Тип:</div>
+                <div th:text="${flight.getFlightType()}"></div>
+            </div>
+            <div class="divForFlightField">
+                <div class="labelForFlightField">Город взлета:</div>
+                <div th:text="${flight.getDepCity()}"></div>
+            </div>
+            <div class="divForFlightField">
+                <div class="labelForFlightField">Город посадки:</div>
+                <div th:text="${flight.getArrCity()}"></div>
+            </div>
+            <div class="divForFlightField">
+                <div class="labelForFlightField">Дата взлета:</div>
+                <div th:text="${flight.getDepCity()}"></div>
+            </div>
+            <div class="divForFlightField">
+                <div class="labelForFlightField">Дата посадки:</div>
+                <div th:text="${flight.getArrCity()}"></div>
+            </div>
+            <div class="divForFlightField">
+                <div class="labelForFlightField">Время взлета:</div>
+                <div th:text="${flight.getDepTime()}"></div>
+            </div>
+            <div class="divForFlightField">
+                <div class="labelForFlightField">Время посадки:</div>
+                <div th:text="${flight.getDepTime()}"></div>
+            </div>
+            <div class="divForFlightField">
+                <div class="labelForFlightField">Вес багажа:</div>
+                <div th:text="${flight.getLuggageWeight()}"></div>
+            </div>
+            <div class="divForFlightField">
+                <div class="labelForFlightField">Количество взрослых пассажиров:</div>
+                <div th:text="${flight.getNumOfAdults()}"></div>
+            </div>
+            <div class="divForFlightField">
+                <div class="labelForFlightField">Количество детей:</div>
+                <div th:text="${flight.getNumOfChildren()}"></div>
+            </div>
+            <div class="divForFlightField">
+                <div class="labelForFlightField">Количество младенцев:</div>
+                <div th:text="${flight.getNumOfBabies()}"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
