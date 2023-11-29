@@ -2,10 +2,7 @@ package com.prigozhaeva.aerocalculations.entity;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,10 +13,19 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(exclude={"flights"})
-public class ProvidedService extends  Service {
+public class ProvidedService {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id")
+    private Long id;
+    @ToString.Exclude
+    @ManyToOne
+    @JoinColumn(name = "service_id")
+    private Service service;
     @Column(name="amount")
     private short amount;
     @ToString.Exclude
-    @ManyToMany(mappedBy = "providedServices")
-    private List<Flight> flights = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "flight_id")
+    private Flight flight;
 }

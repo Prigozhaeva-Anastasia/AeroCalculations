@@ -58,10 +58,7 @@ public class Flight {
     @JoinColumn(name = "aircraft_tail_number")
     private Aircraft aircraft;
     @ToString.Exclude
-    @ManyToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-    @JoinTable(name = "flights_provided_services",
-            joinColumns = {@JoinColumn(name = "flight_number")},
-            inverseJoinColumns = {@JoinColumn(name = "provided_service_id")})
+    @OneToMany(mappedBy = "flight", cascade = CascadeType.ALL)
     private List<ProvidedService> providedServices = new ArrayList<>();
     @ToString.Exclude
     @OneToMany(mappedBy = "flight", cascade = CascadeType.ALL)

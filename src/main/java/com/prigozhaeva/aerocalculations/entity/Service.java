@@ -3,10 +3,11 @@ package com.prigozhaeva.aerocalculations.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "services")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Data
 @Builder
 @NoArgsConstructor
@@ -14,11 +15,14 @@ import javax.persistence.*;
 public class Service {
     @Id
     @Column(name="id")
-    protected Long id;
+    private Long id;
     @Column(name="name")
-    protected String name;
+    private String name;
     @Column(name="service_type")
-    protected String serviceType;
+    private String serviceType;
     @Column(name="tariff")
-    protected double tariff;
+    private double tariff;
+    @ToString.Exclude
+    @OneToMany(mappedBy = "service", cascade = CascadeType.ALL)
+    private List<ProvidedService> providedServices = new ArrayList<>();
 }
