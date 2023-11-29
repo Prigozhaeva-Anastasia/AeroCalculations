@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -39,7 +38,7 @@ public class FlightController {
 
     @GetMapping(value = "/index")
     public String flights(Model model, @RequestParam(name = KEYWORD, defaultValue = "") String keyword) {
-        List<FlightDTO> flightList = new CopyOnWriteArrayList<>(flightService.findFlightsByFlightNumber(keyword));
+        List<FlightDTO> flightList = new CopyOnWriteArrayList<>(flightService.findFlightsDtoByFlightNumber(keyword));
         model.addAttribute(LIST_FLIGHTS, flightList);
         model.addAttribute(KEYWORD, keyword);
         return "flight-views/flights";
@@ -86,5 +85,12 @@ public class FlightController {
                 .collect(Collectors.toList());
         model.addAttribute(LIST_FLIGHTS, flights);
         return "flight-views/flights";
+    }
+
+    @GetMapping(value = "/formMoreDetails")
+    public String fetchMoreDetails(Model model, String flightNumber) {
+        FlightDTO flightDTO = flightService.findFlightDtoByFlightNumber(flightNumber);
+        model.addAttribute(FLIGHT, flightDTO);
+        return "flight-views/formMoreDetails";
     }
 }

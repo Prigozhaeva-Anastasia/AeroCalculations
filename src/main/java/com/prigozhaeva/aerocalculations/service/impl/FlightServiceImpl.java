@@ -36,7 +36,7 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public List<FlightDTO> findFlightsByFlightNumber(String flightNumber) {
+    public List<FlightDTO> findFlightsDtoByFlightNumber(String flightNumber) {
         return flightRepository.findFlightsByFlightNumberContainsIgnoreCase(flightNumber).stream()
                 .map(mappingUtils::mapToFlightDTO)
                 .collect(Collectors.toList());
@@ -56,6 +56,11 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
+    public FlightDTO findFlightDtoByFlightNumber(String flightNumber) {
+        return mappingUtils.mapToFlightDTO(flightRepository.findFlightByFlightNumberIgnoreCase(flightNumber));
+    }
+
+    @Override
     public Flight createOrUpdateFlight(Flight flight) {
         return flightRepository.save(flight);
     }
@@ -64,6 +69,7 @@ public class FlightServiceImpl implements FlightService {
     public List<Flight> fetchAll() {
         return flightRepository.findAll();
     }
+
 
     public List<Flight> parse(String path) {
         List<Flight> flights;
