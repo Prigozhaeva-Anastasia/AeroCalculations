@@ -149,7 +149,7 @@ form {
     text-decoration: none;
     color:black;
 }
-#filterForAircrafts:before{
+#filterForAircrafts:before, #filterForFlights:before{
     content: '';
     background-image: url("../images/filter.png");
     background-size: cover;
@@ -159,7 +159,7 @@ form {
     top: 5px;
     left: 4px;
 }
-#filterForAircrafts{
+#filterForAircrafts, #filterForFlights{
     text-decoration: none;
     width: 44px;
     height: 44px;
@@ -168,7 +168,7 @@ form {
     position: relative;
     left: 16px;
 }
-#filterForAircrafts:hover {
+#filterForAircrafts:hover, #filterForFlights:hover {
     background-color: rgba(166, 165, 165, 0.6);
 }
 #rating1, #rating2 {
@@ -178,6 +178,12 @@ form {
 }
 #date1, #date2, #time1, #time2 {
     margin: 0 10px 5px 0px;
+}
+#directions, #types {
+    margin-top: 7px;
+}
+#types {
+    margin-right: 10px;
 }
 #ratingLabel, #ratingLabel2 {
     font-family: Georgia;
@@ -202,11 +208,25 @@ form {
 #inline {
     display: flex;
 }
-#formFilter, #formFilter2 {
+#formFilterForFlights {
+    display: table;
+}
+#directionDiv {
+    position: relative;
+    right: 10px;
+}
+.cell {
+    display: table-cell;
+    padding-right: 10px;
+}
+#formFilter, #formFilter2, #formFilterForFlights {
     display: none;
     position: relative;
     top: -5px;
     left: -475px;
+}
+#formFilterForFlights {
+    float: left;
 }
 #reload:before{
     content: '';
@@ -276,7 +296,10 @@ input[type="file"]{
 .importLabel:hover{
     background-color: rgba(166, 165, 165, 0.6);
 }
-.table {
+.flightTable {
+    width: 1170px;
+    margin-top: -20px;
+    margin-left: 20px;
     table-layout: fixed;
 }
 .mb {
@@ -305,4 +328,10 @@ table td {
 }
 .center {
     text-align: center;
+}
+#types {
+    width: 170px;
+}
+.actionWithMore {
+    width:180px;
 }
