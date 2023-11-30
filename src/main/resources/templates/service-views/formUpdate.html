@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="template">
+<head>
+    <meta charset="UTF-8">
+    <title>Обновление данных о услугах</title>
+    <link th:href="@{/css/genStyle.css}" rel="stylesheet">
+</head>
+<body class="mainFont">
+<div layout:fragment="content1">
+    <div class="col-md-6 offset-3 mt-3">
+        <form id="form" class="form-control mb" method="post" th:action="@{update}" th:object="${service}">
+            <input type="text" name="id" th:value="${service.getId()}" hidden>
+            <div class="mb-3 mt-3">
+                <label for="serviceName" class="form-label">Название:</label>
+                <input id="serviceName" type="text" name="name" class="form-control" th:errorClass="error" th:value="${service.name}">
+                <div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="${service.name}">Error</div>
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="serviceType" class="form-label">Тип услуги:</label>
+                <select id="serviceType" class="form-select" aria-label="Disabled select example"
+                        th:field="${service.serviceType}">
+                    <option value="Услуги на наземное обслуживание">Услуги на наземное обслуживание</option>
+                    <option value="Аэропортовые услуги">Аэропортовые услуги</option>
+                </select>
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="tariff" class="form-label">Тариф, BYN:</label>
+                <input id="tariff" type="text" name="tariff" class="form-control"
+                       th:value="${service.getTariff()}">
+            </div>
+            <button id="update" type="submit" class="btn btn-primary">Обновить</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
