@@ -14,4 +14,7 @@ public class Constant {
     public static final String DEPARTURE = "вылет";
     public static final String ARRIVAL = "посадка";
     public static final String CITY_CODE_MAP = "cityCodeMap";
+    public static final String AIRPORT_SERVICES_SHORT = "A";
+    public static final String AIRPORT_SERVICES = "Аэропортовые услуги";
+    public static final String GROUND_HANDLING_SERVICES = "Услуги на наземное обслуживание";
 }
