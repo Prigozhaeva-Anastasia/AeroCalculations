@@ -7,4 +7,6 @@ import java.util.List;
 public interface ServiceService {
     List<Service> findServicesByServiceName(String serviceName);
     void importServices(String path);
+    Service findServiceById(Long id);
+    Service createOrUpdateService(Service service);
 }

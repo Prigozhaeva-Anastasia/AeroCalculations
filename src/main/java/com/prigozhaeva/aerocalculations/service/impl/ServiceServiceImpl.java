@@ -4,6 +4,7 @@ import com.prigozhaeva.aerocalculations.repository.ServiceRepository;
 import com.prigozhaeva.aerocalculations.service.ServiceService;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -37,6 +38,18 @@ public class ServiceServiceImpl implements ServiceService {
             serviceRepository.saveAll(services);
         }
     }
+
+    @Override
+    public com.prigozhaeva.aerocalculations.entity.Service findServiceById(Long id) {
+        return serviceRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Service with id " + id + " Not Found"));
+    }
+
+    @Override
+    public com.prigozhaeva.aerocalculations.entity.Service createOrUpdateService(com.prigozhaeva.aerocalculations.entity.Service service) {
+        return serviceRepository.save(service);
+    }
+
 
     public List<com.prigozhaeva.aerocalculations.entity.Service> parse(String path) {
         List<com.prigozhaeva.aerocalculations.entity.Service> services;

@@ -9,6 +9,7 @@ public class Constant {
     public static final String AIRLINE = "airline";
     public static final String AIRCRAFT = "aircraft";
     public static final String FLIGHT = "flight";
+    public static final String SERVICE = "service";
     public static final String DEPARTURE_SHORT = "В";
     public static final String ARRIVAL_SHORT = "П";
     public static final String DEPARTURE = "вылет";
