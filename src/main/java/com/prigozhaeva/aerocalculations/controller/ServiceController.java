@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
 
 import static com.prigozhaeva.aerocalculations.constant.Constant.*;
 
@@ -47,5 +50,22 @@ public class ServiceController {
         }
         serviceService.createOrUpdateService(service);
         return "redirect:/services/index";
+    }
+
+    @GetMapping(value = "/sortByName")
+    public String sortByName(Model model) {
+        List<Service> services = serviceService.fetchAll();
+        Collections.sort(services, Comparator.comparing(Service::getName));
+        model.addAttribute(LIST_SERVICES, services);
+        return "service-views/services";
+    }
+
+    @PostMapping(value = "/filterByServiceType")
+    public String filterByServiceType(Model model, String serviceType) {
+        List<Service> services = serviceService.fetchAll().stream()
+                .filter(element->element.getServiceType().equals(serviceType))
+                .collect(Collectors.toList());
+        model.addAttribute(LIST_SERVICES, services);
+        return "service-views/services";
     }
 }

@@ -9,4 +9,5 @@ public interface ServiceService {
     void importServices(String path);
     Service findServiceById(Long id);
     Service createOrUpdateService(Service service);
+    List<Service> fetchAll();
 }

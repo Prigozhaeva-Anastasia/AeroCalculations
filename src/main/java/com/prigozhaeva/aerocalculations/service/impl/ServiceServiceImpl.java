@@ -50,6 +50,10 @@ public class ServiceServiceImpl implements ServiceService {
         return serviceRepository.save(service);
     }
 
+    @Override
+    public List<com.prigozhaeva.aerocalculations.entity.Service> fetchAll() {
+        return serviceRepository.findAll();
+    }
 
     public List<com.prigozhaeva.aerocalculations.entity.Service> parse(String path) {
         List<com.prigozhaeva.aerocalculations.entity.Service> services;
