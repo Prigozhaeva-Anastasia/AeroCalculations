@@ -14,3 +14,13 @@ function getPathOfImportFile() {
         }
     });
 }
+
+window.onload = function () {
+    let filterForServices = document.getElementById('filterForServices');
+    let formFilter = document.getElementById('formFilter');
+    let formBtns = document.getElementById('formBtns');
+    filterForServices.addEventListener('click', function (event) {
+        formFilter.style.display = 'block';
+        formBtns.style.left = '-20px';
+    });
+}

@@ -30,7 +30,7 @@
             <a id="reload" class="btn" th:href="@{/services/index}"></a>
             <button type="button" id="filterForServices" class="btn"></button>
           </form>
-          <form id="formFilter" method="post" th:action="@{/aircrafts/filterByServiceType}">
+          <form id="formFilter" method="post" th:action="@{/services/filterByServiceType}">
             <label id="serviceTypeLabel">Тип услуги:</label>
             <select id="serviceTypes" class="form-select" aria-label="Disabled select example"
                     name="serviceType">
