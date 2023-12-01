@@ -56,6 +56,20 @@ public class ProvidedServiceServiceImpl implements ProvidedServiceService {
                 .build();
     }
 
+    @Override
+    public ProvidedService findProvidedServiceById(Long id) {
+        return provideServiceRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Provided service with id " + id + " Not Found"));
+    }
+
+    @Override
+    public ProvidedService createOrUpdateProvidedService(Long providedServiceId, short amount) {
+        ProvidedService providedService = findProvidedServiceById(providedServiceId);
+        providedService.setAmount(amount);
+        return provideServiceRepository.save(providedService);
+    }
+
+
     public List<ProvidedService> parse(String path) {
         List<ProvidedService> providedServices;
         try {
