@@ -6,6 +6,7 @@ public class Constant {
     public static final String LIST_AIRCRAFTS = "listAircrafts";
     public static final String LIST_FLIGHTS = "listFlights";
     public static final String LIST_SERVICES = "listServices";
+    public static final String LIST_PROVIDED_SERVICES = "listProvidedServices";
     public static final String AIRLINE = "airline";
     public static final String AIRCRAFT = "aircraft";
     public static final String FLIGHT = "flight";
