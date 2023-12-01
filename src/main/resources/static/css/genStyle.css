@@ -308,9 +308,6 @@ input[type="file"]{
 #actionTH, #countryCodeTH {
     width: 120px;
 }
-#actionWithMore {
-    width: 180px;
-}
 #payerNameTH{
     width: 290px;
 }
@@ -333,7 +330,7 @@ table td {
     width: 170px;
 }
 .actionWithMore {
-    width:180px;
+    width:220px;
 }
 #mainContentForMoreDetails {
     width: 500px;
@@ -366,4 +363,14 @@ table td {
 }
 #serviceTypes {
     width: 310px;
+}
+#iconForProvidedServices {
+    position: relative;
+    top: 3px;
+}
+#tariffTD {
+    width: 120px;
+}
+#amountTD {
+    width: 110px;
 }
