@@ -358,6 +358,10 @@ table td {
 .serviceTable {
     table-layout: fixed;
 }
+.providedServiceTable {
+    margin-top: 48px;
+    table-layout: fixed;
+}
 #nameServiceTD {
     width: 600px;
 }
