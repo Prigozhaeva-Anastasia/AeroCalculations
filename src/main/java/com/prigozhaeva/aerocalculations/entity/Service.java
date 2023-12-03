@@ -13,6 +13,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(exclude={"providedServices"})
 public class Service {
     @Id
     @Column(name="id")

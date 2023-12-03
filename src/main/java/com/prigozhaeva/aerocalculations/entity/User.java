@@ -31,4 +31,9 @@ public class User {
     @ToString.Exclude
     @OneToOne(mappedBy = "user")
     private Employee employee;
+
+    public void assignRoleToUser(Role role) {
+        this.roles.add(role);
+        role.getUsers().add(this);
+    }
 }

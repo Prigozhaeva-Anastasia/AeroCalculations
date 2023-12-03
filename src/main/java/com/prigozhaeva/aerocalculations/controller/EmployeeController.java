@@ -30,4 +30,10 @@ public class EmployeeController {
         model.addAttribute(KEYWORD, keyword);
         return "employee-views/employees";
     }
+
+    @GetMapping(value = "/delete")
+    public String deleteEmployee(Long employeeId) {
+        employeeService.deleteEmployee(employeeId);
+        return "redirect:/employees/index";
+    }
 }

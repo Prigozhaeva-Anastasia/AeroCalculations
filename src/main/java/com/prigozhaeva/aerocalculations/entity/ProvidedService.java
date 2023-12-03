@@ -12,7 +12,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(exclude={"flights"})
+@EqualsAndHashCode(exclude={"flight"})
 public class ProvidedService {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

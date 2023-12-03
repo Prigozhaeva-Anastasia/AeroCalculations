@@ -7,12 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "users")
+@Table(name = "employees")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(exclude={"user"})
+@EqualsAndHashCode(exclude={"user", "invoices"})
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
