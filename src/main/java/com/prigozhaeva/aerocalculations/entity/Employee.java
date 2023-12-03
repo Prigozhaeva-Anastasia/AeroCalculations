@@ -22,6 +22,8 @@ public class Employee {
     private String lastName;
     private String patronymic;
     private String phoneNumber;
+    private String img;
+    private String position;
     @ToString.Exclude
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
