@@ -5,22 +5,54 @@
     <title>Сотрудники</title>
     <link th:href="@{/css/genStyle.css}" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
 <div layout:fragment="content1">
-    <div id="wrapper" class="card-body" th:each="employee: ${listEmployees}">
-        <div id="divForFlightInf">
-            <div class="circle">
-                <img src="\images\employees\Astapovich Aleksandra.jpg" alt="Circle Image">
+    <div class="container mt-3">
+        <div class="card mb">
+            <div class="card-header head">Список сотрудников</div>
+            <div class="card-body">
+                <div class="search">
+                    <form id="formSearch" method="get" th:action="@{index}">
+                        <input id="searchField" type="text" class="col-11" name="keyword"
+                               placeholder="   Введите ФИО/email" th:value="${keyword}">
+                        <button type="submit"/>
+                    </form>
+                </div>
+                <div></div>
+                <div id="inline">
+                    <form id="formBtnsEmp">
+                        <a id="createBtn" class="btn" th:href="@{/employees/formCreate}"></a>
+                        <a id="reloadEmp" class="btn" th:href="@{/employees/index}"></a>
+                    </form>
+                </div>
+                <div id="wrapper" class="card-body" th:each="employee: ${listEmployees}">
+                    <div id="divForEmployees">
+                        <div class="circle">
+                            <img th:src="${employee.getImg()}" alt="Circle Image">
+                        </div>
+                        <a class="edit_trash_btns" th:href="@{/employees/delete(employeeId=${employee.getId()})}"><i id="deleteEmp" class="fa fa-trash-o" aria-hidden="true"></i></a>
+                        <div id="employeeName"
+                             th:text="${employee.getLastName()} + ' ' + ${employee.getFirstName()} + ' ' + ${employee.getPatronymic()} "></div>
+                        <div id="positionEmp" class="minDivs">
+                            <div class="labelEmp">Должность</div>
+                            <div th:text="${employee.getPosition()}"></div>
+                        </div>
+                        <div id="emailEmp" class="minDivs">
+                            <div class="labelEmp">Email</div>
+                            <div th:text="${employee.getUser().getEmail()}"></div>
+                        </div>
+                        <div id="phoneNumberEmp" class="minDivs">
+                            <div class="labelEmp">Номер телефона</div>
+                            <div th:text="${employee.getPhoneNumber()}"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div th:text="${employee.getLastName()} + ' ' + ${employee.getFirstName()} + ' ' + ${employee.getPatronymic()} "></div>
-            <div th:text="${employee.getPosition()}"></div>
-            <div th:text="${employee.getUser().getEmail()}"></div>
-            <div th:text="${employee.getPhoneNumber()}"></div>
         </div>
     </div>
+</div>
 </div>
 </body>
 </html>

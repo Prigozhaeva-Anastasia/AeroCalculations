@@ -228,7 +228,7 @@ form {
 #formFilterForFlights {
     float: left;
 }
-#reload:before{
+#reload:before, #reloadEmp:before{
     content: '';
     background-image: url("../images/reload.png");
     background-size: cover;
@@ -246,12 +246,24 @@ form {
     position: relative;
     left: 15px;
 }
-#reload:hover {
+#reloadEmp {
+    width: 44px;
+    height: 44px;
+    border-color: black;
+    border-radius: 5px;
+    position: relative;
+    left: 50px;
+}
+#reload:hover, #reloadEmp:hover {
     background-color: rgba(166, 165, 165, 0.6);
 }
 #formBtns {
     position: relative;
     left: -315px;
+}
+#formBtnsEmp {
+    position: relative;
+    left: -435px;
 }
 #filterForDirectFlight:before{
     content: '';
@@ -379,8 +391,8 @@ table td {
     width: 110px;
 }
 .circle {
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
     overflow: hidden;
 }
@@ -388,4 +400,60 @@ table td {
 .circle img {
     width: 100%;
     height: auto;
+}
+#divForEmployees {
+    position: relative;
+    right: 10px;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 20px;
+    padding: 20px;
+    height: 250px;
+}
+#employeeName {
+    color: white;
+    font-size: 20px;
+    position: relative;
+    top: -175px;
+    margin-left: 180px;
+}
+#positionEmp {
+    width: 250px;
+    position: relative;
+    top: -130px;
+    left: 180px;
+}
+.labelEmp {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+.minDivs {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    color: white;
+    font-size: 17px;
+    padding: 20px;
+}
+#emailEmp {
+    width: 250px;
+    position: relative;
+    top: -225px;
+    left: 460px;
+}
+#phoneNumberEmp {
+    width: 250px;
+    position: relative;
+    top: -321px;
+    left: 740px;
+}
+#deleteEmp {
+    position: relative;
+    top: 40px;
+    left: 10px;
+    font-size: 22px;
+    color: white;
+    padding: 3px;
+}
+#deleteEmp:hover {
+    background-color: #A6A5A5;
+    border-radius: 5px;
 }
