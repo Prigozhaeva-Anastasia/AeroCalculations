@@ -378,3 +378,14 @@ table td {
 #amountTD {
     width: 110px;
 }
+.circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.circle img {
+    width: 100%;
+    height: auto;
+}
