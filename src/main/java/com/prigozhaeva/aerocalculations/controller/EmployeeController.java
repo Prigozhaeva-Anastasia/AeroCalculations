@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -83,5 +84,12 @@ public class EmployeeController {
                 .collect(Collectors.toList());
         model.addAttribute(LIST_EMPLOYEES, employees);
         return "employee-views/employees";
+    }
+
+    @GetMapping(value = "/personalData")
+    public String personalData(Model model, Principal principal) {
+        Employee employee = employeeService.findEmployeeByEmail("astapovich@gmail.com");//change_this
+        model.addAttribute(EMPLOYEE, employee);
+        return "employee-views/personalData";
     }
 }

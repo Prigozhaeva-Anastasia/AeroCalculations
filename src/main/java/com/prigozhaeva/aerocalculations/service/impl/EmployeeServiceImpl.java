@@ -47,6 +47,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         return checkAreEmployeesActual(employees);
     }
 
+    @Override
+    public Employee findEmployeeByEmail(String email) {
+        return employeeRepository.findEmployeeByEmail(email);
+    }
+
     private List<Employee> checkAreEmployeesActual(List<Employee> employees) {
         return employees.stream()
                     .filter(emp->emp.getUser().getRoles().size() != 0)
