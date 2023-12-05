@@ -2,6 +2,7 @@ package com.prigozhaeva.aerocalculations.controller;
 
 import com.prigozhaeva.aerocalculations.entity.Aircraft;
 import com.prigozhaeva.aerocalculations.entity.Employee;
+import com.prigozhaeva.aerocalculations.entity.Role;
 import com.prigozhaeva.aerocalculations.entity.User;
 import com.prigozhaeva.aerocalculations.service.EmployeeService;
 import com.prigozhaeva.aerocalculations.service.RoleService;
@@ -19,6 +20,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
 
 import static com.prigozhaeva.aerocalculations.constant.Constant.*;
 
@@ -38,7 +40,9 @@ public class EmployeeController {
     @GetMapping(value = "/index")
     public String employees(Model model, @RequestParam(name = KEYWORD, defaultValue = "") String keyword) {
         List<Employee> employees = new CopyOnWriteArrayList<>(employeeService.findEmployeesByFioOrEmail(keyword));
+        List<Role> roles = roleService.fetchAll();
         model.addAttribute(LIST_EMPLOYEES, employees);
+        model.addAttribute(LIST_ROLES, roles);
         model.addAttribute(KEYWORD, keyword);
         return "employee-views/employees";
     }
@@ -68,6 +72,15 @@ public class EmployeeController {
     public String sortByLastName(Model model) {
         List<Employee> employees = employeeService.fetchAll();
         Collections.sort(employees, Comparator.comparing(Employee::getLastName));
+        model.addAttribute(LIST_EMPLOYEES, employees);
+        return "employee-views/employees";
+    }
+
+    @PostMapping(value = "/filterByPosition")
+    public String filterByPosition(Model model, String roleId) {
+        List<Employee> employees = employeeService.fetchAll().stream()
+                .filter(element->element.getUser().getRoles().stream().anyMatch(role->role.getId().equals(Long.parseLong(roleId))))
+                .collect(Collectors.toList());
         model.addAttribute(LIST_EMPLOYEES, employees);
         return "employee-views/employees";
     }
