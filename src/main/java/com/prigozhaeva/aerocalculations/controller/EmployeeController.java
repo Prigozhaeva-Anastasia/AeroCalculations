@@ -1,5 +1,6 @@
 package com.prigozhaeva.aerocalculations.controller;
 
+import com.prigozhaeva.aerocalculations.entity.Aircraft;
 import com.prigozhaeva.aerocalculations.entity.Employee;
 import com.prigozhaeva.aerocalculations.entity.User;
 import com.prigozhaeva.aerocalculations.service.EmployeeService;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -59,5 +62,13 @@ public class EmployeeController {
         if (bindingResult.hasErrors()) return "employee-views/formCreate";
         userService.createOrUpdateUser(user);
         return "redirect:/employees/index";
+    }
+
+    @GetMapping(value = "/sortByLastName")
+    public String sortByLastName(Model model) {
+        List<Employee> employees = employeeService.fetchAll();
+        Collections.sort(employees, Comparator.comparing(Employee::getLastName));
+        model.addAttribute(LIST_EMPLOYEES, employees);
+        return "employee-views/employees";
     }
 }

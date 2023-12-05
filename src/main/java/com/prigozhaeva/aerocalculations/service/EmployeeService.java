@@ -8,4 +8,5 @@ public interface EmployeeService {
     List<Employee> findEmployeesByFioOrEmail(String searchStr);
     Employee createEmployee(Long userId, String lastName, String firstName, String patronymic, String phoneNumber, String position, String img);
     void deleteEmployee(Long employeeId);
+    List<Employee> fetchAll();
 }

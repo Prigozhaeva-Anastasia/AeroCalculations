@@ -74,4 +74,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.getUser().setRoles(null);
         employeeRepository.save(employee);
     }
+
+    @Override
+    public List<Employee> fetchAll() {
+        return employeeRepository.findAll();
+    }
 }
