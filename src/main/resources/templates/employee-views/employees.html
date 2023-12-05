@@ -26,6 +26,7 @@
                     <form id="formBtnsEmp">
                         <a id="createBtn" class="btn" th:href="@{/employees/formCreate}" onclick="clearLocalStorage()"></a>
                         <a id="reloadEmp" class="btn" th:href="@{/employees/index}"></a>
+                        <button id="sortByLastNameEmp" formmethod="get" th:formaction="@{/employees/sortByLastName}"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></button>
                     </form>
                 </div>
                 <div id="wrapper" class="card-body" th:each="employee: ${listEmployees}">

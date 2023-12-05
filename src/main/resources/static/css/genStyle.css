@@ -252,6 +252,7 @@ form {
     border-color: black;
     border-radius: 5px;
     position: relative;
+    top: -3px;
     left: 50px;
 }
 #reload:hover, #reloadEmp:hover {
@@ -539,4 +540,16 @@ table td {
 }
 #registrationForm {
     margin-right: 65px;
+}
+#sortByLastNameEmp{
+    margin-left: 55px;
+    text-decoraton: none;
+    width: 44px;
+    height: 44px;
+    border-width: 0.6px;
+    border-radius: 5px;
+    background-color: white;
+}
+#sortByLastNameEmp:hover {
+    background-color: rgba(166, 165, 165, 0.6);
 }
