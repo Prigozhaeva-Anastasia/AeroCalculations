@@ -10,4 +10,5 @@ public interface EmployeeService {
     Employee createEmployee(Long userId, String lastName, String firstName, String patronymic, String phoneNumber, String position, String img);
     void deleteEmployee(Long employeeId);
     List<Employee> fetchAll();
+    Employee updatePersonalData(Employee employee, String password);
 }

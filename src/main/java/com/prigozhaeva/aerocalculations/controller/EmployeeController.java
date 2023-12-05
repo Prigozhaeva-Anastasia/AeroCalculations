@@ -10,10 +10,7 @@ import com.prigozhaeva.aerocalculations.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -91,5 +88,21 @@ public class EmployeeController {
         Employee employee = employeeService.findEmployeeByEmail("astapovich@gmail.com");//change_this
         model.addAttribute(EMPLOYEE, employee);
         return "employee-views/personalData";
+    }
+
+    @GetMapping(value = "/formUpdate")
+    public String updatePersonalData(Model model, Principal principal) {
+        Employee employee = employeeService.findEmployeeByEmail("astapovich@gmail.com");//change_this
+        List<Role> roles = roleService.fetchAll();
+        model.addAttribute("confirmation", "");
+        model.addAttribute(EMPLOYEE, employee);
+        model.addAttribute(LIST_ROLES, roles);
+        return "employee-views/formUpdate";
+    }
+
+    @PostMapping(value = "/update")
+    public String update(@ModelAttribute("employee") Employee employee, @RequestParam("confirmation") String confirmation) {
+        employeeService.updatePersonalData(employee, confirmation);
+        return "redirect:/employees/personalData";
     }
 }

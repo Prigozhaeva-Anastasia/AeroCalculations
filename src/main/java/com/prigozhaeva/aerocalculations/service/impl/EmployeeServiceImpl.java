@@ -84,4 +84,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<Employee> fetchAll() {
         return employeeRepository.findAll();
     }
+
+    @Override
+    public Employee updatePersonalData(Employee employee, String password) {
+        if (!employee.getImg().contains("/images/")) employee.setImg("/images/employees/" + employee.getImg());
+        if (employee.getImg().contains(",")) employee.setImg((employee.getImg().replace(",", "")));
+        if (!password.equals("#")) {
+            employee.getUser().setPassword(password);
+        }
+        return employeeRepository.save(employee);
+    }
 }
