@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="template">
+<head>
+    <title>Личные данные</title>
+    <link th:href="@{/css/employeeDetail.css}" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+<div layout:fragment="content1">
+    <div id="blackFont">
+        <div id="mainDiv">
+            <div class="circle">
+                <img th:src="${employee.getImg()}">
+            </div>
+            <div id="tableForUser">
+                <div id="personalData">Личные данные</div>
+                <a id="update" class="btn" th:href="@{/employees/formUpdate}"></a>
+                <table>
+                    <tr>
+                        <td class="col1">Фамилия</td>
+                        <td class="col2" th:text="${employee.getLastName()}"></td>
+                    </tr>
+                    <tr>
+                        <td class="col1">Имя</td>
+                        <td class="col2" th:text="${employee.getFirstName()}"></td>
+                    </tr>
+                    <tr>
+                        <td class="col1">Отчество</td>
+                        <td class="col2" th:text="${employee.getPatronymic()}"></td>
+                    </tr>
+                    <tr>
+                        <td class="col1">Должность</td>
+                        <td class="col2" th:text="${employee.getPosition()}"></td>
+                    </tr>
+                    <tr>
+                        <td class="col1">Номер телефона</td>
+                        <td class="col2 font" th:text="${employee.getPhoneNumber()}"></td>
+                    </tr>
+                    <tr>
+                        <td class="col1">Email</td>
+                        <td class="col2 font" th:text="${employee.getUser().getEmail()}"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
