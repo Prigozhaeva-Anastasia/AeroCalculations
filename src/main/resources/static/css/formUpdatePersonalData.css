@@ -1,0 +1,171 @@
+#flightIcon, #serviceIcon {
+    margin-left: 8px;
+}
+#invoiceIcon {
+    margin-left: 13px;
+}
+#archiveIcon {
+    margin-left: 9px;
+}
+#blackFont {
+    border-radius: 20px;
+    background-color: rgba(0, 0, 0, 0.9);
+    width: 1015px;
+    height: 640px;
+    margin-left: 110px;
+    position: relative;
+    top: -15px;
+}
+#mainDiv {
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    width: 915px;
+    height: 550px;
+    margin-top: 17px;
+    margin-left: 50px;
+    position: relative;
+    top: 40px;
+    padding: 25px;
+}
+table {
+    font-family: Georgia;
+    font-size: 22px;
+    color: white;
+    width: 500px;
+    position: relative;
+    left: 100px;
+    margin-top: -210px;
+}
+tr {
+    height: 50px;
+}
+.centuryFont {
+    font-family: "Century751 SeBd BT";
+}
+input {
+    background: transparent;
+    border: none;
+    width: 300px;
+    border-bottom: 1px solid #B8DAD3;
+    color: #615E5E;
+    font-size: 22px;
+    font-family: Georgia;
+}
+input:focus {
+    outline: none;
+    border-bottom: 1px solid white;
+}
+.form-check-input:checked {
+    background-color: #8f34e4;
+    border-color: #8f34e4;
+    box-shadow: #8f34e4;
+}
+.form-check-label {
+    color: #615E5E;
+}
+#editBtn{
+    position: relative;
+    top: -60px;
+    margin-left: 280px;
+    background-color: #B8DAD3;
+    color: white;
+    font-family: Georgia;
+    border-radius: 20px;
+    width: 170px;
+    height: 40px;
+    font-size: 18px;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0);
+}
+#editBtn:hover{
+    background-color: #95B7B1;
+}
+#changePassword {
+    background-color: transparent;
+    border: none;
+    color: #B8DAD3;
+}
+#changePassword:hover{
+    color: #95B7B1;
+    background-color: rgba(166, 165, 165, 0.6);
+}
+#hiddenTR1, #hiddenTR2 {
+    visibility: hidden;
+}
+@charset "UTF-8";
+.errorLabel {
+    color: rgba(255, 96, 96, 0.7);
+    font-size: 14px;
+    display: none;
+}
+.error {
+    border-bottom: 1px solid rgba(255, 63, 63, 0.7);
+}
+.inputForRegistration {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #B8DAD3;
+    color: #615E5E;
+    font-size: 22px;
+    font-family: Georgia;
+    width: 300px;
+    height: 43px;
+}
+.inputForRegistration:focus {
+    outline: none;
+    border-bottom: 1px solid white;
+}
+.blue:focus {
+    box-shadow: none;
+    color: black;
+}
+#formUpdate {
+    padding-left: 180px;
+}
+#imgBtn{
+    position: absolute;
+    text-decoration: none;
+    border-color: black;
+    height: 43px;
+}
+#imgBtn:hover {
+    background-color: #A6A5A5;
+    border-radius: 5px;
+}
+.custom-file-input {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    color: #B8DAD3;
+    text-align: center;
+    padding: 5px 12px;
+    margin-top: 15px;
+}
+.custom-file-input input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+}
+.custom-file-input:hover {
+    background-color: #95B7B1;
+    color: white;
+    border-radius: 15px;
+    padding: 5px 12px;
+}
+.circle {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.circle img {
+    width: 100%;
+    height: auto;
+}
+#imgDiv {
+    position: relative;
+    left: -160px
+}

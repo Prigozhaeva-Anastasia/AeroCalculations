@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="template">
+<head>
+    <title>Редактирование личных данных</title>
+    <link th:href="@{/css/formUpdatePersonalData.css}" rel="stylesheet">
+    <script type="text/javascript" src="../js/formUpdatePersonalData.js" th:src="@{/js/formUpdatePersonalData.js}"
+            charset="windows-1251"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+<div layout:fragment="content1">
+    <div id="blackFont">
+        <div id="mainDiv">
+            <form id="formUpdate" method="post" th:action="@{/employees/update}" th:object="${employee}">
+                <input type="text" name="id" th:value="${employee.getId()}" hidden>
+                <input type="hidden" th:field="${employee.user}">
+                <div id="imgDiv">
+                    <div class="circle">
+                        <img id="empImg" th:src="${employee.getImg()}">
+                    </div>
+                    <label class="custom-file-input">
+                        <input id="imgBtn" type="file" accept="images/*, .jpg" name="img" th:value="${employee.getImg()}">
+                        Изменить
+                    </label>
+                    <input id="hiddenLog" type="hidden" th:field="${employee.img}">
+                </div>
+                <table>
+                    <tr>
+                        <td>Фамилия</td>
+                        <td>
+                            <input id="lastName" type="text" name="lastName" th:value="${employee.getLastName()}"
+                                   pattern="[A-Za-zА-Яа-я ]+" required>
+                            <label id="lastNameError" class="errorLabel">Поле должно содержать только буквы</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Имя</td>
+                        <td>
+                            <input id="firstName" type="text" name="firstName" th:value="${employee.getFirstName()}"
+                                   pattern="[A-Za-zА-Яа-я ]+" required>
+                            <label id="firstNameError" class="errorLabel">Поле должно содержать только буквы</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Отчество</td>
+                        <td>
+                            <input id="patronymic" type="text" name="patronymic" th:value="${employee.getPatronymic()}"
+                                   pattern="[A-Za-zА-Яа-я ]+" required>
+                            <label id="patronymicError" class="errorLabel">Поле должно содержать только буквы</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Доложность</td>
+                        <td>
+                            <input id="position" type="text" name="position" th:value="${employee.getPosition()}"
+                                   pattern="[A-Za-zА-Яа-я ]+" required>
+                            <label id="positionError" class="errorLabel">Поле должно содержать только буквы</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Номер телефона</td>
+                        <td>
+                            <input id="phoneNumber" type="text" class="centuryFont" name="phoneNumber"
+                                   th:value="${employee.getPhoneNumber()}"
+                                   pattern="(\+375|80)(29|25|44|33)(\d{3})(\d{2})(\d{2})" required>
+                            <label id="phoneNumberError" class="errorLabel">Формат:
+                                +375(29)(44)(33)(25)_______</label>
+                        </td>
+                    </tr>
+                    <tr id="hiddenTR3">
+                        <td>
+                            <button id="changePassword" type="button" class="btn">Изменить пароль</button>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr id="hiddenTR1">
+                        <td>Пароль</td>
+                        <td>
+                            <input id="password" type="password"
+                                   pattern="^(?=.*[A-Z].*[A-Z])(?=.*[0-9])(?=.*[a-z])[0-9a-zA-Z]{8,30}|#$" required>
+                            <label id="passwordError" class="errorLabel">Поле должно содержать хотя бы 2 заглавные буквы
+                                латинского алфавита, строчные и цифры (симв > 8)</label>
+                        </td>
+                    </tr>
+                    <tr id="hiddenTR2">
+                        <td>Подтверждение пароля</td>
+                        <td>
+                            <input id="passwordConfirmation" type="password" name="confirmation">
+                            <label id="passwordConfirmationError" class="errorLabel">Поле 'Подтверждение пароля' не
+                                совпадает с полем 'Пароль'</label>
+                        </td>
+                    </tr>
+                </table>
+                <button id="editBtn" type="submit" class="btn">Редактировать</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

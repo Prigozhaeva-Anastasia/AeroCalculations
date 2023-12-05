@@ -4,6 +4,8 @@
     <title>Личные данные</title>
     <link th:href="@{/css/employeeDetail.css}" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <script type="text/javascript" src="../js/personalData.js" th:src="@{/js/personalData.js}"
+            charset="windows-1251"></script>
 </head>
 <body>
 <div layout:fragment="content1">
@@ -14,7 +16,7 @@
             </div>
             <div id="tableForUser">
                 <div id="personalData">Личные данные</div>
-                <a id="update" class="btn" th:href="@{/employees/formUpdate}"></a>
+                <a id="update" class="btn" th:href="@{/employees/formUpdate}" onclick="clearLocalStorage()"></a>
                 <table>
                     <tr>
                         <td class="col1">Фамилия</td>
