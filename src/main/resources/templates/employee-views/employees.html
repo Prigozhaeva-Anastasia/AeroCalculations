@@ -27,6 +27,14 @@
                         <a id="createBtn" class="btn" th:href="@{/employees/formCreate}" onclick="clearLocalStorage()"></a>
                         <a id="reloadEmp" class="btn" th:href="@{/employees/index}"></a>
                         <button id="sortByLastNameEmp" formmethod="get" th:formaction="@{/employees/sortByLastName}"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></button>
+                        <button type="button" id="filterForEmployees" class="btn"></button>
+                    </form>
+                    <form id="formFilter" method="post" th:action="@{/employees/filterByPosition}">
+                        <label id="positionLabel">Должность:</label>
+                        <select id="positions" class="form-select" aria-label="Disabled select example" name="roleId">
+                            <option th:each="role :${listRoles}" th:value="${role.id}" th:text="${role.name}"}></option>
+                        </select>
+                        <div><button id="applyBtn" type="submit">Применить</button></div>
                     </form>
                 </div>
                 <div id="wrapper" class="card-body" th:each="employee: ${listEmployees}">

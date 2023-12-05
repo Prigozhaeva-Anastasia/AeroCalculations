@@ -149,7 +149,7 @@ form {
     text-decoration: none;
     color:black;
 }
-#filterForAircrafts:before, #filterForFlights:before, #filterForServices:before{
+#filterForAircrafts:before, #filterForFlights:before, #filterForServices:before, #filterForEmployees:before{
     content: '';
     background-image: url("../images/filter.png");
     background-size: cover;
@@ -159,7 +159,7 @@ form {
     top: 5px;
     left: 4px;
 }
-#filterForAircrafts, #filterForFlights, #filterForServices{
+#filterForAircrafts, #filterForFlights, #filterForServices, #filterForEmployees{
     text-decoration: none;
     width: 44px;
     height: 44px;
@@ -168,7 +168,12 @@ form {
     position: relative;
     left: 16px;
 }
-#filterForAircrafts:hover, #filterForFlights:hover, #filterForServices:hover {
+#filterForEmployees {
+    position: relative;
+    left: 6px;
+    top: -2px;
+}
+#filterForAircrafts:hover, #filterForFlights:hover, #filterForServices:hover, #filterForEmployees:hover {
     background-color: rgba(166, 165, 165, 0.6);
 }
 #rating1, #rating2 {
@@ -549,6 +554,7 @@ table td {
     border-width: 0.6px;
     border-radius: 5px;
     background-color: white;
+    position: relative;
 }
 #sortByLastNameEmp:hover {
     background-color: rgba(166, 165, 165, 0.6);
