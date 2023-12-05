@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.Set;
+
 
 @Component
 public class MyRunner implements CommandLineRunner {
@@ -24,9 +26,6 @@ public class MyRunner implements CommandLineRunner {
     public static final String FINANCE = "Сотрудник финансового отдела";
     @Override
     public void run(String... args) throws Exception {
-        User user1 = userService.createUser("astapovich@gmail.com", "AdminA1111");
-        User user2 = userService.createUser( "bondarenko@gmail.com", "margoPR2003");
-        User user3 = userService.createUser( "gromov@gmail.com", "olgGR2003");
 //        User user3 = userService.createUser("vikaBU2002", "butskevich@gmail.com", "Буцкевич", "Виктория");
 //        User user4 = userService.createUser("margoSM2002", "smetanchuk@gmail.com", "Сметанчук", "Маргарита");
 //        User user5 = userService.createUser("andreiST1111", "stepanov@gmail.com", "Степанов", "Андрей");
@@ -41,10 +40,9 @@ public class MyRunner implements CommandLineRunner {
         roleService.createRole(ACCOUNTANT);
         roleService.createRole(FINANCE);
 
-        userService.assignRoleToUser(user1.getEmail(), ADMIN);
-        userService.assignRoleToUser(user2.getEmail(), ACCOUNTANT);
-        userService.assignRoleToUser(user3.getEmail(), FINANCE);
-
+        User user1 = userService.createUser("astapovich@gmail.com", "AdminA1111", ADMIN);
+        User user2 = userService.createUser( "bondarenko@gmail.com", "margoPR2003", ACCOUNTANT);
+        User user3 = userService.createUser( "gromov@gmail.com", "olgGR2003", FINANCE);
 
         Employee employee1 = employeeService.createEmployee(user1.getId(), "Астапович", "Александра", "Владимировна", "+375448965214", "cистемный администратор", "/images/employees/Astapovich Aleksandra.jpg");
         Employee employee2 = employeeService.createEmployee(user2.getId(), "Бондаренко", "Маргарита", "Александровна", "+375293514265", "бухгалтер", "/images/employees/Bondarenko Margarita.jpg");

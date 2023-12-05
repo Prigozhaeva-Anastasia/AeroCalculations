@@ -8,6 +8,7 @@ import com.prigozhaeva.aerocalculations.service.UserService;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.HashSet;
 
 @Service
 @Transactional
@@ -21,21 +22,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User createUser(String email, String password) {
-        return userRepository.save(User.builder()
+    public User createUser(String email, String password, String roleName) {
+        User user = User.builder()
                 .email(email)
                 .password(password)
-                .build());
-    }
-    @Override
-    public User findUserByEmail(String email) {
-        return userRepository.findUserByEmail(email);
+                .roles(new HashSet<>())
+                .build();
+        Role role = roleRepository.getRoleByName(roleName);
+        user.assignRoleToUser(role);
+        return userRepository.save(user);
     }
 
     @Override
-    public void assignRoleToUser(String email, String roleName) {
-        User user = findUserByEmail(email);
-        Role role = roleRepository.getRoleByName(roleName);
-        user.assignRoleToUser(role);
+    public User createOrUpdateUser(User user) {
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User findUserByEmail(String email) {
+        return userRepository.findUserByEmail(email);
     }
 }

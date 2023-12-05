@@ -8,11 +8,14 @@ public class Constant {
     public static final String LIST_SERVICES = "listServices";
     public static final String LIST_PROVIDED_SERVICES = "listProvidedServices";
     public static final String LIST_EMPLOYEES = "listEmployees";
+    public static final String LIST_ROLES = "listRoles";
     public static final String AIRLINE = "airline";
     public static final String AIRCRAFT = "aircraft";
     public static final String FLIGHT = "flight";
     public static final String SERVICE = "service";
     public static final String PROVIDED_SERVICE = "providedService";
+    public static final String EMPLOYEE = "employee";
+    public static final String USER = "user";
     public static final String DEPARTURE_SHORT = "В";
     public static final String ARRIVAL_SHORT = "П";
     public static final String DEPARTURE = "вылет";

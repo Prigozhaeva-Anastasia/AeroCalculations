@@ -6,6 +6,7 @@ import com.prigozhaeva.aerocalculations.service.RoleService;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @Transactional
@@ -21,5 +22,10 @@ public class RoleServiceImpl implements RoleService {
         return roleRepository.save(Role.builder()
                 .name(roleName)
                 .build());
+    }
+
+    @Override
+    public List<Role> fetchAll() {
+        return roleRepository.findAll();
     }
 }
