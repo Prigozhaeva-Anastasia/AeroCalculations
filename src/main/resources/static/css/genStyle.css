@@ -457,3 +457,86 @@ table td {
     background-color: #A6A5A5;
     border-radius: 5px;
 }
+#registrationDiv {
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 20px;
+    height: 620px;
+    width: 800px;
+    position: relative;
+    left: 200px;
+}
+#imgForRegistration {
+    height: 620px;
+    width: 400px;
+    border-radius: 20px;
+    position: relative;
+    top: -16px;
+    right: 16px;
+}
+#imgForRegistration img {
+    width: 100%;
+    height: auto;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+#cover {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+    width: 800px;
+    height: 620px;
+    position:relative;
+    top: -618px;
+}
+#labelForRegistration {
+    color: white;
+    font-size: 25px;
+    position: relative;
+    top: 90px;
+    margin-left: 455px;
+}
+.inputForRegistration {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #B8DAD3;
+    color: white;
+    font-size: 18px;
+    font-family: Georgia;
+    width: 334px;
+    height: 43px;
+}
+.inputForRegistration:focus {
+    outline: none;
+    border-bottom: 1px solid white;
+}
+.blue:focus {
+    box-shadow: none;
+    color: black;
+}
+#registrationWrapper {
+    position: relative;
+    top: 170px;
+    margin-left: 430px;
+    color: white;
+}
+#roles {
+    color: grey;
+}
+#signUp {
+    margin-left: 66px;
+    background-color: #B8DAD3;
+    font-family: Georgia;
+    font-size: 18px;
+    color: white;
+    border:none;
+    border-radius:15px;
+    width: 200px;
+    height: 35px;
+    position: relative;
+    top: 50px;
+}
+#signUp:hover {
+    background-color: #95B7B1;
+}
+#registrationForm {
+    margin-right: 65px;
+}

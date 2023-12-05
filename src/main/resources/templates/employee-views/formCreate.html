@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="template">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация сотрудника</title>
+    <link th:href="@{/css/genStyle.css}" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="../js/employees.js" th:src="@{/js/employees.js}"></script>
+</head>
+<body>
+<div layout:fragment="content1">
+    <div class="container mt-3">
+        <div class="mb">
+            <div id="registrationDiv" class="card-body">
+                <div id="imgForRegistration">
+                    <img src="/images/registration.jpg">
+                    <div id="cover">
+                        <div id="labelForRegistration">Регистрация сотрудника</div>
+                        <div id="registrationWrapper">
+                            <form id="registrationForm" method="post" th:action="@{registration}">
+                                <div><input id="email" class="inputForRegistration" type="text" name="email"
+                                            placeholder="Логин" th:errorClass="error" th:field="${user.email}"></div>
+                                <div class="text-danger" th:if="${#fields.hasErrors('user.email')}"
+                                     th:errors="${user.email}">Error
+                                </div>
+                                <div><input id="password" class="inputForRegistration" type="password" name="password"
+                                            placeholder="Пароль" th:errorClass="error" th:field="${user.password}">
+                                </div>
+                                <div class="text-danger" th:if="${#fields.hasErrors('user.password')}"
+                                     th:errors="${user.password}">Error
+                                </div>
+                                <div>
+                                    <select id="roles" class="form-select inputForRegistration blue"
+                                            aria-label="Disabled select example" name="roles"
+                                            onchange="checkSelectColor(this);" th:errorClass="error"
+                                            th:field="${user.roles}">
+                                        <option value="" disabled selected>Роль</option>
+                                        <option th:each="role :${listRoles}" th:value="${role.id}"
+                                                th:text="${role.name}"></option>
+                                    </select>
+                                    <div class="text-danger" th:if="${#fields.hasErrors('user.roles')}"
+                                         th:errors="${user.roles}">Error
+                                    </div>
+                                </div>
+                                <button id="signUp" type="submit">
+                                    Зарегистрировать
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>
