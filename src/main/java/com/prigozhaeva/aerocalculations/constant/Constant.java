@@ -24,4 +24,7 @@ public class Constant {
     public static final String AIRPORT_SERVICES_SHORT = "A";
     public static final String AIRPORT_SERVICES = "Аэропортовые услуги";
     public static final String GROUND_HANDLING_SERVICES = "Услуги на наземное обслуживание";
+    public static final String YEAR = "year";
+    public static final String AVERAGE_FLIGHTS_PER_HOUR = "averageFlightsPerHour";
+    public static final String MAX_AVERAGE_FLIGHTS = "maxAverageFlights";
 }

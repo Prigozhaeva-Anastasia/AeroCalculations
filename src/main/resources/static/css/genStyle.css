@@ -559,3 +559,14 @@ table td {
 #sortByLastNameEmp:hover {
     background-color: rgba(166, 165, 165, 0.6);
 }
+.errorMessage {
+    text-align: center;
+}
+#errorMessage1 {
+    display: none;
+    margin-top: 210px;
+    font-family: Georgia;
+    font-size: 22px;
+    font-weight: bold;
+    font-color: black;
+}
