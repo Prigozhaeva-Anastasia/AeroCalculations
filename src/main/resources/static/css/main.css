@@ -1,0 +1,97 @@
+.container {
+    margin: -24px -16px;
+    padding: 0px;
+    width: 1286px;
+    height: 684px;
+    position: relative;
+}
+.square {
+    width: 50%;
+    height: 50%;
+    position: absolute;
+}
+.square:nth-child(1) {
+    top: 0;
+    left: 0;
+    background-image: url("../images/flights.jpg");
+    background-size: cover;
+}
+.square:nth-child(2) {
+    top: 0;
+    left: 50%;
+    background-image: url("../images/airport_infrastructure.jpg");
+    background-size: cover;
+}
+.square:nth-child(3) {
+    top: 50%;
+    left: 0;
+    background-image: url("../images/airlines.jpg");
+    background-size: cover;
+}
+.square:nth-child(4) {
+    top: 50%;
+    left: 50%;
+    background-image: url("../images/contributions.jpg");
+    background-size: cover;
+}
+.squareBtns {
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    width: 643px;
+    height: 342px;
+}
+.squareBtns:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+#flightsSquare, #infrustructureSquare {
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    width: 643px;
+    height: 342px;
+}
+#flightsSquare:hover, #infrustructureSquare:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+#airlinesSquare, #contributionsSquare {
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    width: 643px;
+    height: 338px;
+}
+#airlinesSquare:hover, #contributionsSquare:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+.squareLabel {
+    font-size: 23px;
+    color: white;
+    font-family: Georgia;
+    width: 460px;
+}
+.divForModal:hover {
+    width: 100%;
+    background-color: rgba(102, 99, 99, 0.8);
+}
+.choices:active,
+.choices:hover,
+.choices {
+    color: white;
+    font-family: Georgia;
+    width: 100%;
+    text-decoration: none;
+}
+.close{
+    border: none;
+    background-color: transparent;
+    font-size: 24px;
+    color: white;
+    position:  relative;
+    top: -10px;
+}
+.close:hover {
+    background-color: rgba(166, 165, 165);
+}
+.modal-header {
+    color: white;
+    font-family: Georgia;
+    font-size: 16px;
+}
