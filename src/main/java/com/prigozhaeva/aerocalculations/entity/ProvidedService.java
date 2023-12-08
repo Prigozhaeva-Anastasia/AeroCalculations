@@ -22,6 +22,8 @@ public class ProvidedService {
     @ManyToOne
     @JoinColumn(name = "service_id")
     private Service service;
+    @Column(name="value")
+    private double value;
     @Column(name="amount")
     private short amount;
     @ToString.Exclude

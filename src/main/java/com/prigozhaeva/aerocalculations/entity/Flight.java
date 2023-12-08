@@ -61,6 +61,6 @@ public class Flight {
     @OneToMany(mappedBy = "flight", cascade = CascadeType.ALL)
     private List<ProvidedService> providedServices = new ArrayList<>();
     @ToString.Exclude
-    @OneToMany(mappedBy = "flight", cascade = CascadeType.ALL)
-    private List<Invoice> invoices = new ArrayList<>();
+    @OneToOne
+    private Invoice invoice;
 }

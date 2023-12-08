@@ -20,10 +20,9 @@ public class Invoice {
     private Long id;
     private int invoiceNumber;
     private LocalDate invoiceCreationDate;
-    private double rate;
     private String currency;
     @ToString.Exclude
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "flight_number")
     private Flight flight;
     @ToString.Exclude
