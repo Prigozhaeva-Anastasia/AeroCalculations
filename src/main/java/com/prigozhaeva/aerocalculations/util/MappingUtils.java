@@ -1,7 +1,9 @@
 package com.prigozhaeva.aerocalculations.util;
 
 import com.prigozhaeva.aerocalculations.dto.FlightDTO;
+import com.prigozhaeva.aerocalculations.dto.InvoiceDTO;
 import com.prigozhaeva.aerocalculations.entity.Flight;
+import com.prigozhaeva.aerocalculations.entity.Invoice;
 import org.springframework.stereotype.Service;
 
 import static com.prigozhaeva.aerocalculations.constant.Constant.*;
@@ -29,6 +31,18 @@ public class MappingUtils {
         dto.setNumOfBabies(flight.getNumOfBabies());
         dto.setTailNumber(flight.getAircraft().getTailNumber());
         dto.setAirlineName(flight.getAircraft().getAirline().getName());
+        return dto;
+    }
+
+    public InvoiceDTO mapToInvoiceDTO(Invoice invoice){
+        InvoiceDTO dto = new InvoiceDTO();
+        dto.setId(invoice.getId());
+        dto.setInvoiceNumber(invoice.getInvoiceNumber());
+        dto.setInvoiceCreationDate(invoice.getInvoiceCreationDate());
+        dto.setCurrency(invoice.getCurrency());
+        dto.setPaymentState(invoice.getPaymentState());
+        dto.setFlight(invoice.getFlight());
+        dto.setEmployee(invoice.getEmployee());
         return dto;
     }
 }
