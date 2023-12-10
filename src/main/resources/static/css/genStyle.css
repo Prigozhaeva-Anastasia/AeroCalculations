@@ -80,6 +80,39 @@ form {
     background-color: #97BFB7;
     border-color: #97BFB7;
 }
+.download:before {
+    content: "\f0ed";
+    font-family: FontAwesome;
+    font-size: 40px;
+    color: #1EC1F7;
+    position: relative;
+    top: -13px;
+    left: -9px;
+}
+.download {
+    height: 45px;
+    width: 50px;
+}
+.download:hover {
+    color: #2096BE;
+    background-color: #CBD3D5;
+}
+.createFile:before {
+    content: "\f1c1";
+    font-family: FontAwesome;
+    font-size: 30px;
+    color: black;
+    position: relative;
+    top: -8px;
+    left: -10px;
+}
+.createFile {
+    height: 45px;
+    width: 33px;
+}
+.createFile:hover {
+    background-color: #CBD3D5;
+}
 .btn-danger:before{
     content: "\f014";
     font-family: FontAwesome;
@@ -125,6 +158,22 @@ form {
     background-color: #A6A5A5;
     border-radius: 5px;
 }
+#createBtnInvoice:before{
+    content: "\f067";
+    font-family: FontAwesome;
+    font-size: 20px;
+    color: black;
+}
+#createBtnInvoice{
+    position: absolute;
+    text-decoration: none;
+    border-color: black;
+    height: 43px;
+}
+#createBtnInvoice:hover {
+    background-color: #A6A5A5;
+    border-radius: 5px;
+}
 #create, #createTransitFlight, #next {
     background-color: #A358E0;
     border-color: transparent;
@@ -143,13 +192,13 @@ form {
 #update:hover {
     background-color: #7BAFA5;
 }
-#sortedFieldByName, #sortedFieldByPayerName,#sortedFieldByPassengerCapacity, #sortedFieldByMTOW, #sortedFieldByDate {
+#sortedFieldByName, #sortedFieldByPayerName,#sortedFieldByPassengerCapacity, #sortedFieldByMTOW, #sortedFieldByDate, #sortedFieldByInvoiceNumber {
     position: relative;
     top: 7px;
     text-decoration: none;
     color:black;
 }
-#filterForAircrafts:before, #filterForFlights:before, #filterForServices:before, #filterForEmployees:before{
+#filterForAircrafts:before, #filterForFlights:before, #filterForServices:before, #filterForEmployees:before, #filterForInvoices:before{
     content: '';
     background-image: url("../images/filter.png");
     background-size: cover;
@@ -159,7 +208,7 @@ form {
     top: 5px;
     left: 4px;
 }
-#filterForAircrafts, #filterForFlights, #filterForServices, #filterForEmployees{
+#filterForAircrafts, #filterForFlights, #filterForServices, #filterForEmployees, #filterForInvoices{
     text-decoration: none;
     width: 44px;
     height: 44px;
@@ -173,7 +222,11 @@ form {
     left: 6px;
     top: -2px;
 }
-#filterForAircrafts:hover, #filterForFlights:hover, #filterForServices:hover, #filterForEmployees:hover {
+#filterForInvoices {
+    position: relative;
+    left: 56px;
+}
+#filterForAircrafts:hover, #filterForFlights:hover, #filterForServices:hover, #filterForEmployees:hover, #filterForInvoices:hover {
     background-color: rgba(166, 165, 165, 0.6);
 }
 #rating1, #rating2 {
@@ -233,7 +286,7 @@ form {
 #formFilterForFlights {
     float: left;
 }
-#reload:before, #reloadEmp:before{
+#reload:before, #reloadEmp:before, #reloadInvoice:before{
     content: '';
     background-image: url("../images/reload.png");
     background-size: cover;
@@ -251,6 +304,23 @@ form {
     position: relative;
     left: 15px;
 }
+#sendInvoice:before {
+    content: "\f003";
+    font-family: FontAwesome;
+    font-size: 30px;
+    color: black;
+    position: relative;
+    top: -8px;
+    left: -6px;
+}
+#sendInvoice {
+    width: 44px;
+    height: 44px;
+    border-color: black;
+    border-radius: 5px;
+    position: relative;
+    left: 60px;
+}
 #reloadEmp {
     width: 44px;
     height: 44px;
@@ -260,7 +330,15 @@ form {
     top: -3px;
     left: 50px;
 }
-#reload:hover, #reloadEmp:hover {
+#reloadInvoice {
+    width: 44px;
+    height: 44px;
+    border-color: black;
+    border-radius: 5px;
+    position: relative;
+    left: 50px;
+}
+#reload:hover, #reloadEmp:hover, #reloadInvoice:hover, #sendInvoice:hover {
     background-color: rgba(166, 165, 165, 0.6);
 }
 #formBtns {
@@ -270,6 +348,10 @@ form {
 #formBtnsEmp {
     position: relative;
     left: -435px;
+}
+#formBtnsInvoice {
+    position: relative;
+    left: -445px;
 }
 #filterForDirectFlight:before{
     content: '';
@@ -318,6 +400,12 @@ input[type="file"]{
     width: 1170px;
     margin-top: -20px;
     margin-left: 20px;
+    table-layout: fixed;
+}
+.invoiceTable {
+    width: 1200px;
+    margin-top: -10px;
+    margin-left: 10px;
     table-layout: fixed;
 }
 .mb {
@@ -569,4 +657,12 @@ table td {
     font-size: 22px;
     font-weight: bold;
     font-color: black;
+}
+#paymentState{
+    width: 135px;
+    cursor: pointer;
+}
+option {
+    background-color: white;
+    color: black;
 }
