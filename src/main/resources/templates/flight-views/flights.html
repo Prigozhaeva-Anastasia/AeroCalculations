@@ -97,13 +97,13 @@
                         <td class="center" th:text="${flight.getDepTime()}"></td>
                         <td>
                             <a class="btn btn-primary output"
-                               th:href="@{/flights/formUpdate(flightNumber=${flight.getFlightNumber()})}"
+                               th:href="@{/flights/formUpdate(flightId=${flight.getId()})}"
                                onclick="clearLocalStorage()"></a>
                             <a class="btn btn-outline-dark"
-                               th:href="@{/providedServices/index(flightNumber=${flight.getFlightNumber()})}">
+                               th:href="@{/providedServices/index(flightId=${flight.getId()})}">
                                 <i id="iconForProvidedServices" class="fa fa-list" aria-hidden="true"></i></a>
                             <a class="btn btn-outline-dark"
-                               th:href="@{/flights/formMoreDetails(flightNumber=${flight.getFlightNumber()})}">Подробнее</a>
+                               th:href="@{/flights/formMoreDetails(flightId=${flight.getId()})}">Подробнее</a>
                         </td>
                     </tr>
                     </tbody>

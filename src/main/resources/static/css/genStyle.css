@@ -666,3 +666,51 @@ option {
     background-color: white;
     color: black;
 }
+.mainDivForInvoice {
+    margin-left: 130px;
+    min-height: 650px;
+    background-color: white;
+    width: 1000px;
+    padding: 25px;
+}
+.column1 {
+    position: relative;
+    left: -300px;
+    width: 300px;
+    min-height: 500px;
+
+}
+.column2 {
+    position: absolute;
+    top: 0px;
+    left: 40px;
+    width: 570px;
+    min-height: 600px;
+}
+.scrollable-div {
+    width: 580px;
+    height: 200px;
+    overflow: auto;
+    background-color: rgba(184, 218, 211, 0.3);
+    padding: 10px;
+    border-radius: 8px;
+}
+.scrollable-div2 {
+    width: 580px;
+    height: 330px;
+    overflow: auto;
+    background-color: rgba(184, 218, 211, 0.3);
+    padding: 10px;
+    border-radius: 8px;
+}
+#saveBtnInvoice {
+    background-color: #97BFB7;
+    border-color: transparent;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0);
+    position: relative;
+    top: 70px;
+    left: 5px;
+}
+#saveBtnInvoice:hover {
+    background-color: #7BAFA5;
+}

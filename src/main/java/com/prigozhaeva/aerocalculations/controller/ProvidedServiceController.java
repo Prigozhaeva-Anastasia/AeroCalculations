@@ -26,8 +26,8 @@ public class ProvidedServiceController {
     }
 
     @GetMapping(value = "/index")
-    public String providedServices(Model model, String flightNumber) {
-        List<ProvidedService> providedServices = providedServiceService.findProvidedServicesByFlightNumber(flightNumber);
+    public String providedServices(Model model, Long flightId) {
+        List<ProvidedService> providedServices = providedServiceService.findProvidedServicesByFlightId(flightId);
         model.addAttribute(LIST_PROVIDED_SERVICES, providedServices);
         return "provided_service-views/providedServices";
     }

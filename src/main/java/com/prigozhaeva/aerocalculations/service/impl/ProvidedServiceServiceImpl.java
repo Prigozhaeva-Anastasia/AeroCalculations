@@ -33,8 +33,8 @@ public class ProvidedServiceServiceImpl implements ProvidedServiceService {
     }
 
     @Override
-    public List<ProvidedService> findProvidedServicesByFlightNumber(String flightNumber) {
-        return provideServiceRepository.findProvidedServicesByFlightNumber(flightNumber);
+    public List<ProvidedService> findProvidedServicesByFlightId(Long flightId) {
+        return provideServiceRepository.findProvidedServicesByFlightId(flightId);
     }
 
     @Override
@@ -46,10 +46,11 @@ public class ProvidedServiceServiceImpl implements ProvidedServiceService {
     }
 
     @Override
-    public ProvidedService createProvidedService(Long serviceId, String flightNumber) {
+    public ProvidedService createProvidedService(Long serviceId, Long flightId) {
         com.prigozhaeva.aerocalculations.entity.Service service = serviceRepository.findById(serviceId)
                 .orElseThrow(() -> new EntityNotFoundException("Service with id " + serviceId + " Not Found"));
-        Flight flight = flightRepository.findFlightByFlightNumberIgnoreCase(flightNumber);
+        Flight flight = flightRepository.findById(flightId)
+                .orElseThrow(() -> new EntityNotFoundException("Flight with id " + flightId + " Not Found"));
         return ProvidedService.builder()
                 .service(service)
                 .flight(flight)
@@ -78,19 +79,19 @@ public class ProvidedServiceServiceImpl implements ProvidedServiceService {
             providedServices = new ArrayList<>();
             ProvidedService providedService;
             Long serviceId = null;
-            String flightNumber = null;
+            Long flightId = null;
             while (reader.hasNext()) {
                 int event = reader.next();
                 switch (event) {
                     case XMLStreamConstants.START_ELEMENT:
                         if ("row".equals(reader.getLocalName())) {
                             serviceId = Long.valueOf(reader.getAttributeValue(null, "CLAUSE_ID"));
-                            flightNumber = reader.getAttributeValue(null, "econ_flight_name");
+                            flightId = Long.valueOf(reader.getAttributeValue(null, "ID_SPP"));
                         }
                         break;
                     case XMLStreamConstants.END_ELEMENT:
                         if ("row".equals(reader.getLocalName())) {
-                            providedService = createProvidedService(serviceId, flightNumber);
+                            providedService = createProvidedService(serviceId, flightId);
                             providedServices.add(providedService);
                         }
                         break;

@@ -2,6 +2,7 @@ package com.prigozhaeva.aerocalculations.controller;
 
 import com.prigozhaeva.aerocalculations.dto.FlightDTO;
 import com.prigozhaeva.aerocalculations.dto.InvoiceDTO;
+import com.prigozhaeva.aerocalculations.entity.Invoice;
 import com.prigozhaeva.aerocalculations.entity.ProvidedService;
 import com.prigozhaeva.aerocalculations.service.InvoiceService;
 import org.springframework.stereotype.Controller;
@@ -42,5 +43,12 @@ public class InvoiceController {
     public String changePaymentStatus(Long invoiceId, String paymentState) {
         //invoiceService.changePaymentStatus(invoiceId, paymentState);
         return "redirect:/invoices/index";
+    }
+
+    @GetMapping(value = "/formCreate")
+    public String formCreate(Model model) {
+        Invoice invoice = invoiceService.findInvoiceById(1L);
+        model.addAttribute(INVOICE, invoice);
+        return "invoice-views/formCreate";
     }
 }

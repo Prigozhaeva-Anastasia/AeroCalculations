@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="template">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавление счета</title>
+    <link th:href="@{/css/genStyle.css}" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script th:inline="javascript" type="text/javascript" src="../js/formCreateInvoice.js" th:src="@{/js/formCreateInvoice.js}"></script>
+</head>
+<body>
+<div layout:fragment="content1">
+    <div class="mainDivForInvoice">
+        <form method="post" th:action="@{save}" th:object="${invoice}">
+            <div class="column1">
+                <div>
+                    <div class="field">
+                        <label for="invoiceNumber" class="form-label">Номер счета:</label>
+                        <input id="invoiceNumber" type="text" name="invoiceNumber" class="form-control"
+                               th:field="${invoice.invoiceNumber}">
+                    </div>
+                    <div class="field">
+                        <label for="invoiceCreationDate" class="form-label">Дата создания счета:</label>
+                        <input id="invoiceCreationDate" type="date" name="invoiceCreationDate" class="form-control"
+                               th:field="${invoice.invoiceCreationDate}">
+                    </div>
+                    <div class="field">
+                        <label for="currency" class="form-label">Валюта:</label>
+                        <select id="currency" class="form-select" aria-label="Disabled select example"
+                                th:field="${invoice.currency}">
+                            <option value="BYN">BYN</option>
+                            <option value="EUR">EUR</option>
+                            <option value="USD">USD</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="flightNumber" class="form-label">Номер рейса:</label>
+                        <input id="flightNumber" type="text" name="flightNumber" class="form-control"
+                               th:field="${invoice.flight.flightNumber}">
+                    </div>
+                    <div class="field">
+                        <label for="airlineName" class="form-label">Авиакомпания:</label>
+                        <input id="airlineName" type="text" name="airlineName" class="form-control"
+                               th:field="${invoice.flight.aircraft.airline.name}">
+                    </div>
+                    <div class="field">
+                        <label for="payerName" class="form-label">Плательщик:</label>
+                        <input id="payerName" type="text" name="payerName" class="form-control"
+                               th:field="${invoice.flight.aircraft.airline.payerName}">
+                    </div>
+                    <div class="field">
+                        <label for="tailNumber" class="form-label">Бортовой номер ВС:</label>
+                        <input id="tailNumber" type="text" name="tailNumber" class="form-control"
+                               th:field="${invoice.flight.aircraft.tailNumber}">
+                    </div>
+                </div>
+                <button id="saveBtnInvoice" type="submit" class="btn btn-primary">Создать</button>
+            </div>
+            <div class="column2">
+                <div id="airlineServicesDiv">
+                    <label class="form-label">Аэропортовые услуги:</label>
+                    <div class="scrollable-div">
+<!--                        <input type="checkbox"  th:value="${service}" th:checked="${invoice.flight.providedServices.contains(service)}">-->
+                    </div>
+                </div>
+                <div id="groundHandlingServices">
+                    <label class="form-label">Услуги на наземное обслуживание:</label>
+                    <div class="scrollable-div2">
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+</body>
+</html>

@@ -7,6 +7,7 @@ import java.time.LocalTime;
 
 @Data
 public class FlightDTO {
+    private Long id;
     private String flightNumber;
     private String flightDirection;
     private String flightType;

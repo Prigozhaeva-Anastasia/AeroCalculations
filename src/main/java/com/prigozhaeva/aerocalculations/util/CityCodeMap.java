@@ -51,6 +51,8 @@ public class CityCodeMap {
         cityCodeMap.put("CEE", "Череповец");
         cityCodeMap.put("SVO", "Шереметьево");
         cityCodeMap.put("CEK", "Челябинск");
+        cityCodeMap.put("LED", "Москва");
+        cityCodeMap.put("OMS", "Омск");
     }
     public static Map<String, String> getCityCodeMap() {
         return cityCodeMap;

@@ -12,6 +12,7 @@ import static com.prigozhaeva.aerocalculations.constant.Constant.*;
 public class MappingUtils {
     public FlightDTO mapToFlightDTO(Flight flight){
         FlightDTO dto = new FlightDTO();
+        dto.setId(flight.getId());
         dto.setFlightNumber(flight.getFlightNumber());
         if (flight.getFlightDirection().equals(DEPARTURE_SHORT)) {
             dto.setFlightDirection(DEPARTURE);

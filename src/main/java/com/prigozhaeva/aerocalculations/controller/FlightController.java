@@ -45,9 +45,9 @@ public class FlightController {
     }
 
     @GetMapping(value = "/formUpdate")
-    public String updateFlight(Model model, String flightNumber) {
+    public String updateFlight(Model model, Long flightId) {
         List<Aircraft> aircrafts = aircraftService.fetchAll();
-        Flight flight = flightService.findFlightByFlightNumber(flightNumber);
+        Flight flight = flightService.findFlightById(flightId);
         model.addAttribute(FLIGHT, flight);
         model.addAttribute(LIST_AIRCRAFTS, aircrafts);
         model.addAttribute(CITY_CODE_MAP, CityCodeMap.getCityCodeMap());
@@ -88,8 +88,8 @@ public class FlightController {
     }
 
     @GetMapping(value = "/formMoreDetails")
-    public String fetchMoreDetails(Model model, String flightNumber) {
-        FlightDTO flightDTO = flightService.findFlightDtoByFlightNumber(flightNumber);
+    public String fetchMoreDetails(Model model, Long flightId) {
+        FlightDTO flightDTO = flightService.findFlightDtoById(flightId);
         model.addAttribute(FLIGHT, flightDTO);
         return "flight-views/formMoreDetails";
     }

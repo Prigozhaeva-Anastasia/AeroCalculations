@@ -8,8 +8,8 @@ import java.util.List;
 public interface FlightService {
     List<FlightDTO> findFlightsDtoByFlightNumber(String flightNumber);
     void importFlights(String path);
-    Flight findFlightByFlightNumber(String flightNumber);
-    FlightDTO findFlightDtoByFlightNumber(String flightNumber);
+    Flight findFlightById(Long flightId);
+    FlightDTO findFlightDtoById(Long flightId);
     Flight createOrUpdateFlight(Flight flight);
     List<Flight> fetchAll();
 }

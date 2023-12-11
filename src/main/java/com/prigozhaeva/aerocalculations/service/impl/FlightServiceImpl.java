@@ -9,6 +9,7 @@ import com.prigozhaeva.aerocalculations.service.FlightService;
 import com.prigozhaeva.aerocalculations.util.MappingUtils;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -51,13 +52,15 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public Flight findFlightByFlightNumber(String flightNumber) {
-        return flightRepository.findFlightByFlightNumberIgnoreCase(flightNumber);
+    public Flight findFlightById(Long flightId) {
+        return flightRepository.findById(flightId)
+                .orElseThrow(() -> new EntityNotFoundException("Flight with id " + flightId + " Not Found"));
     }
 
     @Override
-    public FlightDTO findFlightDtoByFlightNumber(String flightNumber) {
-        return mappingUtils.mapToFlightDTO(flightRepository.findFlightByFlightNumberIgnoreCase(flightNumber));
+    public FlightDTO findFlightDtoById(Long flightId) {
+        return mappingUtils.mapToFlightDTO(flightRepository.findById(flightId)
+                .orElseThrow(() -> new EntityNotFoundException("Flight with id " + flightId + " Not Found")));
     }
 
     @Override
@@ -85,6 +88,11 @@ public class FlightServiceImpl implements FlightService {
                         case "flight":
                             flight = new Flight();
                             break;
+                        case "flight_id":
+                            reader.next();
+                            if (reader.getEventType() == XMLEvent.CHARACTERS) {
+                                flight.setId(Long.valueOf(reader.getText()));
+                            }
                         case "nr":
                             reader.next();
                             if (reader.getEventType() == XMLEvent.CHARACTERS) {

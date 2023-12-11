@@ -24,7 +24,7 @@ public class Invoice {
     private String paymentState;
     @ToString.Exclude
     @OneToOne
-    @JoinColumn(name = "flight_number")
+    @JoinColumn(name = "flight_id")
     private Flight flight;
     @ToString.Exclude
     @ManyToOne

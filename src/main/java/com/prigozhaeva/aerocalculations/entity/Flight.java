@@ -19,6 +19,9 @@ import java.util.List;
 @EqualsAndHashCode(exclude={"aircraft", "providedServices", "invoices"})
 public class Flight {
     @Id
+    @Column(name="id")
+
+    Long id;
     @Column(name="flight_number")
     private String flightNumber;
     @Column(name="flight_direction")
