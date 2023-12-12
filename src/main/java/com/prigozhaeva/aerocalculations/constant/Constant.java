@@ -29,4 +29,8 @@ public class Constant {
     public static final String YEAR = "year";
     public static final String AVERAGE_FLIGHTS_PER_HOUR = "averageFlightsPerHour";
     public static final String MAX_AVERAGE_FLIGHTS = "maxAverageFlights";
+    public static final String AIRPORT_SERVICES_MODEL_CHECK = "airportServicesCheck";
+    public static final String GROUND_HANDLING_SERVICES_MODEL_CHECK = "groundHandlingServicesCheck";
+    public static final String AIRPORT_SERVICES_MODEL = "airportServices";
+    public static final String GROUND_HANDLING_SERVICES_MODEL = "groundHandlingServices";
 }

@@ -3,6 +3,7 @@ package com.prigozhaeva.aerocalculations.service;
 import com.prigozhaeva.aerocalculations.dto.FlightDTO;
 import com.prigozhaeva.aerocalculations.entity.Flight;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface FlightService {
@@ -12,4 +13,5 @@ public interface FlightService {
     FlightDTO findFlightDtoById(Long flightId);
     Flight createOrUpdateFlight(Flight flight);
     List<Flight> fetchAll();
+    Flight findFlightByFlightNumberAndDepDate(String flightNumber, LocalDate date);
 }

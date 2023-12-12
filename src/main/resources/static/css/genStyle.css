@@ -714,3 +714,36 @@ option {
 #saveBtnInvoice:hover {
     background-color: #7BAFA5;
 }
+.whiteColor {
+    color: white;
+    font-family: Georgia;
+}
+#closeInvoice{
+    position:  relative;
+    top: -20px;
+    left: 5px;
+}
+#okModalInvoice{
+    background-color: #B8DAD3;
+    color: white;
+    font-family: Georgia;
+    border: none;
+    position: relative;
+    top: 8px;
+    left: 405px;
+    width: 60px;
+}
+#okModalInvoice:hover {
+    background-color: #97BFB7;
+}
+.divForServ {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 5px;
+    margin: 5px;
+    padding: 3px;
+}
+.checkbox:checked {
+    background-color: #7BAFA5;
+    border-color: #7BAFA5;
+    box-shadow: #7BAFA5;
+}

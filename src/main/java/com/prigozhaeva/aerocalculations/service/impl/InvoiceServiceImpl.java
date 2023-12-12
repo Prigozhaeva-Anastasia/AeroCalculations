@@ -47,4 +47,9 @@ public class InvoiceServiceImpl implements InvoiceService {
         return invoiceRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Invoice with id " + id + " Not Found"));
     }
+
+    @Override
+    public List<Invoice> fetchAll() {
+        return invoiceRepository.findAll();
+    }
 }

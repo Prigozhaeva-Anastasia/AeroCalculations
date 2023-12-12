@@ -10,4 +10,5 @@ public interface InvoiceService {
     List<InvoiceDTO> fetchAllDto();
     void changePaymentStatus(Long invoiceId, String paymentState);
     Invoice findInvoiceById(Long id);
+    List<Invoice> fetchAll();
 }
