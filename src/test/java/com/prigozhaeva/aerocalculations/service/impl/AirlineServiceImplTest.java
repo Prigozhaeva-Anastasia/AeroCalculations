@@ -62,7 +62,7 @@ class AirlineServiceImplTest {
     }
 
     @Test
-    void createOrUpdateAirline() {
+    void testCreateOrUpdateAirline() {
         Airline airline = new Airline();
 
         when(airlineRepository.save(airline)).thenReturn(airline);
