@@ -18,31 +18,35 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class EmployeeRepositoryTest {
     @Autowired
     private EmployeeRepository employeeRepository;
-    private static final String NAME = "Маргарита";
-    private static final String LAST_NAME = "Бондаренко";
-    private static final String LAST_NAME2 = "Астапович";
-    private static final String PATRONYMIC = "Александровна";
-    private static final String EMAIL = "bondarenko@gmail.com";
     @Test
     void testFindEmployeesByLastNameContainsIgnoreCaseAndFirstNameContainsIgnoreCaseAndPatronymicContainsIgnoreCase() {
+        String LAST_NAME = "Бондаренко";
+        String NAME = "Маргарита";
+        String PATRONYMIC = "Александровна";
         List<Employee> employees = employeeRepository.findEmployeesByLastNameContainsIgnoreCaseAndFirstNameContainsIgnoreCaseAndPatronymicContainsIgnoreCase(LAST_NAME, NAME, PATRONYMIC);
         int expectedValue = 1;
         assertEquals(expectedValue, employees.size());
     }
     @Test
     void testFindEmployeesByLastNameContainsIgnoreCaseAndFirstNameContainsIgnoreCase() {
+        String LAST_NAME = "Бондаренко";
+        String NAME = "Маргарита";
         List<Employee> employees = employeeRepository.findEmployeesByLastNameContainsIgnoreCaseAndFirstNameContainsIgnoreCase(LAST_NAME, NAME);
         int expectedValue = 1;
         assertEquals(expectedValue, employees.size());
     }
     @Test
     void testFindEmployeesByLastNameContainsIgnoreCaseOrFirstNameContainsIgnoreCaseOrPatronymicContainsIgnoreCase() {
+        String LAST_NAME2 = "Астапович";
+        String NAME = "Маргарита";
+        String PATRONYMIC = "Александровна";
         List<Employee> employees = employeeRepository.findEmployeesByLastNameContainsIgnoreCaseOrFirstNameContainsIgnoreCaseOrPatronymicContainsIgnoreCase(LAST_NAME2, NAME, PATRONYMIC);
         int expectedValue = 2;
         assertEquals(expectedValue, employees.size());
     }
     @Test
     void testFindEmployeeByEmail() {
+        String EMAIL = "bondarenko@gmail.com";
         Employee employee = employeeRepository.findEmployeeByEmail(EMAIL);
         assertNotNull(employee);
     }

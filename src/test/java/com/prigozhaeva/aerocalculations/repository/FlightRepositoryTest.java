@@ -19,17 +19,18 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class FlightRepositoryTest {
     @Autowired
     private FlightRepository flightRepository;
-    private static final String FLIGHT_NUMBER = "BRU8195";
-    private static final String DEP_DATE = "2023-11-04";
 
     @Test
     void testFindFlightsByFlightNumberContainsIgnoreCase() {
+        String FLIGHT_NUMBER = "BRU8195";
         List<Flight> flights = flightRepository.findFlightsByFlightNumberContainsIgnoreCase(FLIGHT_NUMBER);
         int expectedValue = 3;
         assertEquals(expectedValue, flights.size());
     }
     @Test
     void testFindFlightByFlightNumberAndDepDate() {
+        String FLIGHT_NUMBER = "BRU8195";
+        String DEP_DATE = "2023-11-04";
         Flight flight = flightRepository.findFlightByFlightNumberAndDepDate(FLIGHT_NUMBER, LocalDate.parse(DEP_DATE));
         assertNotNull(flight);
     }

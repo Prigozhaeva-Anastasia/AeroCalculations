@@ -17,10 +17,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class ServiceRepositoryTest {
     @Autowired
     private ServiceRepository serviceRepository;
-    private static final String SERVICE_NAME = "Пользование CIP-залом";
-
     @Test
     void findServicesByNameContainsIgnoreCase() {
+        String SERVICE_NAME = "Пользование CIP-залом";
         List<Service> services = serviceRepository.findServicesByNameContainsIgnoreCase(SERVICE_NAME);
         int expectedValue = 8;
         assertEquals(expectedValue, services.size());

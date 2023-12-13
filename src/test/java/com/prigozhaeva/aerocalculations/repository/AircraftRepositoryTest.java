@@ -19,15 +19,16 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class AircraftRepositoryTest {
     @Autowired
     private AircraftRepository aircraftRepository;
-    private static  final String TAIL_NUMBER = "EW455PA";
     @Test
     void testFindAircraftByTailNumberIgnoreCase() {
+        String TAIL_NUMBER = "EW455PA";
         Aircraft aircraft = aircraftRepository.findAircraftByTailNumberIgnoreCase(TAIL_NUMBER);
         assertNotNull(aircraft);
     }
 
     @Test
     void testFindAircraftsByTailNumberContainsIgnoreCase() {
+        String TAIL_NUMBER = "EW455PA";
         List<Aircraft> aircrafts = aircraftRepository.findAircraftsByTailNumberContainsIgnoreCase(TAIL_NUMBER);
         int expectedValue = 1;
         assertEquals(expectedValue, aircrafts.size());

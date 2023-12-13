@@ -15,9 +15,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class RoleRepositoryTest {
     @Autowired
     private RoleRepository roleRepository;
-    private static final String FLIGHT_NUMBER = "Бухгалтер";
     @Test
     void getRoleByName() {
+        String FLIGHT_NUMBER = "Бухгалтер";
         Role role = roleRepository.getRoleByName(FLIGHT_NUMBER);
         assertNotNull(role);
     }

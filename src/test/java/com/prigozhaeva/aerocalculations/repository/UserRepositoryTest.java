@@ -15,9 +15,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserRepositoryTest {
     @Autowired
     private UserRepository userRepository;
-    private static final String EMAIL = "astapovich@gmail.com";
     @Test
     void findUserByEmail() {
+        String EMAIL = "astapovich@gmail.com";
         User user = userRepository.findUserByEmail(EMAIL);
         assertNotNull(user);
     }

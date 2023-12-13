@@ -18,10 +18,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class AirlineRepositoryTest {
     @Autowired
     private  AirlineRepository airlineRepository;
-    private static final String AIRLINE_NAME = "ТУРКМЕНХОВАЕЛЛАРЫ";
-    private static final String PAYER_NAME = "эйр";
     @Test
     void testFindAirlinesByNameContainsIgnoreCase() {
+        String AIRLINE_NAME = "ТУРКМЕНХОВАЕЛЛАРЫ";
         List<Airline> airlines = airlineRepository.findAirlinesByNameContainsIgnoreCase(AIRLINE_NAME);
         int expectedValue = 1;
         assertEquals(expectedValue, airlines.size());
@@ -29,12 +28,14 @@ public class AirlineRepositoryTest {
 
     @Test
     void testFindAirlinesByPayerNameContainsIgnoreCase() {
+        String PAYER_NAME = "эйр";
         List<Airline> airlines = airlineRepository.findAirlinesByPayerNameContainsIgnoreCase(PAYER_NAME);
         int expectedValue = 5;
         assertEquals(expectedValue, airlines.size());
     }
     @Test
     void testFindAirlineByName() {
+        String AIRLINE_NAME = "ТУРКМЕНХОВАЕЛЛАРЫ";
         Airline airline = airlineRepository.findAirlineByName(AIRLINE_NAME);
         assertNotNull(airline);
     }
