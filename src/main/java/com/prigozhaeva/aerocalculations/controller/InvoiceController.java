@@ -44,7 +44,7 @@ public class InvoiceController {
         if (keyword.isEmpty()) {
             invoiceList = new CopyOnWriteArrayList<>(invoiceService.fetchAllDto());
         } else {
-            invoiceList = new CopyOnWriteArrayList<>(invoiceService.findInvoiceDtoByInvoiceNumber(Integer.parseInt(keyword)));
+            invoiceList = new CopyOnWriteArrayList<>(invoiceService.findInvoiceDtoByInvoiceNumber(keyword));
         }
         model.addAttribute(LIST_INVOICES, invoiceList);
         model.addAttribute(KEYWORD, keyword);

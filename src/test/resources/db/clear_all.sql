@@ -1,0 +1,11 @@
+DELETE FROM flights_provided_services;
+DELETE FROM invoices;
+DELETE FROM provided_services;
+DELETE FROM flights;
+DELETE FROM aircrafts;
+DELETE FROM airlines;
+DELETE FROM services;
+DELETE FROM users_roles;
+DELETE FROM employees;
+DELETE FROM users;
+DELETE FROM roles;

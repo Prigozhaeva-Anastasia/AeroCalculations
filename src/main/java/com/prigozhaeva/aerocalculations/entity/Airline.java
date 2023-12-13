@@ -20,7 +20,7 @@ public class Airline {
     @Column(name="id")
     private Long id;
     @NotBlank(message = "Поле не должно быть пустым")
-    @Column(name="name")
+    @Column(name="airline_name")
     private String name;
     @NotBlank(message = "Поле не должно быть пустым")
     @Column(name="payer_name")
