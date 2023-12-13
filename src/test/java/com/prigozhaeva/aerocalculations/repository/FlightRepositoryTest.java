@@ -19,14 +19,13 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class FlightRepositoryTest {
     @Autowired
     private FlightRepository flightRepository;
-    private static  final int EXPECTED_SIZE_OF_FLIGHTS_LIST = 3;
     private static final String FLIGHT_NUMBER = "BRU8195";
     private static final String DEP_DATE = "2023-11-04";
 
     @Test
     void testFindFlightsByFlightNumberContainsIgnoreCase() {
         List<Flight> flights = flightRepository.findFlightsByFlightNumberContainsIgnoreCase(FLIGHT_NUMBER);
-        int expectedValue = EXPECTED_SIZE_OF_FLIGHTS_LIST;
+        int expectedValue = 3;
         assertEquals(expectedValue, flights.size());
     }
     @Test

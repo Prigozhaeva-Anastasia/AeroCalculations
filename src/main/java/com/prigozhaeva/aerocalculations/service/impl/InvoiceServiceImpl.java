@@ -24,8 +24,8 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public List<InvoiceDTO> findInvoiceDtoByInvoiceNumber(String invoiceNumber) {
-        return invoiceRepository.findInvoicesByInvoiceNumberContains(invoiceNumber).stream()
+    public List<InvoiceDTO> findInvoiceDtoByInvoiceNumber(int invoiceNumber) {
+        return invoiceRepository.findInvoicesByInvoiceNumber(invoiceNumber).stream()
                 .map(mappingUtils::mapToInvoiceDTO)
                 .collect(Collectors.toList());
     }

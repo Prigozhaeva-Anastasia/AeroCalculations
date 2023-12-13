@@ -20,19 +20,17 @@ public class AirlineRepositoryTest {
     private  AirlineRepository airlineRepository;
     private static final String AIRLINE_NAME = "ТУРКМЕНХОВАЕЛЛАРЫ";
     private static final String PAYER_NAME = "эйр";
-    private static  final int EXPECTED_SIZE_OF_AIRLINES_LIST = 1;
-    private static  final int EXPECTED_SIZE_OF_AIRLINES_LIST2 = 5;
     @Test
     void testFindAirlinesByNameContainsIgnoreCase() {
         List<Airline> airlines = airlineRepository.findAirlinesByNameContainsIgnoreCase(AIRLINE_NAME);
-        int expectedValue = EXPECTED_SIZE_OF_AIRLINES_LIST;
+        int expectedValue = 1;
         assertEquals(expectedValue, airlines.size());
     }
 
     @Test
     void testFindAirlinesByPayerNameContainsIgnoreCase() {
         List<Airline> airlines = airlineRepository.findAirlinesByPayerNameContainsIgnoreCase(PAYER_NAME);
-        int expectedValue = EXPECTED_SIZE_OF_AIRLINES_LIST2;
+        int expectedValue = 5;
         assertEquals(expectedValue, airlines.size());
     }
     @Test

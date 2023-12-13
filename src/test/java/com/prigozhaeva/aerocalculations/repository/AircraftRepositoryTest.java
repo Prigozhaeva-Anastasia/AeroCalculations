@@ -20,7 +20,6 @@ public class AircraftRepositoryTest {
     @Autowired
     private AircraftRepository aircraftRepository;
     private static  final String TAIL_NUMBER = "EW455PA";
-    private static  final int EXPECTED_SIZE_OF_AIRCRAFTS_LIST = 1;
     @Test
     void testFindAircraftByTailNumberIgnoreCase() {
         Aircraft aircraft = aircraftRepository.findAircraftByTailNumberIgnoreCase(TAIL_NUMBER);
@@ -30,7 +29,7 @@ public class AircraftRepositoryTest {
     @Test
     void testFindAircraftsByTailNumberContainsIgnoreCase() {
         List<Aircraft> aircrafts = aircraftRepository.findAircraftsByTailNumberContainsIgnoreCase(TAIL_NUMBER);
-        int expectedValue = EXPECTED_SIZE_OF_AIRCRAFTS_LIST;
+        int expectedValue = 1;
         assertEquals(expectedValue, aircrafts.size());
     }
 }

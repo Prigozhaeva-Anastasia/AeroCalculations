@@ -1,6 +1,6 @@
 package com.prigozhaeva.aerocalculations.repository;
 
-import com.prigozhaeva.aerocalculations.entity.Invoice;
+import com.prigozhaeva.aerocalculations.entity.Service;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -9,20 +9,20 @@ import org.springframework.test.context.jdbc.Sql;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Sql(scripts = {"file:src/test/resources/db/clear_all.sql","file:src/test/resources/db/insert_script.sql"})
-
-class InvoiceRepositoryTest {
+class ServiceRepositoryTest {
     @Autowired
-    private  InvoiceRepository invoiceRepository;
+    private ServiceRepository serviceRepository;
+    private static final String SERVICE_NAME = "Пользование CIP-залом";
+
     @Test
-    void testFindInvoiceByInvoiceNumberContains() {
-        int INVOICE_NUMBER = 1234;
-        List<Invoice> invoices = invoiceRepository.findInvoicesByInvoiceNumber(INVOICE_NUMBER);
-        int expectedValue = 1;
-        assertEquals(expectedValue, invoices.size());
+    void findServicesByNameContainsIgnoreCase() {
+        List<Service> services = serviceRepository.findServicesByNameContainsIgnoreCase(SERVICE_NAME);
+        int expectedValue = 8;
+        assertEquals(expectedValue, services.size());
     }
 }
