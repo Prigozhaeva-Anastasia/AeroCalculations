@@ -49,7 +49,7 @@ public class ReportController {
         inftrastructureTypeMap.put(820, "транспортные средства для перевозки пассажиров");
         inftrastructureTypeMap.put(1041, "транспортные средства для перевозки пассажиров");
         inftrastructureTypeMap.put(821, "транспортные средства для перевозки пассажиров");
-        inftrastructureTypeMap.put(973, "хостовая системой DCS");
+        inftrastructureTypeMap.put(973, "хостовая система DCS");
     }
 
     @GetMapping(value = "/flightDynamics")
