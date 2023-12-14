@@ -9,8 +9,6 @@
 //import org.springframework.boot.CommandLineRunner;
 //import org.springframework.stereotype.Component;
 //
-//import java.util.Set;
-//
 //
 //@Component
 //public class MyRunner implements CommandLineRunner {
@@ -26,15 +24,6 @@
 //    public static final String FINANCE = "Сотрудник финансового отдела";
 //    @Override
 //    public void run(String... args) throws Exception {
-////        User user3 = userService.createUser("vikaBU2002", "butskevich@gmail.com", "Буцкевич", "Виктория");
-////        User user4 = userService.createUser("margoSM2002", "smetanchuk@gmail.com", "Сметанчук", "Маргарита");
-////        User user5 = userService.createUser("andreiST1111", "stepanov@gmail.com", "Степанов", "Андрей");
-////        User user6 = userService.createUser("alekseiARA1986", "artemev@gmail.com", "Артемьев", "Алексей");
-////        User user7 = userService.createUser("vitaliiMLA1986", "melnik@gmail.com", "Артемьев", "Алексей");
-////        User user8 = userService.createUser("annaROA1986", "romanenko@gmail.com", "Романенко", "Анна");
-////        User user9 = userService.createUser("olgaOSA1990", "osadchaya@gmail.com", "Осадчая", "Ольга");
-////        User user10 = userService.createUser("elenaYDA1990", "udina@gmail.com", "Юдина", "Елена");
-////        User user11 = userService.createUser("maksimSHA1970", "shpilevskii@gmail.com", "Шпилевский", "Максим");
 //
 //        roleService.createRole(ADMIN);
 //        roleService.createRole(ACCOUNTANT);

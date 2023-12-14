@@ -60,34 +60,39 @@ public class InvoiceController {
     @GetMapping(value = "/formCreate")
     public String formCreate(Model model, String flightNumberModal, String invoiceCreationDate) {
         Flight flight = flightService.findFlightByFlightNumberAndDepDate(flightNumberModal, LocalDate.parse(invoiceCreationDate));
-        List<ProvidedService> airportServicesCheck = flight.getProvidedServices().stream()
-                        .filter(providedService->providedService.getService().getServiceType().equals(AIRPORT_SERVICES))
-                        .collect(Collectors.toList());
-        List<ProvidedService> groundHandlingServicesCheck = flight.getProvidedServices().stream()
-                .filter(providedService->providedService.getService().getServiceType().equals(GROUND_HANDLING_SERVICES))
-                .collect(Collectors.toList());
-        List<Service> airportServices = serviceService.fetchAll().stream()
-                .filter(service1 -> airportServicesCheck.stream()
-                        .anyMatch(service2 -> service1.getId() != service2.getService().getId() && service1.getServiceType().equals(service2.getService().getServiceType())))
-                .collect(Collectors.toList());
-        List<Service> groundHandlingServices = serviceService.fetchAll().stream()
-                .filter(service1 -> groundHandlingServicesCheck.stream()
-                        .anyMatch(service2 -> service1.getId() != service2.getService().getId() && service1.getServiceType().equals(service2.getService().getServiceType())))
-                .collect(Collectors.toList());
-        Optional<Integer> number = invoiceService.fetchAll().stream()
-                .map(Invoice::getInvoiceNumber)
-                .max(Integer::compareTo);
-        String currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        model.addAttribute(FLIGHT, flight);
-        model.addAttribute(AIRPORT_SERVICES_MODEL_CHECK, airportServicesCheck);
-        model.addAttribute(GROUND_HANDLING_SERVICES_MODEL_CHECK, groundHandlingServicesCheck);
-        model.addAttribute(AIRPORT_SERVICES_MODEL, airportServices);
-        model.addAttribute(GROUND_HANDLING_SERVICES_MODEL, groundHandlingServices);
-        model.addAttribute(INVOICE, Invoice.builder()
-                .invoiceCreationDate(LocalDate.parse(currentDate))
-                .invoiceNumber(number.get().intValue()+1)
-                .build()
-        );
-        return "invoice-views/formCreate";
+        if (flight != null) {
+            List<ProvidedService> airportServicesCheck = flight.getProvidedServices().stream()
+                    .filter(providedService -> providedService.getService().getServiceType().equals(AIRPORT_SERVICES))
+                    .collect(Collectors.toList());
+            List<ProvidedService> groundHandlingServicesCheck = flight.getProvidedServices().stream()
+                    .filter(providedService -> providedService.getService().getServiceType().equals(GROUND_HANDLING_SERVICES))
+                    .collect(Collectors.toList());
+            List<Service> airportServices = serviceService.fetchAll().stream()
+                    .filter(service1 -> airportServicesCheck.stream()
+                            .anyMatch(service2 -> service1.getId() != service2.getService().getId() && service1.getServiceType().equals(service2.getService().getServiceType())))
+                    .collect(Collectors.toList());
+            List<Service> groundHandlingServices = serviceService.fetchAll().stream()
+                    .filter(service1 -> groundHandlingServicesCheck.stream()
+                            .anyMatch(service2 -> service1.getId() != service2.getService().getId() && service1.getServiceType().equals(service2.getService().getServiceType())))
+                    .collect(Collectors.toList());
+            Optional<Integer> number = invoiceService.fetchAll().stream()
+                    .map(Invoice::getInvoiceNumber)
+                    .max(Integer::compareTo);
+            String currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            model.addAttribute(FLIGHT, flight);
+            model.addAttribute(AIRPORT_SERVICES_MODEL_CHECK, airportServicesCheck);
+            model.addAttribute(GROUND_HANDLING_SERVICES_MODEL_CHECK, groundHandlingServicesCheck);
+            model.addAttribute(AIRPORT_SERVICES_MODEL, airportServices);
+            model.addAttribute(GROUND_HANDLING_SERVICES_MODEL, groundHandlingServices);
+            model.addAttribute(INVOICE, Invoice.builder()
+                    .invoiceCreationDate(LocalDate.parse(currentDate))
+                    .invoiceNumber(number.get().intValue() + 1)
+                    .build()
+            );
+            return "invoice-views/formCreate";
+        }
+        else {
+            return "invoice-views/msgPage";
+        }
     }
 }

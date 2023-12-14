@@ -2,7 +2,7 @@
     margin: -24px -16px;
     padding: 0px;
     width: 1286px;
-    height: 684px;
+    height: 674px;
     position: relative;
 }
 .square {
@@ -94,4 +94,13 @@
     color: white;
     font-family: Georgia;
     font-size: 16px;
+}
+#flightIcon, #serviceIcon {
+    margin-left: 8px;
+}
+#invoiceIcon {
+    margin-left: 13px;
+}
+#archiveIcon {
+    margin-left: 9px;
 }

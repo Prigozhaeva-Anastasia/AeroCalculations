@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Авторизация</title>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        #mainFont {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/images/font.jpg");
+            background-size: cover;
+            width: 1400px;
+            min-height: 607px;
+        }
+        #mainDiv {
+            border-radius: 20px;
+            background-color: rgba(58, 58, 58, 0.7);
+            width: 510px;
+            height: 546px;
+            margin-top: 80px;
+            margin-left: 890px;
+        }
+        #authorizationLabel {
+            position: relative;
+            top: 50px;
+            margin-left: 152px;
+            font-family: Georgia;
+            color: white;
+            font-size: 32px;
+        }
+        input {
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid #97BFB7;
+            color: white;
+            font-size: 18px;
+            font-family: Georgia;
+            width: 334px;
+            height: 43px;
+        }
+        input:focus {
+            outline: none;
+            border-bottom: 1px solid white;
+        }
+        #wrapper {
+            position: relative;
+            top: 134px;
+            left: 80px;
+        }
+        #password {
+            margin-top: 30px;
+        }
+        #loginBtn{
+            background-color: #97BFB7;
+            color: white;
+            font-family: Georgia;
+            border-radius: 20px;
+            width: 160px;
+            height: 42px;
+            margin-top: 70px;
+            margin-left: 80px;
+            font-size: 18px;
+            box-shadow: 0px 0px 8px rgba(0, 0, 0);
+        }
+        #loginBtn:hover{
+            background-color: #7BAFA5;
+        }
+        #error {
+            color: rgb(255, 0, 0, 0.7);
+            font-size: 18px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body id="mainFont">
+<div>
+    <div id="mainDiv">
+            <form method="post" th:action="@{/login}">
+                <label id="authorizationLabel">Авторизация</label>
+                <div id="wrapper">
+                    <input id="email" type="text" name="email" placeholder="Логин">
+                    <input  id="password" type="password" name="password" placeholder="Пароль">
+                    <div id="error" th:if="${param.error}">Логин ил пароль введены неверно</div>
+                    <button id="loginBtn" type="submit">Войти</button>
+                </div>
+            </form>
+    </div>
+</div>
+<script>
+    let email = document.getElementById('email');
+    let password = document.getElementById('password');
+
+    if (window.location.href.includes('error')) {
+        email.style.backgroundColor = 'rgb(255, 0, 0, 0.1)';
+        email.style.borderBottom = '1px solid rgb(255, 0, 0, 0.4)';
+        password.style.backgroundColor = 'rgb(255, 0, 0, 0.1)';
+        password.style.borderBottom = '1px solid rgb(255, 0, 0, 0.4)';
+    }
+</script>
+</body>
+</html>
+
+
+
+

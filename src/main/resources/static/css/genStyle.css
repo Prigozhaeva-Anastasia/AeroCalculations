@@ -658,6 +658,13 @@ table td {
     font-weight: bold;
     font-color: black;
 }
+#errorMessage2 {
+    margin-top: 210px;
+    font-family: Georgia;
+    font-size: 22px;
+    font-weight: bold;
+    font-color: black;
+}
 #paymentState{
     width: 135px;
     cursor: pointer;
