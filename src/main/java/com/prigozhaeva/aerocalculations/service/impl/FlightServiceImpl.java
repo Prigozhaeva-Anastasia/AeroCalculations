@@ -78,6 +78,11 @@ public class FlightServiceImpl implements FlightService {
         return flightRepository.findFlightByFlightNumberAndDepDate(flightNumber, date);
     }
 
+    @Override
+    public List<Flight> findFlightsByDepDate(LocalDate date) {
+        return flightRepository.findFlightsByDepDate(date);
+    }
+
 
     public List<Flight> parse(String path) {
         List<Flight> flights;

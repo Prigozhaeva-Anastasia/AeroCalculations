@@ -104,3 +104,19 @@
 #archiveIcon {
     margin-left: 9px;
 }
+#okModalInfrastructure{
+    background-color: #B8DAD3;
+    color: white;
+    font-family: Georgia;
+    border: none;
+    position: relative;
+    top: 8px;
+    left: 405px;
+    width: 60px;
+}
+#okModalInfrastructure:hover {
+    background-color: #97BFB7;
+}
+#inputModalInfrastructure {
+    width: 150px;
+}

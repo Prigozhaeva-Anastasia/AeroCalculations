@@ -14,4 +14,5 @@ public interface FlightService {
     Flight createOrUpdateFlight(Flight flight);
     List<Flight> fetchAll();
     Flight findFlightByFlightNumberAndDepDate(String flightNumber, LocalDate date);
+    List<Flight> findFlightsByDepDate(LocalDate date);
 }
