@@ -36,4 +36,11 @@ public class Constant {
     public static final String GROUND_HANDLING_SERVICES_MODEL = "groundHandlingServices";
     public static final String COUNTS_OF_EVERY_INFRASTRUCTURE = "countsOfEveryInfrastructure";
     public static final String DATE = "date";
+    public static final String PERCENT_OF_AIRLINES = "percentOfAirlines";
+    public static final String PERCENT_OF_UNUSED_AIRLINES = "percentOfUnusedAirlines";
+    public static final String MONTH = "month";
+    public static final String PERCENT_OF_AIRLINES_CUR = "percentOfAirlinesCur";
+    public static final String PERCENT_OF_UNUSED_AIRLINES_CUR = "percentOfUnusedAirlinesCur";
+    public static final String MONTH_CUR = "monthCur";
+    public static final String YEAR_CUR = "yearCur";
 }

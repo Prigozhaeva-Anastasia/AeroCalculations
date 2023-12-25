@@ -42,6 +42,6 @@ public class ProvidedServiceController {
     @PostMapping(value = "/update")
     public String update(ProvidedService providedService) {
         ProvidedService result = providedServiceService.createOrUpdateProvidedService(providedService.getId(), providedService.getAmount());
-        return "redirect:/providedServices/index?flightNumber=" + result.getFlight().getFlightNumber();
+        return "redirect:/providedServices/index?flightId=" + result.getFlight().getId();
     }
 }

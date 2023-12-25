@@ -1,16 +1,22 @@
 package com.prigozhaeva.aerocalculations.controller;
 
+import com.prigozhaeva.aerocalculations.entity.Airline;
 import com.prigozhaeva.aerocalculations.entity.Flight;
+import com.prigozhaeva.aerocalculations.service.AirlineService;
 import com.prigozhaeva.aerocalculations.service.FlightService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -20,10 +26,12 @@ import static com.prigozhaeva.aerocalculations.constant.Constant.*;
 @RequestMapping(value = "/reports")
 public class ReportController {
     private FlightService flightService;
+    private AirlineService airlineService;
     private static final Map<Integer, String> inftrastructureTypeMap = new HashMap<>();
 
-    public ReportController(FlightService flightService) {
+    public ReportController(FlightService flightService, AirlineService airlineService) {
         this.flightService = flightService;
+        this.airlineService = airlineService;
     }
 
     static {
@@ -85,6 +93,39 @@ public class ReportController {
         }
         model.addAttribute(COUNTS_OF_EVERY_INFRASTRUCTURE, countMap);
         return "report-views/airportInfrastructureDynamics";
+    }
+
+    @GetMapping(value = "/changesInNumOfAirlinesDynamics")
+    public String changesInNumOfAirlinesDynamics(Model model, int year, int month) {
+        List<Airline> airlines = airlineService.fetchAll();
+        List<Airline> result = findAirlinesByDepDate(airlines, year, month);
+        List<Airline> currentResult = findAirlinesByDepDate(airlines, LocalDate.now().getYear(), LocalDate.now().getMonthValue());
+        double percentOfAirlines = Double.parseDouble(new DecimalFormat("#0.00").format((double)result.size() * 100 / airlines.size()).replace(',', '.'));
+        double percentOfUnusedAirlines = 100 - percentOfAirlines;
+        String monthStr = Month.of(month).getDisplayName(TextStyle.FULL, new Locale("ru", "RU"));
+        String monthFormat = monthStr.substring(0, monthStr.length() - 1) + "ь";
+        model.addAttribute(MONTH, monthFormat);
+        model.addAttribute(YEAR, year);
+        model.addAttribute(PERCENT_OF_AIRLINES, percentOfAirlines);
+        model.addAttribute(PERCENT_OF_UNUSED_AIRLINES, percentOfUnusedAirlines);
+        double percentOfAirlinesCur = Double.parseDouble(new DecimalFormat("#0.00").format((double)currentResult.size() * 100 / airlines.size()).replace(',', '.'));
+        double percentOfUnusedAirlinesCur = 100 - percentOfAirlinesCur;
+        String monthStrCur = Month.of(LocalDate.now().getMonthValue()).getDisplayName(TextStyle.FULL, new Locale("ru", "RU"));
+        String monthFormatCur = monthStrCur.substring(0, monthStrCur.length() - 1) + "ь";
+        model.addAttribute(MONTH_CUR, monthFormatCur);
+        model.addAttribute(YEAR_CUR, LocalDate.now().getYear());
+        model.addAttribute(PERCENT_OF_AIRLINES_CUR, percentOfAirlinesCur);
+        model.addAttribute(PERCENT_OF_UNUSED_AIRLINES_CUR, percentOfUnusedAirlinesCur);
+        return "report-views/changesInNumOfAirlinesDynamics";
+    }
+
+    private static List<Airline> findAirlinesByDepDate(List<Airline> airlines, int year, int month) {
+        return airlines.stream()
+                .filter(airline -> airline.getAircrafts().stream()
+                        .flatMap(aircraft -> aircraft.getFlights().stream())
+                        .anyMatch(flight -> flight.getDepDate().getMonth().getValue() == month && flight.getDepDate().getYear() == year)
+                )
+                .collect(Collectors.toList());
     }
 
     private static Map<LocalDate, Map<Integer, Long>> analyzeFlightDynamics(List<Flight> flights, int year, int month) {

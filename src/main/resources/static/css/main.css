@@ -120,3 +120,46 @@
 #inputModalInfrastructure {
     width: 150px;
 }
+.mainDivForAirlineDynamic {
+    display: flex;
+    position: relative;
+    top: 110px;
+}
+.column {
+    flex: 1;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+}
+.column {
+    flex: 1;
+    box-sizing: border-box;
+    width: 50px;
+}
+#container2 {
+    margin-left: 3px;
+}
+#divChangeInNumOfAirlDynam{
+    margin-left: 300px;
+    font-family: Georgia;
+    font-size: 22px;
+    font-weight: bold;
+    font-color: black;
+}
+#labelChangeInNumOfAirlDynamL {
+    margin-left: 140px;
+    position: relative;
+    top: 80px;
+    font-family: Georgia;
+    font-size: 16px;
+    font-weight: bold;
+    font-color: black;
+}
+#labelChangeInNumOfAirlDynamR {
+    margin-left: 250px;
+    position: relative;
+    top: 80px;
+    font-family: Georgia;
+    font-size: 16px;
+    font-weight: bold;
+    font-color: black;
+}

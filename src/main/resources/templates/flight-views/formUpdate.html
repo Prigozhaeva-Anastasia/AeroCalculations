@@ -10,6 +10,7 @@
 <div layout:fragment="content1">
     <div class="col-md-6 offset-3 mt-3">
         <form id="form" class="form-control mb" method="post" th:action="@{update}" th:object="${flight}">
+            <input type="text" name="id" th:value="${flight.getId()}" hidden>
             <div class="mb-3 mt-3">
                 <label for="flightNumber" class="form-label">Номер рейса:</label>
                 <input id="flightNumber" type="text" name="flightNumber" class="form-control"
