@@ -80,7 +80,7 @@
                         <td class="center" th:text="${invoice.getTotalCost()}"></td>
                         <td class="center" th:text="${invoice.getCurrency()}"></td>
                         <td>
-                            <form id="formPaymentState" th:action="@{/invoices/changePaymentStatus(invoiceId=${invoice.getId()})}" method="post">
+                            <form id="formPaymentState" th:action="@{/invoices/changePaymentStatus(invoiceNumber=${invoice.getInvoiceNumber()})}" method="post">
                                 <select id="paymentState" class="form-select paymentState" aria-label="Disabled select example">
                                     <option value="Оплачен">Оплачен</option>
                                     <option value="Не оплачен">Не оплачен</option>
@@ -90,14 +90,14 @@
                         </td>
                         <td>
                             <a class="btn btn-primary output"
-                               th:href="@{/invoices/formUpdate(invoiceId=${invoice.getId()})}"></a>
+                               th:href="@{/invoices/formUpdate(invoiceNumber=${invoice.getInvoiceNumber()})}"></a>
                             <a class="btn btn-danger"
                                onclick="return confirm('Вы действительно хотите удалить выбранный счет?')"
-                               th:href="@{/invoices/delete(invoiceId=${invoice.getId()}, keyword=${keyword})}"></a>
+                               th:href="@{/invoices/delete(invoiceNumber=${invoice.getInvoiceNumber()}, keyword=${keyword})}"></a>
                             <a class="btn download"
-                               th:href="@{/invoices/download(invoiceId=${invoice.getId()})}"></a>
+                               th:href="@{/invoices/download(invoiceNumber=${invoice.getInvoiceNumber()})}"></a>
                             <a class="btn createFile"
-                               th:href="@{/invoices/createFile(invoiceId=${invoice.getId()})}"></a>
+                               th:href="@{/invoices/createFile(invoiceNumber=${invoice.getInvoiceNumber()})}"></a>
                         </td>
                     </tr>
                     </tbody>

@@ -15,4 +15,5 @@ public interface FlightService {
     List<Flight> fetchAll();
     Flight findFlightByFlightNumberAndDepDate(String flightNumber, LocalDate date);
     List<Flight> findFlightsByDepDate(LocalDate date);
+    List<Flight> findFlightsByMonthOfDepDateAndAirline(LocalDate flightDate, Long airlineId);
 }

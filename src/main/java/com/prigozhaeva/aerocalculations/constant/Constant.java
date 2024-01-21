@@ -43,4 +43,11 @@ public class Constant {
     public static final String PERCENT_OF_UNUSED_AIRLINES_CUR = "percentOfUnusedAirlinesCur";
     public static final String MONTH_CUR = "monthCur";
     public static final String YEAR_CUR = "yearCur";
+    public static final String NOT_PAID_STATUS = "Не оплачен";
+    public static final String BYN = "BYN";
+    public static final String CHILDREN = "дети";
+    public static final String PASSENGER = "пассажир";
+    public static final String DISABLED_PERSON = "инвалид";
+    public static final int FLIGHT_PLAN = 20;
+    public static final String CURRENCY_SYMBOL = "currencySymbol";
 }

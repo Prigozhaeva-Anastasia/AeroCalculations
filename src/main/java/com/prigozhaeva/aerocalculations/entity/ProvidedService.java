@@ -3,6 +3,8 @@ package com.prigozhaeva.aerocalculations.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,15 +21,18 @@ public class ProvidedService {
     @Column(name="id")
     private Long id;
     @ToString.Exclude
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "service_id")
     private Service service;
     @Column(name="value")
-    private double value;
+    private BigDecimal value;
     @Column(name="amount")
     private short amount;
     @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "flight_id")
     private Flight flight;
+    public void setValue(BigDecimal value) {
+        this.value = value.setScale(2, RoundingMode.HALF_UP);
+    }
 }

@@ -13,67 +13,90 @@
 <body>
 <div layout:fragment="content1">
     <div class="mainDivForInvoice">
-        <form method="post" th:action="@{save}" th:object="${invoice}">
+        <form>
             <div class="column1">
                 <div>
                     <div class="field">
                         <label for="invoiceNumber" class="form-label">Номер счета:</label>
                         <input id="invoiceNumber" type="text" name="invoiceNumber" class="form-control"
-                               th:field="${invoice.invoiceNumber}" readonly>
+                               th:value="${invoice.invoiceNumber}" readonly>
                     </div>
                     <div class="field">
                         <label for="invoiceCreationDate" class="form-label">Дата создания счета:</label>
-                        <input id="invoiceCreationDate" type="date" name="invoiceCreationDate" class="form-control"
+                        <input id="invoiceCreationDate" type="date" class="form-control"
                                th:value="${invoice.invoiceCreationDate}">
                     </div>
                     <div class="field">
                         <label for="currency" class="form-label">Валюта:</label>
-                        <select id="currency" class="form-select" aria-label="Disabled select example"
-                                th:field="${invoice.currency}">
+                        <select id="currency" class="form-select" aria-label="Disabled select example" name="currency"
+                                th:value="${invoice.currency}">
                             <option value="BYN">BYN</option>
                             <option value="EUR">EUR</option>
                             <option value="USD">USD</option>
                         </select>
                     </div>
+                    <input id="flightId" type="text" name="id" class="form-control"
+                           th:value="${flight.id}" hidden="hidden">
                     <div class="field">
                         <label for="flightNumber" class="form-label">Номер рейса:</label>
                         <input id="flightNumber" type="text" name="flightNumber" class="form-control"
-                               th:field="${flight.flightNumber}" readonly>
+                               th:value="${flight.flightNumber}" readonly>
                     </div>
                     <div class="field">
                         <label for="airlineName" class="form-label">Авиакомпания:</label>
                         <input id="airlineName" type="text" name="airlineName" class="form-control"
-                               th:field="${flight.aircraft.airline.name}" readonly>
+                               th:value="${flight.aircraft.airline.name}" readonly>
                     </div>
                     <div class="field">
                         <label for="payerName" class="form-label">Плательщик:</label>
                         <input id="payerName" type="text" name="payerName" class="form-control"
-                               th:field="${flight.aircraft.airline.payerName}" readonly>
+                               th:value="${flight.aircraft.airline.payerName}" readonly>
                     </div>
                     <div class="field">
                         <label for="tailNumber" class="form-label">Бортовой номер ВС:</label>
                         <input id="tailNumber" type="text" name="tailNumber" class="form-control"
-                               th:field="${flight.aircraft.tailNumber}" readonly>
+                               th:value="${flight.aircraft.tailNumber}" readonly>
                     </div>
                 </div>
-                <button id="saveBtnInvoice" type="submit" class="btn btn-primary">Создать</button>
+                <button id="saveBtnInvoice" type="button" class="btn btn-primary">Создать</button>
             </div>
             <div class="column2">
                 <div id="airlineServicesDiv">
                     <label class="form-label">Аэропортовые услуги:</label>
+                    <label class="form-label labelAmount">Количество</label>
                     <div class="scrollable-div">
                         <div th:each="airportServiceCheck:${airportServicesCheck}">
-                            <div class="divForServ">
-                                <input class="form-check-input checkbox" type="checkbox" name="airportServices"
-                                       th:value="${airportServiceCheck.service.name}" checked>
-                                <span th:text="${airportServiceCheck.service.name}"></span>
+                            <div class="divForServ row">
+                                <div class="widthForService">
+                                    <input id="providedServiceId" type="text" name="id" class="form-control"
+                                           th:value="${airportServiceCheck.id}" hidden="hidden">
+                                    <input id="serviceId" type="text" name="serviceId" class="form-control"
+                                           th:value="${airportServiceCheck.service.id}" hidden="hidden">
+                                    <input class="form-check-input checkbox" type="checkbox" name="airportServices"
+                                           th:value="${airportServiceCheck.service.name}" checked>
+                                    <span th:text="${airportServiceCheck.service.name}"></span>
+                                </div>
+                                <div class="widthForAmount">
+                                    <input type="text" name="amount" class="form-control text-center"
+                                           th:value="${airportServiceCheck.amount}">
+                                </div>
                             </div>
                         </div>
                         <div th:each="airportService:${airportServices}">
-                            <div class="divForServ">
-                                <input class="form-check-input checkbox" type="checkbox" name="airportServices"
-                                       th:value="${airportService.name}">
-                                <span th:text="${airportService.name}"></span>
+                            <div class="divForServ row">
+                                <div class="widthForService">
+                                    <input type="text" name="id" class="form-control"
+                                           th:value="${airportService.id}" hidden="hidden">
+                                    <input type="text" name="serviceId" class="form-control"
+                                           th:value="${airportService.service.id}" hidden="hidden">
+                                    <input class="form-check-input checkbox" type="checkbox" name="airportServices"
+                                           th:value="${airportService.service.name}">
+                                    <span th:text="${airportService.service.name}"></span>
+                                </div>
+                                <div class="widthForAmount">
+                                    <input type="text" name="amount" class="form-control text-center"
+                                           th:value="${airportService.amount}">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -82,17 +105,39 @@
                     <label class="form-label">Услуги на наземное обслуживание:</label>
                     <div class="scrollable-div2">
                         <div th:each="groundHandlServCheck:${groundHandlingServicesCheck}">
-                            <div class="divForServ">
-                                <input class="form-check-input checkbox" type="checkbox" name="groundHandlingServices"
-                                       th:value="${groundHandlServCheck.service.name}" checked>
-                                <span th:text="${groundHandlServCheck.service.name}"></span>
+                            <div class="divForServ row">
+                                <div class="widthForService">
+                                    <input type="text" name="id" class="form-control"
+                                           th:value="${groundHandlServCheck.id}" hidden="hidden">
+                                    <input type="text" name="serviceId" class="form-control"
+                                           th:value="${groundHandlServCheck.service.id}" hidden="hidden">
+                                    <input class="form-check-input checkbox" type="checkbox"
+                                           name="groundHandlingServices"
+                                           th:value="${groundHandlServCheck.service.name}" checked>
+                                    <span th:text="${groundHandlServCheck.service.name}"></span>
+                                </div>
+                                <div class="widthForAmount">
+                                    <input type="text" name="amount" class="form-control text-center"
+                                           th:value="${groundHandlServCheck.amount}">
+                                </div>
                             </div>
                         </div>
                         <div th:each="groundHandlServ:${groundHandlingServices}">
-                            <div class="divForServ">
-                                <input class="form-check-input checkbox" type="checkbox" name="groundHandlingServices"
-                                       th:value="${groundHandlServ.name}">
-                                <span th:text="${groundHandlServ.name}"></span>
+                            <div class="divForServ row">
+                                <div class="widthForService">
+                                    <input type="text" name="id" class="form-control"
+                                           th:value="${groundHandlServ.id}" hidden="hidden">
+                                    <input type="text" name="serviceId" class="form-control"
+                                           th:value="${groundHandlServ.service.id}" hidden="hidden">
+                                    <input class="form-check-input checkbox" type="checkbox"
+                                           name="groundHandlingServices"
+                                           th:value="${groundHandlServ.service.name}">
+                                    <span th:text="${groundHandlServ.service.name}"></span>
+                                </div>
+                                <div class="widthForAmount">
+                                    <input type="text" name="amount" class="form-control text-center"
+                                           th:value="${groundHandlServ.amount}">
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -21,7 +21,7 @@ public class Flight {
     @Id
     @Column(name="id")
 
-    Long id;
+    private Long id;
     @Column(name="flight_number")
     private String flightNumber;
     @Column(name="flight_direction")
@@ -51,11 +51,11 @@ public class Flight {
     @Column(name="luggage_weight")
     private int luggageWeight;
     @Column(name="num_of_adults")
-    private int numOfAdults;
+    private short numOfAdults;
     @Column(name="num_of_children")
-    private int numOfChildren;
+    private short numOfChildren;
     @Column(name="num_of_babies")
-    private int numOfBabies;
+    private short numOfBabies;
     @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "aircraft_tail_number")

@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface InvoiceRepository extends JpaRepository<Invoice, Long>  {
     List<Invoice> findInvoicesByInvoiceNumber(int invoiceNumber);
+    Invoice findInvoiceByInvoiceNumber(int invoiceNumber);
 }

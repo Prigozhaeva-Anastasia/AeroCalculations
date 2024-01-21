@@ -28,16 +28,15 @@ import java.util.stream.Collectors;
 public class FlightServiceImpl implements FlightService {
     private FlightRepository flightRepository;
     private AircraftRepository aircraftRepository;
-    private MappingUtils mappingUtils;
 
-    public FlightServiceImpl(FlightRepository flightRepository, AircraftRepository aircraftRepository, MappingUtils mappingUtils) {
+    public FlightServiceImpl(FlightRepository flightRepository, AircraftRepository aircraftRepository) {
         this.flightRepository = flightRepository;
         this.aircraftRepository = aircraftRepository;
-        this.mappingUtils = mappingUtils;
     }
 
     @Override
     public List<FlightDTO> findFlightsDtoByFlightNumber(String flightNumber) {
+        MappingUtils mappingUtils = MappingUtils.builder().build();
         return flightRepository.findFlightsByFlightNumberContainsIgnoreCase(flightNumber).stream()
                 .map(mappingUtils::mapToFlightDTO)
                 .collect(Collectors.toList());
@@ -59,6 +58,7 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     public FlightDTO findFlightDtoById(Long flightId) {
+        MappingUtils mappingUtils = MappingUtils.builder().build();
         return mappingUtils.mapToFlightDTO(flightRepository.findById(flightId)
                 .orElseThrow(() -> new EntityNotFoundException("Flight with id " + flightId + " Not Found")));
     }
@@ -81,6 +81,13 @@ public class FlightServiceImpl implements FlightService {
     @Override
     public List<Flight> findFlightsByDepDate(LocalDate date) {
         return flightRepository.findFlightsByDepDate(date);
+    }
+
+    @Override
+    public List<Flight> findFlightsByMonthOfDepDateAndAirline(LocalDate flightDate, Long airlineId) {
+        return flightRepository.findFlightsByAirlineId(airlineId).stream()
+                .filter(flight -> (flight.getDepDate().getMonthValue() == flightDate.getMonthValue()) && (flight.getDepDate().getYear() == flightDate.getYear()))
+                .collect(Collectors.toList());
     }
 
 
@@ -168,19 +175,19 @@ public class FlightServiceImpl implements FlightService {
                         case "pax_vzr":
                             reader.next();
                             if (reader.getEventType() == XMLEvent.CHARACTERS) {
-                                flight.setNumOfAdults(Integer.parseInt(reader.getText()));
+                                flight.setNumOfAdults(Short.parseShort(reader.getText()));
                             }
                             break;
                         case "pax_rb":
                             reader.next();
                             if (reader.getEventType() == XMLEvent.CHARACTERS) {
-                                flight.setNumOfChildren(Integer.parseInt(reader.getText()));
+                                flight.setNumOfChildren(Short.parseShort(reader.getText()));
                             }
                             break;
                         case "pax_rm":
                             reader.next();
                             if (reader.getEventType() == XMLEvent.CHARACTERS) {
-                                flight.setNumOfBabies(Integer.parseInt(reader.getText()));
+                                flight.setNumOfBabies(Short.parseShort(reader.getText()));
                             }
                             break;
                     }
