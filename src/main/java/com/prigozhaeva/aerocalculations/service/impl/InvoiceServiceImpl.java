@@ -2,7 +2,6 @@ package com.prigozhaeva.aerocalculations.service.impl;
 
 import com.prigozhaeva.aerocalculations.dto.InvoiceCreateDTO;
 import com.prigozhaeva.aerocalculations.dto.InvoiceDTO;
-import com.prigozhaeva.aerocalculations.entity.Airline;
 import com.prigozhaeva.aerocalculations.entity.Employee;
 import com.prigozhaeva.aerocalculations.entity.Flight;
 import com.prigozhaeva.aerocalculations.entity.Invoice;
@@ -49,8 +48,10 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public void changePaymentStatus(Long invoiceId, String paymentState) {
-
+    public void changePaymentStatus(int invoiceNumber, String paymentState) {
+        Invoice invoiceDB = invoiceRepository.findInvoiceByInvoiceNumber(invoiceNumber);
+        invoiceDB.setPaymentState(paymentState);
+        invoiceRepository.save(invoiceDB);
     }
 
     @Override

@@ -165,7 +165,8 @@ form {
     color: black;
 }
 #createBtnInvoice{
-    position: absolute;
+    position: relative;
+    left: 8px;
     text-decoration: none;
     border-color: black;
     height: 43px;
@@ -224,7 +225,7 @@ form {
 }
 #filterForInvoices {
     position: relative;
-    left: 56px;
+    left: 16px;
 }
 #filterForAircrafts:hover, #filterForFlights:hover, #filterForServices:hover, #filterForEmployees:hover, #filterForInvoices:hover {
     background-color: rgba(166, 165, 165, 0.6);
@@ -319,7 +320,7 @@ form {
     border-color: black;
     border-radius: 5px;
     position: relative;
-    left: 60px;
+    left: 20px;
 }
 #reloadEmp {
     width: 44px;
@@ -336,7 +337,7 @@ form {
     border-color: black;
     border-radius: 5px;
     position: relative;
-    left: 50px;
+    left: 13px;
 }
 #reload:hover, #reloadEmp:hover, #reloadInvoice:hover, #sendInvoice:hover {
     background-color: rgba(166, 165, 165, 0.6);
@@ -665,7 +666,7 @@ table td {
     font-weight: bold;
     font-color: black;
 }
-#paymentState{
+.paymentState{
     width: 135px;
     cursor: pointer;
 }

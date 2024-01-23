@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import org.xhtmlrenderer.pdf.ITextRenderer;
-import org.xhtmlrenderer.pdf.ITextReplacedElementFactory;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -67,8 +66,8 @@ public class InvoiceController {
     }
 
     @PostMapping(value = "/changePaymentStatus")
-    public String changePaymentStatus(Long invoiceId, String paymentState) {
-        //invoiceService.changePaymentStatus(invoiceId, paymentState);
+    public String changePaymentStatus(int invoiceNumber, String paymentState) {
+        invoiceService.changePaymentStatus(invoiceNumber, paymentState);
         return "redirect:/invoices/index";
     }
 

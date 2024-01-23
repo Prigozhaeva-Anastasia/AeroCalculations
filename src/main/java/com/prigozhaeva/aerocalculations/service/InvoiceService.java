@@ -10,7 +10,7 @@ import java.util.List;
 public interface InvoiceService {
     List<InvoiceDTO> findInvoiceDtoByInvoiceNumber(int invoiceNumber);
     List<InvoiceDTO> fetchAllDto();
-    void changePaymentStatus(Long invoiceId, String paymentState);
+    void changePaymentStatus(int invoiceNumber, String paymentState);
     Invoice findInvoiceById(Long id);
     List<Invoice> fetchAll();
     Invoice createInvoice(InvoiceCreateDTO invoiceCreateDTO);

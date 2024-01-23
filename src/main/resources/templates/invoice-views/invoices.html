@@ -80,12 +80,24 @@
                         <td class="center" th:text="${invoice.getTotalCost()}"></td>
                         <td class="center" th:text="${invoice.getCurrency()}"></td>
                         <td>
-                            <form id="formPaymentState" th:action="@{/invoices/changePaymentStatus(invoiceNumber=${invoice.getInvoiceNumber()})}" method="post">
-                                <select id="paymentState" class="form-select paymentState" aria-label="Disabled select example">
-                                    <option value="Оплачен">Оплачен</option>
-                                    <option value="Не оплачен">Не оплачен</option>
-                                    <option value="Отправлен">Отправлен</option>
-                                </select>
+                            <form id="formPaymentState" th:action="@{/invoices/changePaymentStatus}" method="post">
+                                <input type="text" th:value="${invoice.getInvoiceNumber()}" name="invoiceNumber" hidden="hidden">
+<!--                                <select id="paymentState" class="form-select paymentState" aria-label="Disabled select example"-->
+<!--                                        name="paymentState">-->
+<!--                                    <option value="Оплачен">Оплачен</option>-->
+<!--                                    <option value="Не оплачен">Не оплачен</option>-->
+<!--                                    <option value="Отправлен">Отправлен</option>-->
+<!--                                </select>-->
+<!--                                <select id="types" class="form-select paymentState" aria-label="Disabled select example"-->
+<!--                                        name="paymentState">-->
+<!--&lt;!&ndash;                                    <option value="Оплачен">Оплачен</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <option value="Не оплачен">Регулярный рейс</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <option value="Отправлен">Отправлен</option>&ndash;&gt;-->
+<!--                                    <option value="Оплачен">Оплачен</option>-->
+<!--                                                                        <option value="Не оплачен">Не оплачен</option>-->
+<!--                                                                        <option value="Отправлен">Отправлен</option>-->
+
+<!--                                </select>-->
                             </form>
                         </td>
                         <td>
