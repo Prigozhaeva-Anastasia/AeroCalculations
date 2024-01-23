@@ -1,15 +1,28 @@
 package com.prigozhaeva.aerocalculations.controller;
 
+import com.lowagie.text.pdf.BaseFont;
 import com.prigozhaeva.aerocalculations.dto.InvoiceDTO;
 import com.prigozhaeva.aerocalculations.entity.*;
 import com.prigozhaeva.aerocalculations.service.FlightService;
 import com.prigozhaeva.aerocalculations.service.InvoiceService;
 import com.prigozhaeva.aerocalculations.service.ServiceService;
+import com.prigozhaeva.aerocalculations.util.CityCodeMap;
 import com.prigozhaeva.aerocalculations.util.MappingUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
+import org.xhtmlrenderer.pdf.ITextRenderer;
+import org.xhtmlrenderer.pdf.ITextReplacedElementFactory;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -107,7 +120,76 @@ public class InvoiceController {
         Invoice invoiceDB = invoiceService.findInvoiceByInvoiceNumber(invoiceNumber);
         InvoiceDTO invoiceDTO = mappingUtils.mapToInvoiceDTO(invoiceDB);
         model.addAttribute(INVOICE, invoiceDTO);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        DateTimeFormatter formatterT = DateTimeFormatter.ofPattern("HH:mm");
+        model.addAttribute(FORMATTED_DATE_INVOICE, invoiceDTO.getInvoiceCreationDate().format(formatter));
+        model.addAttribute(FORMATTED_DATE_DEP_DATE, invoiceDTO.getFlight().getDepDate().format(formatter));
+        model.addAttribute(FORMATTED_DATE_ARR_DATE, invoiceDTO.getFlight().getArrDate().format(formatter));
+        model.addAttribute(FORMATTED_DATE_DEP_TIME, invoiceDTO.getFlight().getDepTime().format(formatterT));
+        model.addAttribute(FORMATTED_DATE_ARR_TIME, invoiceDTO.getFlight().getArrTime().format(formatterT));
+        model.addAttribute(DEP_CITY, CityCodeMap.getCityCodeMap().get(invoiceDTO.getFlight().getDepCity()));
+        model.addAttribute(ARR_CITY, CityCodeMap.getCityCodeMap().get(invoiceDTO.getFlight().getArrCity()));
         model.addAttribute(CURRENCY_SYMBOL, Currency.getInstance(invoiceDTO.getCurrency()).getSymbol());
         return "invoice-views/confirmForm";
+    }
+
+    @GetMapping(value = "/saveToPdf")
+    public String saveToPdf(int invoiceNumber) {
+        Invoice invoiceDB = invoiceService.findInvoiceByInvoiceNumber(invoiceNumber);
+        InvoiceDTO invoiceDTO = mappingUtils.mapToInvoiceDTO(invoiceDB);
+        String templatePath = "D:/diploma/проект/aeroCalculations/src/main/resources/templates/invoice-views/invoicePdf.html";
+        String htmlContent = readHtmlContent(templatePath);
+        String filledHtmlContent = fillTemplateWithData(htmlContent, invoiceDTO);
+        String pdfOutputPath = "D:/diploma/проект/pdf/" + invoiceNumber + ".pdf";
+        convertHtmlToPdf(filledHtmlContent, pdfOutputPath);
+        return "redirect:/invoices/index";
+    }
+
+    private static String readHtmlContent(String templatePath) {
+        try {
+            Path path = Paths.get(templatePath);
+            return Files.readString(path, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+    private static String fillTemplateWithData(String htmlContent, InvoiceDTO invoiceDTO) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        DateTimeFormatter formatterT = DateTimeFormatter.ofPattern("HH:mm");
+        String formattedDateInvoice = invoiceDTO.getInvoiceCreationDate().format(formatter);
+        String formattedDateDepDate = invoiceDTO.getFlight().getDepDate().format(formatter);
+        String formattedDateArrDate = invoiceDTO.getFlight().getArrDate().format(formatter);
+        String formattedDateDepTime = invoiceDTO.getFlight().getDepTime().format(formatterT);
+        String formattedDateArrTime = invoiceDTO.getFlight().getArrTime().format(formatterT);
+        Context context = new Context();
+        context.setVariable(INVOICE, invoiceDTO);
+        context.setVariable(FORMATTED_DATE_INVOICE, formattedDateInvoice);
+        context.setVariable(FORMATTED_DATE_DEP_DATE, formattedDateDepDate);
+        context.setVariable(FORMATTED_DATE_ARR_DATE, formattedDateArrDate);
+        context.setVariable(FORMATTED_DATE_DEP_TIME, formattedDateDepTime);
+        context.setVariable(FORMATTED_DATE_ARR_TIME, formattedDateArrTime);
+        context.setVariable(DEP_CITY, CityCodeMap.getCityCodeMap().get(invoiceDTO.getFlight().getDepCity()));
+        context.setVariable(ARR_CITY, CityCodeMap.getCityCodeMap().get(invoiceDTO.getFlight().getArrCity()));
+        context.setVariable(CURRENCY_SYMBOL, Currency.getInstance(invoiceDTO.getCurrency()).getSymbol());
+        TemplateEngine templateEngine = new TemplateEngine();
+        return templateEngine.process(htmlContent, context);
+    }
+
+    public static void convertHtmlToPdf(String htmlContent, String pdfFilePath) {
+        try {
+            ITextRenderer renderer = new ITextRenderer();
+            String fontPath = "D:/diploma/проект/aeroCalculations/src/main/resources/fonts";
+            String cyrillicFontPath = fontPath + "/arial.ttf";
+            renderer.getFontResolver().addFont(cyrillicFontPath, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+            renderer.setDocumentFromString(htmlContent);
+            renderer.layout();
+            try (OutputStream os = new FileOutputStream(pdfFilePath)) {
+                renderer.createPDF(os);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Подтверждение</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      font-size: 16px;
+      margin-left: -90px;
+    }
+    #invoiceLabel {
+      font-size: 14px;
+      margin-left: 160px;
+    }
+    #invoiceWithFlightInfTable {
+      position: relative;
+      left: 0px;
+      top: 20px;
+      width: 500px;
+      table-layout: fixed;
+    }
+    .clmnF1 {
+      width: 10px;
+    }
+    .clmnF2 {
+      width: 10px;
+    }
+    .providedServiceCharacteristics {
+      display: inline-block;
+    }
+    #divForProvidedServices {
+      width: 670px;
+      padding: 10px;
+      border-radius: 8px;
+      position: relative;
+      left: 0px;
+      top: 30px;
+      margin-bottom: 20px;
+    }
+    .divForProvServ {
+      border-radius: 5px;
+      margin: 5px;
+      padding: 3px;
+    }
+    .serviceNameWidth {
+      width: 530px;
+    }
+    .amountWidth {
+      width: 40px;
+      text-align: center;
+    }
+    .priceWidth {
+      width: 70px;
+      text-align: center;
+    }
+    .mainDivForInvoiceRes {
+      font-size: 10px;
+      margin-left: 70px;
+      min-height: 640px;
+      background-color: white;
+      width: 1100px;
+      padding: 25px;
+      margin-bottom: 20px;
+    }
+    #amountLabel {
+      position: relative;
+      left: 310px;
+    }
+    #priceLabel {
+      position: relative;
+      left: 315px;
+    }
+    .trForInvoiceTable {
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      height: 15px;
+      margin: 5px;
+      padding: 5px;
+      font-size: 10px;
+    }
+    .totalValue, .totalLabel {
+      color: #4A5A56;
+      font-size: 10px;
+    }
+    .totalLabel {
+      position: relative;
+      left: 8px;
+      width: 590px;
+    }
+    .totalValue {
+      width: 45px;
+      text-align: center;
+      position: relative;
+      left: 4px;
+    }
+    .horizontal-line {
+      border-top: 1px solid #4A5A56;
+      width: 100%;
+    }
+    #divForDiscount {
+      font-size: 10px;
+      margin-top: 8px;
+    }
+    #divForTotal {
+      font-size: 10px;
+    }
+    .greenFontClr {
+      color: #4A5A56;
+    }
+  </style>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"/>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+</head>
+<body>
+<div class="mainDivForInvoiceRes">
+  <div id="invoiceLabel">Счет (акт о сдаче-приемке услуг) №<span class="fontForNumbers"
+                                                                 th:text="${invoice.invoiceNumber}"></span><span> от </span><span
+          class="fontForNumbers" th:text="${formattedDateInvoice}"></span>
+  </div>
+  <table id="invoiceWithFlightInfTable">
+    <tr>
+      <td class="clmnF1">Номер рейса</td>
+      <td class="clmnF2" th:text="${invoice.flight.flightNumber}"></td>
+    </tr>
+    <tr>
+      <td class="clmnF1">Перевозчик (плательщик)</td>
+      <td class="clmnF2" th:text="${invoice.flight.aircraft.airline.payerName}"></td>
+    </tr>
+    <tr>
+      <td class="clmnF1">Тип ВС</td>
+      <td class="clmnF2" th:text="${invoice.flight.aircraft.aircraftType}"></td>
+    </tr>
+    <tr>
+      <td class="clmnF1">Максимальная взлетная масса</td>
+      <td class="clmnF2" th:text="${invoice.flight.aircraft.MTOW}"></td>
+    </tr>
+    <tr>
+      <td class="clmnF1">Маршрут следования</td>
+      <td class="clmnF2"><span th:text="${depCity}"></span><span> - </span><span
+              th:text="${arrCity}"></span></td>
+    </tr>
+    <tr>
+      <td class="clmnF1">Дата и время вылета</td>
+      <td class="clmnF2"><span
+              th:text="${formattedDateDepDate}"></span><span> </span><span
+              th:text="${formattedDateDepTime}"></span></td>
+    </tr>
+    <tr>
+      <td class="clmnF1">Дата и время прилета</td>
+      <td class="clmnF2"><span
+              th:text="${formattedDateArrDate}"></span><span> </span><span
+              th:text="${formattedDateArrTime}"></span></td>
+    </tr>
+  </table>
+  <div id="divForProvidedServices" style="background-color: rgb(184, 218, 211);">
+    <div class="trForInvoiceTable" style="background-color: rgb(159, 190, 184);">
+      <span id="airportTariffLabel" class="providedServiceCharacteristics">Аэропортовые и аэронавигационные тарифы</span>
+      <span id="amountLabel" class="providedServiceCharacteristics">Количество</span>
+      <span id="priceLabel" class="providedServiceCharacteristics">Стоимость</span>
+    </div>
+    <div th:if="${invoice.airportServices != null}" th:each="airportService:${invoice.airportServices}">
+      <div class="divForProvServ" style="background-color: rgb(255, 255, 255);">
+                    <span class="providedServiceCharacteristics serviceNameWidth"
+                          th:text="${airportService.service.name}"></span>
+        <span class="providedServiceCharacteristics amountWidth" th:text="${airportService.amount}"></span>
+        <span class="providedServiceCharacteristics priceWidth" th:text="${airportService.value}"></span>
+      </div>
+    </div>
+    <div>
+      <span class="providedServiceCharacteristics totalLabel">Итого:</span>
+      <span class="providedServiceCharacteristics totalValue"
+            th:text="${invoice.totalCostOfAirportServ}"></span>
+    </div>
+    <div class="trForInvoiceTable" style="background-color: rgb(159, 190, 184);"><span
+            id="groundHandlingTariffLabel">Тарифы за наземное обслуживание ВС</span></div>
+    <div th:each="groundHandlingService:${invoice.groundHandlingServices}">
+      <div class="divForProvServ" style="background-color: rgb(255, 255, 255);">
+                    <span class="providedServiceCharacteristics serviceNameWidth"
+                          th:text="${groundHandlingService.service.name}"></span>
+        <span class="providedServiceCharacteristics amountWidth"
+              th:text="${groundHandlingService.amount}"></span>
+        <span class="providedServiceCharacteristics priceWidth"
+              th:text="${groundHandlingService.value}"></span>
+      </div>
+    </div>
+    <div>
+      <span class="providedServiceCharacteristics totalLabel">Итого:</span>
+      <span class="providedServiceCharacteristics totalValue"
+            th:text="${invoice.totalCostOfGroundHandlingServ}"></span>
+    </div>
+    <div class="horizontal-line"></div>
+    <div id="divForDiscount">
+      <span class="providedServiceCharacteristics totalLabel">Скидка:</span>
+      <span class="providedServiceCharacteristics totalValue" th:text="${invoice.discount}"></span>
+      <span class="providedServiceCharacteristics greenFontClr" th:text="${currencySymbol}"></span>
+    </div>
+    <div id="divForTotal">
+      <span class="providedServiceCharacteristics totalLabel">Итого:</span>
+      <span class="providedServiceCharacteristics totalValue" th:text="${invoice.totalCost}"></span>
+      <span class="providedServiceCharacteristics greenFontClr" th:text="${currencySymbol}"></span>
+    </div>
+  </div>
+</div>
+</body>
+</html>

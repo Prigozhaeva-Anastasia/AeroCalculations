@@ -1,19 +1,26 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="template">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
     <title>Подтверждение</title>
-    <link th:href="@{/css/genStyle.css}" rel="stylesheet">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/css/genStyle.css" rel="stylesheet"/>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"/>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 </head>
 <body>
 <div layout:fragment="content1">
     <div class="mainDivForInvoiceRes">
+        <form method="get" th:action="@{http://localhost:8082/invoices/saveToPdf}">
+            <input type="text" name="invoiceNumber" th:value="${invoice.invoiceNumber}" hidden="hidden"/>
+            <button id="downloadBtn" type="submit"><i id="downloadIcon" class="fa fa-download" aria-hidden="true"></i>
+            </button>
+        </form>
+
         <div id="invoiceLabel">Счет (акт о сдаче-приемке услуг) №<span class="fontForNumbers"
                                                                        th:text="${invoice.invoiceNumber}"></span><span> от </span><span
-                class="fontForNumbers" th:text="${#temporals.format(invoice.invoiceCreationDate, 'dd.MM.yyyy')}"></span>
+                class="fontForNumbers" th:text="${formattedDateInvoice}"></span>
         </div>
         <table id="invoiceWithFlightInfTable">
             <tr>
@@ -34,20 +41,20 @@
             </tr>
             <tr>
                 <td class="clmnF1">Маршрут следования</td>
-                <td class="clmnF2"><span th:text="${invoice.flight.depCity}"></span><span> - </span><span
-                        th:text="${invoice.flight.arrCity}"></span></td>
+                <td class="clmnF2"><span th:text="${depCity}"></span><span> - </span><span
+                        th:text="${arrCity}"></span></td>
             </tr>
             <tr>
                 <td class="clmnF1">Дата и время вылета</td>
                 <td class="clmnF2"><span
-                        th:text="${#temporals.format(invoice.flight.depDate, 'dd.MM.yyyy')}"></span><span> </span><span
-                        th:text="${#temporals.format(invoice.flight.depTime, 'HH:mm')}"></span></td>
+                        th:text="${formattedDateDepDate}"></span><span> </span><span
+                        th:text="${formattedDateDepTime}"></span></td>
             </tr>
             <tr>
                 <td class="clmnF1">Дата и время прилета</td>
                 <td class="clmnF2"><span
-                        th:text="${#temporals.format(invoice.flight.arrDate, 'dd.MM.yyyy')}"></span><span> </span><span
-                        th:text="${#temporals.format(invoice.flight.arrTime, 'HH:mm')}"></span></td>
+                        th:text="${formattedDateArrDate}"></span><span> </span><span
+                        th:text="${formattedDateArrTime}"></span></td>
             </tr>
         </table>
         <div id="divForProvidedServices">
@@ -56,7 +63,7 @@
                 <span id="amountLabel" class="providedServiceCharacteristics">Количество</span>
                 <span id="priceLabel" class="providedServiceCharacteristics">Стоимость</span>
             </div>
-            <div th:each="airportService:${invoice.airportServices}">
+            <div th:if="${invoice.airportServices != null}" th:each="airportService:${invoice.airportServices}">
                 <div class="divForProvServ">
                     <span class="providedServiceCharacteristics serviceNameWidth"
                           th:text="${airportService.service.name}"></span>
@@ -66,9 +73,11 @@
             </div>
             <div>
                 <span class="providedServiceCharacteristics totalLabel">Итого:</span>
-                <span class="providedServiceCharacteristics totalValue" th:text="${invoice.totalCostOfAirportServ}"></span>
+                <span class="providedServiceCharacteristics totalValue"
+                      th:text="${invoice.totalCostOfAirportServ}"></span>
             </div>
-            <div class="trForInvoiceTable"><span id="groundHandlingTariffLabel">Тарифы за наземное обслуживание ВС</span></div>
+            <div class="trForInvoiceTable"><span
+                    id="groundHandlingTariffLabel">Тарифы за наземное обслуживание ВС</span></div>
             <div th:each="groundHandlingService:${invoice.groundHandlingServices}">
                 <div class="divForProvServ">
                     <span class="providedServiceCharacteristics serviceNameWidth"
@@ -81,7 +90,8 @@
             </div>
             <div>
                 <span class="providedServiceCharacteristics totalLabel">Итого:</span>
-                <span class="providedServiceCharacteristics totalValue" th:text="${invoice.totalCostOfGroundHandlingServ}"></span>
+                <span class="providedServiceCharacteristics totalValue"
+                      th:text="${invoice.totalCostOfGroundHandlingServ}"></span>
             </div>
             <div class="horizontal-line"></div>
             <div id="divForDiscount">
@@ -96,7 +106,6 @@
             </div>
         </div>
     </div>
-</div>
 </div>
 </body>
 </html>

@@ -805,11 +805,11 @@ option {
     width: 790px;
 }
 .amountWidth {
-    width:110px;
+    width:100px;
     text-align: center;
 }
 .priceWidth {
-    width: 70px;
+    width: 87px;
     text-align: center;
 }
 .mainDivForInvoiceRes {
@@ -828,7 +828,7 @@ option {
 }
 #priceLabel {
     position: relative;
-    left: 455px;
+    left: 458px;
 }
 .trForInvoiceTable {
     border-top-left-radius: 5px;
@@ -867,4 +867,21 @@ option {
 }
 .greenFontClr {
     color: #4A5A56;
+}
+#downloadBtn {
+    position: relative;
+    top: -10px;
+    left: 620px;
+    background-color: transparent;
+    border-color: transparent;
+    position: absolute;
+}
+#downloadBtn:hover {
+    background-color: rgba(166, 165, 165, 0.5);
+    border-radius: 5px;
+}
+#downloadIcon {
+    margin-top: 7px;
+    font-size: 40px;
+    color: rgba(159, 190, 184);
 }

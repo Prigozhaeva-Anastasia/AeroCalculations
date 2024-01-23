@@ -50,4 +50,11 @@ public class Constant {
     public static final String DISABLED_PERSON = "инвалид";
     public static final int FLIGHT_PLAN = 20;
     public static final String CURRENCY_SYMBOL = "currencySymbol";
+    public static final String FORMATTED_DATE_INVOICE = "formattedDateInvoice";
+    public static final String FORMATTED_DATE_DEP_DATE = "formattedDateDepDate";
+    public static final String FORMATTED_DATE_ARR_DATE = "formattedDateArrDate";
+    public static final String FORMATTED_DATE_DEP_TIME = "formattedDateDepTime";
+    public static final String FORMATTED_DATE_ARR_TIME = "formattedDateArrTime";
+    public static final String DEP_CITY = "depCity";
+    public static final String ARR_CITY = "arrCity";
 }
