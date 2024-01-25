@@ -93,8 +93,8 @@
                         <td th:text="${flight.getFlightType()}"></td>
                         <td class="center" th:text="${flight.getDepCity()}"></td>
                         <td class="center" th:text="${flight.getArrCity()}"></td>
-                        <td class="center" th:text="${flight.getDepDate()}"></td>
-                        <td class="center" th:text="${flight.getDepTime()}"></td>
+                        <td class="center" th:text="${#temporals.format(flight.getDepDate(), 'dd.MM.yyyy')}"></td>
+                        <td class="center" th:text="${#temporals.format(flight.getDepTime(), 'HH:mm')}"></td>
                         <td>
                             <a class="btn btn-primary output"
                                th:href="@{/flights/formUpdate(flightId=${flight.getId()})}"

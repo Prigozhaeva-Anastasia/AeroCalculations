@@ -193,7 +193,7 @@ form {
 #update:hover {
     background-color: #7BAFA5;
 }
-#sortedFieldByName, #sortedFieldByPayerName,#sortedFieldByPassengerCapacity, #sortedFieldByMTOW, #sortedFieldByDate, #sortedFieldByInvoiceNumber {
+#sortedFieldByName, #sortedFieldByPayerName,#sortedFieldByPassengerCapacity, #sortedFieldByMTOW, #sortedFieldByDate, #sortedFieldByInvoiceNumber, #sortedFieldByInvoiceCreationDate {
     position: relative;
     top: 7px;
     text-decoration: none;
@@ -244,7 +244,7 @@ form {
 #types {
     margin-right: 10px;
 }
-#ratingLabel, #ratingLabel2 {
+#ratingLabel, #ratingLabel2, #airlineLabel, #paymentStatusLabel {
     font-family: Georgia;
     font-size: 17px;
     padding-bottom: 5px;
@@ -267,7 +267,7 @@ form {
 #inline {
     display: flex;
 }
-#formFilterForFlights {
+#formFilterForFlights, #formFilterForInvoices {
     display: table;
 }
 #directionDiv {
@@ -282,7 +282,13 @@ form {
     display: none;
     position: relative;
     top: -5px;
-    left: -475px;
+    left: -490px;
+}
+#formFilterForInvoices {
+    display: none;
+    position: relative;
+    top: -5px;
+    left: -510px;
 }
 #formFilterForFlights {
     float: left;
@@ -885,4 +891,8 @@ option {
     margin-top: 7px;
     font-size: 40px;
     color: rgba(159, 190, 184);
+}
+.airlinesFilter {
+    width: 200px;
+    cursor: pointer;
 }

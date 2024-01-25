@@ -53,6 +53,34 @@
                         <button type="button" id="filterForInvoices" class="btn"></button>
                         <a id="sendInvoice" class="btn" th:href="@{/invoices/sendInvoiceForm}"></a>
                     </form>
+                    <form id="formFilterForInvoices" method="post" th:action="@{/invoices/filter}">
+                        <div class="cell">
+                            <label id="airlineLabel">Авиакомпания:</label>
+                            <select id="airlines" class="form-select airlinesFilter" aria-label="Disabled select example" name="airlineId">
+                                <option selected></option>
+                                <option th:each="airline :${listAirlines}" th:value="${airline.id}" th:text="${airline.name}"></option>
+                            </select>
+                        </div>
+                        <div class="cell">
+                            <label id="ratingLabel">Дата создания счета:</label>
+                            <div class="inputs">
+                                <input id="date1" class="form-control" type="date" name="date1" placeholder="от">
+                                <input id="date2" class="form-control" type="date" name="date2" placeholder="до">
+                            </div>
+                        </div>
+                        <div class="cell">
+                            <label id="paymentStatusLabel">Статус оплаты:</label>
+                            <select id="paymentStatuses" class="form-select paymentState" aria-label="Disabled select example" name="paymentStatus">
+                                <option selected></option>
+                                <option value="Оплачен">Оплачен</option>
+                                <option value="Не оплачен">Не оплачен</option>
+                                <option value="Отправлен">Отправлен</option>
+                            </select>
+                        </div>
+                        <div>
+                            <button id="applyBtn" type="submit">Применить</button>
+                        </div>
+                    </form>
                 </div>
             </div>
             <div class="table-responsive">
@@ -61,7 +89,8 @@
                     <tr class="text-center">
                         <th><a id="sortedFieldByInvoiceNumber" class="nav-link dropdown-toggle menu"
                                th:href="@{/invoices/sortByInvoiceNumber}">Номер счета</a></th>
-                        <th style="width: 180px;">Дата создания счета</th>
+                        <th style="width: 180px;"><a id="sortedFieldByInvoiceCreationDate" class="nav-link dropdown-toggle menu"
+                                                     th:href="@{/invoices/sortByInvoiceCreationDate}">Дата создания счета</a></th>
                         <th>Номер рейса</th>
                         <th>Авиакомпания</th>
                         <th>Сумма</th>
@@ -74,7 +103,7 @@
                     <tr class="text-center" th:each="invoice, iterStat : ${listInvoices}">
                         <input type="text" class="paymentStateHid" th:value="${invoice.getPaymentState()}" hidden>
                         <td class="center" th:text="${invoice.getInvoiceNumber()}"></td>
-                        <td class="center" th:text="${invoice.getInvoiceCreationDate()}"></td>
+                        <td class="center" th:text="${#temporals.format(invoice.getInvoiceCreationDate(), 'dd.MM.yyyy')}"></td>
                         <td class="center" th:text="${invoice.getFlight().getFlightNumber()}"></td>
                         <td class="center" th:text="${invoice.getFlight().getAircraft().getAirline().getName()}"></td>
                         <td class="center" th:text="${invoice.getTotalCost()}"></td>
