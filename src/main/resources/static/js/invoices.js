@@ -1,3 +1,9 @@
+function saveMsg(element) {
+    let invoiceNumber = element.getAttribute('data-invoice-number');
+    let alertMessage = 'Счет был сохранен в pdf-формате: D:/diploma/проект/pdf/' + invoiceNumber + '.pdf';
+    alert(alertMessage);
+}
+
 window.onload = function () {
     let arrPaymentStateHid = document.querySelectorAll(".paymentStateHid");
     let filterForInvoices = document.getElementById('filterForInvoices');

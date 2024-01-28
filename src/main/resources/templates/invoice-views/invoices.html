@@ -125,7 +125,10 @@
                                onclick="return confirm('Вы действительно хотите удалить выбранный счет?')"
                                th:href="@{/invoices/delete(invoiceId=${invoice.getId()})}"></a>
                             <a class="btn download"
-                               th:href="@{/invoices/saveToPdf(invoiceNumber=${invoice.getInvoiceNumber()})}"></a>
+                               th:href="@{/invoices/saveToPdf(invoiceNumber=${invoice.getInvoiceNumber()})}"
+                               th:attr="data-invoice-number=${invoice.getInvoiceNumber()}"
+                               onclick="saveMsg(this)">
+                            </a>
                             <a class="btn createFile"
                                th:href="@{/invoices/createFile(invoiceNumber=${invoice.getInvoiceNumber()})}"></a>
                         </td>
