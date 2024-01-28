@@ -11,6 +11,7 @@ import com.prigozhaeva.aerocalculations.service.InvoiceService;
 import com.prigozhaeva.aerocalculations.service.ServiceService;
 import com.prigozhaeva.aerocalculations.util.CityCodeMap;
 import com.prigozhaeva.aerocalculations.util.MappingUtils;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -251,5 +252,11 @@ public class InvoiceController {
         model.addAttribute(AIRPORT_SERVICES_MODEL, airportServices);
         model.addAttribute(GROUND_HANDLING_SERVICES_MODEL, groundHandlingServices);
         return "invoice-views/formUpdate";
+    }
+
+    @GetMapping(value = "/delete")
+    public String deleteInvoice(Long invoiceId) {
+        invoiceService.removeInvoice(invoiceId);
+        return "redirect:/invoices/index";
     }
 }

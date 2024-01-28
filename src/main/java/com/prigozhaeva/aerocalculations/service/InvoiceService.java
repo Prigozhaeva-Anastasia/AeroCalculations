@@ -20,4 +20,5 @@ public interface InvoiceService {
     Invoice createInvoice(int invoiceNumber, LocalDate invoiceCreationDate, String currency, String paymentState, Long employeeId,Long flightId);
     Invoice findInvoiceByInvoiceNumber(int invoiceNumber);
     Invoice createOrUpdateInvoice(Invoice invoice);
+    void removeInvoice(Long invoiceId);
 }
