@@ -1,7 +1,9 @@
 package com.prigozhaeva.aerocalculations.controller;
 
 import com.lowagie.text.pdf.BaseFont;
+import com.prigozhaeva.aerocalculations.dto.InvoiceCreateDTO;
 import com.prigozhaeva.aerocalculations.dto.InvoiceDTO;
+import com.prigozhaeva.aerocalculations.dto.InvoiceUpdateDTO;
 import com.prigozhaeva.aerocalculations.entity.*;
 import com.prigozhaeva.aerocalculations.service.AirlineService;
 import com.prigozhaeva.aerocalculations.service.FlightService;
@@ -62,7 +64,7 @@ public class InvoiceController {
         if (keyword.isEmpty()) {
             invoiceList = new CopyOnWriteArrayList<>(invoiceService.fetchAllDto());
         } else {
-            invoiceList = new CopyOnWriteArrayList<>(invoiceService.findInvoiceDtoByInvoiceNumber(Integer.parseInt(keyword)));
+            invoiceList = new CopyOnWriteArrayList<>(invoiceService.findInvoicesDtoByInvoiceNumber(Integer.parseInt(keyword)));
         }
         model.addAttribute(LIST_INVOICES, invoiceList);
         model.addAttribute(KEYWORD, keyword);
@@ -228,5 +230,26 @@ public class InvoiceController {
         model.addAttribute(LIST_INVOICES, invoiceDTOList);
         model.addAttribute(LIST_AIRLINES, airlineService.fetchAll());
         return "invoice-views/invoices";
+    }
+
+    @GetMapping(value = "/formUpdate")
+    public String updateInvoice(Model model, int invoiceNumber) {
+        InvoiceDTO dto= invoiceService.findInvoiceDtoByInvoiceNumber(invoiceNumber);
+        List<ProvidedService> airportServices = serviceService.fetchAll().stream()
+                .filter(service -> service.getServiceType().equals(AIRPORT_SERVICES))
+                .filter(service -> dto.getAirportServices().stream()
+                        .noneMatch(providedService -> providedService.getService().getId().equals(service.getId())))
+                .map(service -> ProvidedService.builder().service(service).build())
+                .collect(Collectors.toList());
+        List<ProvidedService> groundHandlingServices = serviceService.fetchAll().stream()
+                .filter(service -> service.getServiceType().equals(GROUND_HANDLING_SERVICES))
+                .filter(service -> dto.getGroundHandlingServices().stream()
+                        .noneMatch(providedService -> providedService.getService().getId().equals(service.getId())))
+                .map(service -> ProvidedService.builder().service(service).build())
+                .collect(Collectors.toList());
+        model.addAttribute(INVOICE, dto);
+        model.addAttribute(AIRPORT_SERVICES_MODEL, airportServices);
+        model.addAttribute(GROUND_HANDLING_SERVICES_MODEL, groundHandlingServices);
+        return "invoice-views/formUpdate";
     }
 }

@@ -2,6 +2,7 @@ package com.prigozhaeva.aerocalculations.service.impl;
 
 import com.prigozhaeva.aerocalculations.dto.InvoiceCreateDTO;
 import com.prigozhaeva.aerocalculations.dto.InvoiceDTO;
+import com.prigozhaeva.aerocalculations.dto.InvoiceUpdateDTO;
 import com.prigozhaeva.aerocalculations.entity.Employee;
 import com.prigozhaeva.aerocalculations.entity.Flight;
 import com.prigozhaeva.aerocalculations.entity.Invoice;
@@ -34,10 +35,20 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public List<InvoiceDTO> findInvoiceDtoByInvoiceNumber(int invoiceNumber) {
+    public List<InvoiceDTO> findInvoicesDtoByInvoiceNumber(int invoiceNumber) {
         return invoiceRepository.findInvoicesByInvoiceNumber(invoiceNumber).stream()
                 .map(mappingUtils::mapToInvoiceDTO)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public InvoiceDTO findInvoiceDtoByInvoiceNumber(int invoiceNumber) {
+        return mappingUtils.mapToInvoiceDTO(invoiceRepository.findInvoiceByInvoiceNumber(invoiceNumber));
+    }
+
+    @Override
+    public InvoiceUpdateDTO findInvoiceUpdateDtoByInvoiceNumber(int invoiceNumber) {
+        return mappingUtils.mapToInvoiceUpdateDTO(invoiceRepository.findInvoiceByInvoiceNumber(invoiceNumber));
     }
 
     @Override
@@ -91,7 +102,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         return invoiceRepository.findInvoiceByInvoiceNumber(invoiceNumber);
     }
     public Invoice createOrUpdateInvoice(Invoice invoice) {
-        return invoiceRepository.save(invoice);
+            return invoiceRepository.save(invoice);
     }
 
 }

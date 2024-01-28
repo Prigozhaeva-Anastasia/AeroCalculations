@@ -8,7 +8,7 @@
 <body class="mainFont">
 <div layout:fragment="content1">
   <div class="col-md-6 offset-3 mt-3">
-    <form id="form" class="form-control mb" method="post" th:action="@{update}" th:object="${aircraft}">
+    <form id="form" class="form-control mb" method="post" th:action="@{update}" th:object="${aircraft}"method="post" th:action="@{update}" th:object="${aircraft}">
       <div class="mb-3 mt-3">
         <label for="tailNumber" class="form-label">Бортовой номер:</label>
         <input id="tailNumber" type="text" name="tailNumber" class="form-control" th:value="${aircraft.getTailNumber()}" readonly="readonly">

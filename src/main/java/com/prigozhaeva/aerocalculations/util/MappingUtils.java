@@ -3,6 +3,7 @@ package com.prigozhaeva.aerocalculations.util;
 import com.prigozhaeva.aerocalculations.dto.FlightDTO;
 import com.prigozhaeva.aerocalculations.dto.InvoiceCreateDTO;
 import com.prigozhaeva.aerocalculations.dto.InvoiceDTO;
+import com.prigozhaeva.aerocalculations.dto.InvoiceUpdateDTO;
 import com.prigozhaeva.aerocalculations.entity.Flight;
 import com.prigozhaeva.aerocalculations.entity.Invoice;
 import com.prigozhaeva.aerocalculations.entity.ProvidedService;
@@ -56,6 +57,7 @@ public class  MappingUtils {
 
     public InvoiceDTO mapToInvoiceDTO(Invoice invoice){
         InvoiceDTO dto = new InvoiceDTO();
+        dto.setId(invoice.getId());
         dto.setInvoiceNumber(invoice.getInvoiceNumber());
         dto.setInvoiceCreationDate(invoice.getInvoiceCreationDate());
         dto.setCurrency(invoice.getCurrency());
@@ -105,5 +107,40 @@ public class  MappingUtils {
         invoice.setFlight(flightService.findFlightById(dto.getFlightId()));
         invoice.setEmployee(employeeService.findEmployeeByEmail("astapovich@gmail.com"));//change_this
         return invoice;
+    }
+
+    public Invoice mapToInvoice(InvoiceUpdateDTO dto){
+        Invoice invoice = new Invoice();
+        invoice.setId(dto.getId());
+        invoice.setInvoiceNumber(dto.getInvoiceNumber());
+        invoice.setInvoiceCreationDate(dto.getInvoiceCreationDate());
+        invoice.setCurrency(dto.getCurrency());
+        return invoice;
+    }
+
+    public Invoice mapToInvoice(InvoiceDTO dto){
+        Invoice invoice = new Invoice();
+        invoice.setInvoiceNumber(dto.getInvoiceNumber());
+        invoice.setInvoiceCreationDate(dto.getInvoiceCreationDate());
+        invoice.setCurrency(dto.getCurrency());
+        invoice.setPaymentState(NOT_PAID_STATUS);
+        invoice.setFlight(dto.getFlight());
+        invoice.setEmployee(employeeService.findEmployeeByEmail("astapovich@gmail.com"));//change_this
+        return invoice;
+    }
+
+    public InvoiceUpdateDTO mapToInvoiceUpdateDTO(Invoice invoice){
+        InvoiceUpdateDTO dto = new InvoiceUpdateDTO();
+        dto.setId(invoice.getId());
+        dto.setInvoiceNumber(invoice.getInvoiceNumber());
+        dto.setInvoiceCreationDate(invoice.getInvoiceCreationDate());
+        dto.setCurrency(invoice.getCurrency());
+        dto.setAirportServices(invoice.getFlight().getProvidedServices().stream()
+                .filter(providedService -> providedService.getService().getServiceType().equals(AIRPORT_SERVICES))
+                .collect(Collectors.toList()));
+        dto.setGroundHandlingServices(invoice.getFlight().getProvidedServices().stream()
+                .filter(providedService -> providedService.getService().getServiceType().equals(GROUND_HANDLING_SERVICES))
+                .collect(Collectors.toList()));
+        return dto;
     }
 }

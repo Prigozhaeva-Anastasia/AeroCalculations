@@ -71,10 +71,12 @@ form {
 }
 .btn-danger {
     background-color: rgba(272, 77, 77);
+    cursor: pointer;
 }
 .output{
     background-color: #B8DAD3;
     border-color: #B8DAD3;
+    cursor: pointer;
 }
 .output:hover {
     background-color: #97BFB7;

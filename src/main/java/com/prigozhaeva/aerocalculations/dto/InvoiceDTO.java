@@ -12,6 +12,7 @@ import java.util.List;
 
 @Data
 public class InvoiceDTO {
+    private Long id;
     private int invoiceNumber;
     private LocalDate invoiceCreationDate;
     private String currency;
