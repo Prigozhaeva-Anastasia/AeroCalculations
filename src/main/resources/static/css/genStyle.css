@@ -49,6 +49,9 @@ form {
 .error {
     box-shadow: 0 0 5px rgba(255, 63, 63, 0.7);
 }
+.errorForFile {
+    border-bottom: 1px solid rgba(255, 63, 63, 0.7);
+}
 #formSearch {
     margin-bottom: 20px;
     margin-right: 10px;
@@ -56,6 +59,13 @@ form {
 @charset "UTF-8";
 .errorLabel {
     color: red;
+}
+@charset "UTF-8";
+.errorLabelForFile {
+    color: rgba(255, 96, 96, 0.7);
+    font-size: 17px;
+    display: none;
+    width: 500px;
 }
 #errorLabel {
     display: none;
@@ -688,6 +698,7 @@ option {
     background-color: white;
     width: 1080px;
     padding: 25px;
+    margin-bottom: 20px;
 }
 .column1 {
     position: relative;
@@ -727,7 +738,7 @@ option {
     top: 70px;
     left: 5px;
 }
-#saveBtnInvoice:hover {
+#saveBtnInvoice:hover, #saveFileWithTermsPayment:hover {
     background-color: #7BAFA5;
 }
 .whiteColor {
@@ -792,7 +803,7 @@ option {
 .clmnF2 {
     width: 150px;
 }
-.providedServiceCharacteristics {
+.inlineBlock {
     display: inline-block;
 }
 #divForProvidedServices {
@@ -897,4 +908,64 @@ option {
 .airlinesFilter {
     width: 200px;
     cursor: pointer;
+}
+.lblTermsPayment {
+    padding-top: 7px;
+    padding-left: 15px;
+    width: 1020px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: rgba(159, 190, 184);
+    margin-bottom: 20px;
+}
+.divForPaymentTerms {
+    color: white;
+    font-size: 18px;
+    font-family: Georgia;
+}
+#dueDate {
+    width: 150px;
+}
+#lblForDueDate {
+    width: 20px;
+}
+#finesAndPenalties {
+    width: 150px;
+}
+#lblForDueDate {
+    color: black;
+    width: 30px;
+}
+.paymentTerm {
+    margin-left: 15px;
+    margin-bottom: 20px;
+}
+#lblFL, #lblPhone {
+    color: black;
+    width: 400px;
+}
+#specialConditions {
+    width: 550px;
+    height: 150px;
+}
+.contactData {
+    width: 300px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+#paymentMethods {
+    width: 300px;
+}
+#saveFileWithTermsPayment {
+    background-color: #97BFB7;
+    font-family: Georgia;
+    font-size: 17px;
+    border-color: transparent;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0);
+    border-radius: 10px;
+    position: relative;
+    left: 455px;
+}
+#formCreateFile {
+    margin-left: 00px;
 }

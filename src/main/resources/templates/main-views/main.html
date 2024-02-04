@@ -7,6 +7,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script type="text/javascript" src="../js/main.js" th:src="@{/js/main.js}"></script>
 </head>
 <body>
 <div layout:fragment="content1">
@@ -31,40 +32,40 @@
                             <input style="width: 5rem;" type="number" name="transferList" id="year" class="form-control"
                                    th:value="${year}" required/>
                             <label style="margin-bottom: 10px;" class="form-label">Месяц:</label>
-                            <div class="divForModal"><a class="choices"
+                            <div class="divForModal"><a id="monthLink1" class="choices"
                                                         th:href="@{/reports/flightDynamics(year=${year}, month=1)}">январь</a>
                             </div>
-                            <div class="divForModal"><a class="choices"
+                            <div class="divForModal"><a id="monthLink2" class="choices"
                                                         th:href="@{/reports/flightDynamics(year=${year}, month=2)}">февраль</a>
                             </div>
-                            <div class="divForModal"><a class="choices"
+                            <div class="divForModal"><a id="monthLink3" class="choices"
                                                         th:href="@{/reports/flightDynamics(year=${year}, month=3)}">март</a>
                             </div>
-                            <div class="divForModal"><a class="choices"
+                            <div class="divForModal"><a id="monthLink4" class="choices"
                                                         th:href="@{/reports/flightDynamics(year=${year}, month=4)}">апрель</a>
                             </div>
-                            <div class="divForModal"><a class="choices"
+                            <div class="divForModal"><a id="monthLink5" class="choices"
                                                         th:href="@{/reports/flightDynamics(year=${year}, month=5)}">май</a>
                             </div>
-                            <div class="divForModal"><a class="choices"
+                            <div class="divForModal"><a id="monthLink6" class="choices"
                                                         th:href="@{/reports/flightDynamics(year=${year}, month=6)}">июнь</a>
                             </div>
-                            <div class="divForModal"><a class="choices"
+                            <div class="divForModal"><a id="monthLink7" class="choices"
                                                         th:href="@{/reports/flightDynamics(year=${year}, month=7)}">июль</a>
                             </div>
-                            <div class="divForModal"><a class="choices"
+                            <div class="divForModal"><a id="monthLink8" class="choices"
                                                         th:href="@{/reports/flightDynamics(year=${year}, month=8)}">август</a>
                             </div>
-                            <div class="divForModal"><a class="choices"
+                            <div class="divForModal"><a id="monthLink9" class="choices"
                                                         th:href="@{/reports/flightDynamics(year=${year}, month=9)}">сентябрь</a>
                             </div>
-                            <div class="divForModal"><a class="choices"
+                            <div class="divForModal"><a id="monthLink10" class="choices"
                                                         th:href="@{/reports/flightDynamics(year=${year}, month=10)}">октябрь</a>
                             </div>
-                            <div class="divForModal"><a class="choices"
+                            <div class="divForModal"><a id="monthLink11" class="choices"
                                                         th:href="@{/reports/flightDynamics(year=${year}, month=11)}">ноябрь</a>
                             </div>
-                            <div class="divForModal"><a class="choices"
+                            <div class="divForModal"><a id="monthLink12" class="choices"
                                                         th:href="@{/reports/flightDynamics(year=${year}, month=12)}">декабрь</a>
                             </div>
                         </div>
@@ -114,50 +115,49 @@
                         </div>
                         <div class="modal-body">
                             <label class="form-label" for="year">Год:</label>
-                            <input style="width: 5rem;" type="number" name="transferList" class="form-control"
+                            <input id="yearForAirlines" style="width: 5rem;" type="number" name="transferList" class="form-control"
                                    th:value="${year}" required/>
                             <label style="margin-bottom: 10px;" class="form-label">Месяц:</label>
-                            <div class="divForModal"><a class="choices"
+                            <div class="divForModal"><a id="month1" class="choices"
                                                         th:href="@{/reports/changesInNumOfAirlinesDynamics(year=${year}, month=1)}">январь</a>
                             </div>
-                            <div class="divForModal"><a class="choices"
+                            <div class="divForModal"><a id="month2" class="choices"
                                                         th:href="@{/reports/changesInNumOfAirlinesDynamics(year=${year}, month=2)}">февраль</a>
                             </div>
-                            <div class="divForModal"><a class="choices"
+                            <div class="divForModal"><a id="month3" class="choices"
                                                         th:href="@{/reports/changesInNumOfAirlinesDynamics(year=${year}, month=3)}">март</a>
                             </div>
-                            <div class="divForModal"><a class="choices"
+                            <div class="divForModal"><a id="month4" class="choices"
                                                         th:href="@{/reports/changesInNumOfAirlinesDynamics(year=${year}, month=4)}">апрель</a>
                             </div>
-                            <div class="divForModal"><a class="choices"
+                            <div class="divForModal"><a id="month5" class="choices"
                                                         th:href="@{/reports/changesInNumOfAirlinesDynamics(year=${year}, month=5)}">май</a>
                             </div>
-                            <div class="divForModal"><a class="choices"
+                            <div class="divForModal"><a id="month6" class="choices"
                                                         th:href="@{/reports/changesInNumOfAirlinesDynamics(year=${year}, month=6)}">июнь</a>
                             </div>
-                            <div class="divForModal"><a class="choices"
+                            <div class="divForModal"><a id="month7" class="choices"
                                                         th:href="@{/reports/changesInNumOfAirlinesDynamics(year=${year}, month=7)}">июль</a>
                             </div>
-                            <div class="divForModal"><a class="choices"
+                            <div class="divForModal"><a id="month8" class="choices"
                                                         th:href="@{/reports/changesInNumOfAirlinesDynamics(year=${year}, month=8)}">август</a>
                             </div>
-                            <div class="divForModal"><a class="choices"
+                            <div class="divForModal"><a  id="month9" class="choices"
                                                         th:href="@{/reports/changesInNumOfAirlinesDynamics(year=${year}, month=9)}">сентябрь</a>
                             </div>
-                            <div class="divForModal"><a class="choices"
+                            <div class="divForModal"><a id="month10" class="choices"
                                                         th:href="@{/reports/changesInNumOfAirlinesDynamics(year=${year}, month=10)}">октябрь</a>
                             </div>
-                            <div class="divForModal"><a class="choices"
+                            <div class="divForModal"><a id="month11" class="choices"
                                                         th:href="@{/reports/changesInNumOfAirlinesDynamics(year=${year}, month=11)}">ноябрь</a>
                             </div>
-                            <div class="divForModal"><a class="choices"
+                            <div class="divForModal"><a id="month12" class="choices"
                                                         th:href="@{/reports/changesInNumOfAirlinesDynamics(year=${year}, month=12)}">декабрь</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
         <div class="square">
             <button id="contributionsSquare" type="submit" th:formaction="@{/airlines/index}"><label

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="template">
+<head>
+    <meta charset="UTF-8">
+    <title>Условия и сроки оплаты</title>
+    <link th:href="@{/css/genStyle.css}" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script type="text/javascript" src="../js/createFileWithTermsPayment.js"
+            th:src="@{/js/createFileWithTermsPayment.js}"></script>
+</head>
+<body>
+<div layout:fragment="content1">
+    <div class="mainDivForInvoice">
+        <form id="formCreateFile" method="post" th:action="@{createFile}">
+            <input class="form-control" type="text" name="invoiceNumber"
+                   th:value="${invoicePaymentTermsDTO.getInvoiceNumber()}" hidden="hidden">
+            <div class="divForPaymentTerms">
+                <div class="lblTermsPayment">Срок оплаты</div>
+                <div class="paymentTerm">
+                    <div id="lblForDueDate" class="inlineBlock">до</div>
+                    <div class="inlineBlock">
+                        <input id="arrivalDate" type="date" class="form-control" th:field="${invoicePaymentTermsDTO.dueDate}">
+                    </div>
+                    <label id="dueDateError" class="errorLabelForFile">Поле не должно быть пустым</label>
+                </div>
+            </div>
+            <div class="divForPaymentTerms">
+                <div class="lblTermsPayment">Метод оплаты</div>
+                <div class="paymentTerm">
+                    <select id="paymentMethods" class="form-select paymentState" aria-label="Disabled select example"
+                            name="paymentMethod" th:field="${invoicePaymentTermsDTO.paymentMethod}">
+                        <option value="банковский трансфер">банковский трансфер</option>
+                        <option value="чеки">чеки</option>
+                        <option value="кредитная карта">кредитная карта</option>
+                        <option value="электронная банковская система">электронная банковская система</option>
+                    </select>
+                </div>
+            </div>
+            <div class="divForPaymentTerms">
+                <div class="lblTermsPayment">Штрафы и пени</div>
+                <div class="paymentTerm">
+                    <div class="inlineBlock">
+                        <input id="finesAndPenalties" class="form-control fontForNumbers" type="text"
+                               name="finesAndPenalties" pattern="\d+(\.\d{1,2})?"
+                               th:field="${invoicePaymentTermsDTO.finesAndPenalties}">
+                    </div>
+                    <div class="inlineBlock">
+                        <select id="currency" class="form-select" aria-label="Disabled select example" name="currency"
+                                th:field="${invoicePaymentTermsDTO.currency}">
+                            <option value="BYN">BYN</option>
+                            <option value="EUR">EUR</option>
+                            <option value="USD">USD</option>
+                        </select>
+                    </div>
+                    <label id="finesAndPenaltiesError" class="errorLabelForFile">Поле должно содержать целочисленное или
+                        десятичное число</label>
+                </div>
+            </div>
+            <div class="divForPaymentTerms">
+                <div class="lblTermsPayment">Особые условия</div>
+                <div class="paymentTerm">
+                    <textarea id="specialConditions" name="specialConditions"
+                              th:field="${invoicePaymentTermsDTO.specialConditions}"></textarea>
+                </div>
+            </div>
+            <div class="divForPaymentTerms">
+                <div class="lblTermsPayment">Контактные данные для вопросов по счету и оплате</div>
+                <div class="paymentTerm">
+                    <div id="lblFL">Имя и фамилия контактного лица:</div>
+                    <input id="FL" class="form-control contactData" type="text" name="firstAndLastNames"
+                           pattern="[A-Za-zА-Яа-я ]+" th:field="${invoicePaymentTermsDTO.firstAndLastNames}" required>
+                    <label id="FLError" class="errorLabelForFile">Поле должно содержать только буквы</label>
+                    <div id="lblPhone">Телефон:</div>
+                    <input id="phoneNumber" class="form-control contactData fontForNumbers" type="text"
+                           name="phoneNumber"
+                           pattern="(\+375|80)(29|25|44|33)(\d{3})(\d{2})(\d{2})"
+                           th:field="${invoicePaymentTermsDTO.phoneNumber}" required>
+                    <label id="phoneNumberError" class="errorLabelForFile">Формат: +375(29)(44)(33)(25)_______</label>
+                </div>
+            </div>
+            <button id="saveFileWithTermsPayment" type="submit" class="btn btn-primary">Создать</button>
+        </form>
+    </div>
+</div>
+</div>
+</body>
+</html>

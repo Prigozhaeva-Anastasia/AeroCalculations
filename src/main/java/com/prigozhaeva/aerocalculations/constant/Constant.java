@@ -18,6 +18,7 @@ public class Constant {
     public static final String EMPLOYEE = "employee";
     public static final String USER = "user";
     public static final String INVOICE = "invoice";
+    public static final String INVOICE_PAYMENT_TERMS = "invoicePaymentTermsDTO";
     public static final String DEPARTURE_SHORT = "В";
     public static final String ARRIVAL_SHORT = "П";
     public static final String DEPARTURE = "вылет";
@@ -57,4 +58,5 @@ public class Constant {
     public static final String FORMATTED_DATE_ARR_TIME = "formattedDateArrTime";
     public static final String DEP_CITY = "depCity";
     public static final String ARR_CITY = "arrCity";
+    public static final String TOTAL_COST = "totalCost";
 }

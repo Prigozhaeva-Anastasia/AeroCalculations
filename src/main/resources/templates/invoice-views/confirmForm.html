@@ -16,7 +16,6 @@
             <button id="downloadBtn" type="submit" onclick="saveMsg()"><i id="downloadIcon" class="fa fa-download" aria-hidden="true"></i>
             </button>
         </form>
-
         <div id="invoiceLabel">Счет (акт о сдаче-приемке услуг) №<span class="fontForNumbers"
                                                                        th:text="${invoice.invoiceNumber}"></span><span> от </span><span
                 class="fontForNumbers" th:text="${formattedDateInvoice}"></span>
@@ -58,50 +57,50 @@
         </table>
         <div id="divForProvidedServices">
             <div class="trForInvoiceTable">
-                <span id="airportTariffLabel" class="providedServiceCharacteristics">Аэропортовые и аэронавигационные тарифы</span>
-                <span id="amountLabel" class="providedServiceCharacteristics">Количество</span>
-                <span id="priceLabel" class="providedServiceCharacteristics">Стоимость</span>
+                <span id="airportTariffLabel" class="inlineBlock">Аэропортовые и аэронавигационные тарифы</span>
+                <span id="amountLabel" class="inlineBlock">Количество</span>
+                <span id="priceLabel" class="inlineBlock">Стоимость</span>
             </div>
             <div th:if="${invoice.airportServices != null}" th:each="airportService:${invoice.airportServices}">
                 <div class="divForProvServ">
-                    <span class="providedServiceCharacteristics serviceNameWidth"
+                    <span class="inlineBlock serviceNameWidth"
                           th:text="${airportService.service.name}"></span>
-                    <span class="providedServiceCharacteristics amountWidth" th:text="${airportService.amount}"></span>
-                    <span class="providedServiceCharacteristics priceWidth" th:text="${airportService.value}"></span>
+                    <span class="inlineBlock amountWidth" th:text="${airportService.amount}"></span>
+                    <span class="inlineBlock priceWidth" th:text="${airportService.value}"></span>
                 </div>
             </div>
             <div>
-                <span class="providedServiceCharacteristics totalLabel">Итого:</span>
-                <span class="providedServiceCharacteristics totalValue"
+                <span class="inlineBlock totalLabel">Итого:</span>
+                <span class="inlineBlock totalValue"
                       th:text="${invoice.totalCostOfAirportServ}"></span>
             </div>
             <div class="trForInvoiceTable"><span
                     id="groundHandlingTariffLabel">Тарифы за наземное обслуживание ВС</span></div>
             <div th:each="groundHandlingService:${invoice.groundHandlingServices}">
                 <div class="divForProvServ">
-                    <span class="providedServiceCharacteristics serviceNameWidth"
+                    <span class="inlineBlock serviceNameWidth"
                           th:text="${groundHandlingService.service.name}"></span>
-                    <span class="providedServiceCharacteristics amountWidth"
+                    <span class="inlineBlock amountWidth"
                           th:text="${groundHandlingService.amount}"></span>
-                    <span class="providedServiceCharacteristics priceWidth"
+                    <span class="inlineBlock priceWidth"
                           th:text="${groundHandlingService.value}"></span>
                 </div>
             </div>
             <div>
-                <span class="providedServiceCharacteristics totalLabel">Итого:</span>
-                <span class="providedServiceCharacteristics totalValue"
+                <span class="inlineBlock totalLabel">Итого:</span>
+                <span class="inlineBlock totalValue"
                       th:text="${invoice.totalCostOfGroundHandlingServ}"></span>
             </div>
             <div class="horizontal-line"></div>
             <div id="divForDiscount">
-                <span class="providedServiceCharacteristics totalLabel">Скидка:</span>
-                <span class="providedServiceCharacteristics totalValue" th:text="${invoice.discount}"></span>
-                <span class="providedServiceCharacteristics greenFontClr" th:text="${currencySymbol}"></span>
+                <span class="inlineBlock totalLabel">Скидка:</span>
+                <span class="inlineBlock totalValue" th:text="${invoice.discount}"></span>
+                <span class="inlineBlock greenFontClr" th:text="${currencySymbol}"></span>
             </div>
             <div id="divForTotal">
-                <span class="providedServiceCharacteristics totalLabel">Итого:</span>
-                <span class="providedServiceCharacteristics totalValue" th:text="${invoice.totalCost}"></span>
-                <span class="providedServiceCharacteristics greenFontClr" th:text="${currencySymbol}"></span>
+                <span class="inlineBlock totalLabel">Итого:</span>
+                <span class="inlineBlock totalValue" th:text="${invoice.totalCost}"></span>
+                <span class="inlineBlock greenFontClr" th:text="${currencySymbol}"></span>
             </div>
         </div>
     </div>

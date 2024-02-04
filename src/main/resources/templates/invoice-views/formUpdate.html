@@ -30,7 +30,7 @@
           <div class="field">
             <label for="currency" class="form-label">Валюта:</label>
             <select id="currency" class="form-select" aria-label="Disabled select example" name="currency"
-                    th:value="${invoice.getCurrency()}">
+                    th:field="${invoice.currency}">
               <option value="BYN">BYN</option>
               <option value="EUR">EUR</option>
               <option value="USD">USD</option>

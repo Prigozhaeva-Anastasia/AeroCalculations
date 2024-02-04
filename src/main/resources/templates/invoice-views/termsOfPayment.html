@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="template">
+<head>
+    <meta charset="UTF-8"/>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            font-size: 16px;
+            margin-left: -90px;
+        }
+
+        .mainDivForInvoiceRes {
+            font-size: 10px;
+            margin-left: 70px;
+            min-height: 640px;
+            background-color: white;
+            width: 1100px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        #invoiceNumber {
+            font-size: 20px;
+            margin-bottom: 20px;
+            margin-left: 150px;
+        }
+
+        .fontForPaymentTerms {
+            font-size: 18px;
+        }
+    </style>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+</head>
+<body>
+<div class="mainDivForInvoiceRes">
+    <div id="invoiceNumber">Счет на оплату услуг аэропорта № <span th:text="${invoicePaymentTermsDTO.invoiceNumber}"></span></div>
+    <div class="fontForPaymentTerms">
+        <div>Срок оплаты: до <span th:text="${formattedDateInvoice}"></span></div>
+        <div>Метод оплаты: <span th:text="${invoicePaymentTermsDTO.paymentMethod}"></span></div>
+        <div>Штрафы и пени: <span th:text="${invoicePaymentTermsDTO.finesAndPenalties}"></span><span> </span><span
+                th:text="${currencySymbol}"></span></div>
+        <div>Особые условия:</div>
+        <div th:text="${invoicePaymentTermsDTO.specialConditions}"></div>
+        <div>Контактные данные для вопросов по счету и оплате:</div>
+        <div>Имя и фамилия контатного лица: <span th:text="${invoicePaymentTermsDTO.firstAndLastNames}"></span></div>
+        <div>Телефон: <span th:text="${invoicePaymentTermsDTO.phoneNumber}"></span></div>
+        <div>Электронная почта: minsk_airport@mail.ru></div>
+    </div>
+</div>
+</body>
+</html>

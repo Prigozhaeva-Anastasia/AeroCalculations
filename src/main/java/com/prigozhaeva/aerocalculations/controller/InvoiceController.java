@@ -3,6 +3,7 @@ package com.prigozhaeva.aerocalculations.controller;
 import com.lowagie.text.pdf.BaseFont;
 import com.prigozhaeva.aerocalculations.dto.InvoiceCreateDTO;
 import com.prigozhaeva.aerocalculations.dto.InvoiceDTO;
+import com.prigozhaeva.aerocalculations.dto.InvoicePaymentTermsDTO;
 import com.prigozhaeva.aerocalculations.dto.InvoiceUpdateDTO;
 import com.prigozhaeva.aerocalculations.entity.*;
 import com.prigozhaeva.aerocalculations.service.AirlineService;
@@ -19,9 +20,11 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
+import javax.validation.Valid;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -82,45 +85,47 @@ public class InvoiceController {
 
     @GetMapping(value = "/formCreate")
     public String formCreate(Model model, String flightNumberModal, String invoiceCreationDate) {
-        if (!flightNumberModal.isEmpty() && !invoiceCreationDate.isEmpty()) {
-            Flight flight = flightService.findFlightByFlightNumberAndDepDate(flightNumberModal, LocalDate.parse(invoiceCreationDate));
-            if (flight != null) {
-                List<ProvidedService> airportServicesCheck = flight.getProvidedServices().stream()
-                        .filter(providedService -> providedService.getService().getServiceType().equals(AIRPORT_SERVICES))
-                        .collect(Collectors.toList());
-                List<ProvidedService> groundHandlingServicesCheck = flight.getProvidedServices().stream()
-                        .filter(providedService -> providedService.getService().getServiceType().equals(GROUND_HANDLING_SERVICES))
-                        .collect(Collectors.toList());
-                Set<ProvidedService> airportServices = serviceService.fetchAll().stream()
-                        .filter(service -> service.getServiceType().equals(AIRPORT_SERVICES))
-                        .filter(service -> airportServicesCheck.stream()
-                                .noneMatch(providedService -> providedService.getService().getId().equals(service.getId())))
-                        .map(service -> ProvidedService.builder().service(service).build())
-                        .collect(Collectors.toSet());
-                List<ProvidedService> groundHandlingServices = serviceService.fetchAll().stream()
-                        .filter(service -> service.getServiceType().equals(GROUND_HANDLING_SERVICES))
-                        .filter(service -> groundHandlingServicesCheck.stream()
-                                .noneMatch(providedService -> providedService.getService().getId().equals(service.getId())))
-                        .map(service -> ProvidedService.builder().service(service).build())
-                        .collect(Collectors.toList());
-                Optional<Integer> number = invoiceService.fetchAll().stream()
-                        .map(Invoice::getInvoiceNumber)
-                        .max(Integer::compareTo);
-                String currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                model.addAttribute(FLIGHT, flight);
-                model.addAttribute(AIRPORT_SERVICES_MODEL_CHECK, airportServicesCheck);
-                model.addAttribute(GROUND_HANDLING_SERVICES_MODEL_CHECK, groundHandlingServicesCheck);
-                model.addAttribute(AIRPORT_SERVICES_MODEL, airportServices);
-                model.addAttribute(GROUND_HANDLING_SERVICES_MODEL, groundHandlingServices);
-                model.addAttribute(INVOICE, Invoice.builder()
-                        .invoiceCreationDate(LocalDate.parse(currentDate))
-                        .invoiceNumber(number.get().intValue() + 1)
-                        .build()
-                );
-                return "invoice-views/formCreate";
-            }
+        if (flightNumberModal.isEmpty() || invoiceCreationDate.isEmpty()) {
+            return "invoice-views/msgPage";
         }
-        return "invoice-views/msgPage";
+        Flight flight = flightService.findFlightByFlightNumberAndDepDate(flightNumberModal, LocalDate.parse(invoiceCreationDate));
+        if (flight == null) {
+            return "invoice-views/msgPage";
+        }
+        List<ProvidedService> airportServicesCheck = filterByServiceType(flight.getProvidedServices(), AIRPORT_SERVICES);
+        List<ProvidedService> groundHandlingServicesCheck = filterByServiceType(flight.getProvidedServices(), GROUND_HANDLING_SERVICES);
+        List<ProvidedService> airportServices = filterAndMapServices(AIRPORT_SERVICES, airportServicesCheck);
+        List<ProvidedService> groundHandlingServices = filterAndMapServices(GROUND_HANDLING_SERVICES, groundHandlingServicesCheck);
+        Optional<Integer> number = invoiceService.fetchAll().stream()
+                .map(Invoice::getInvoiceNumber)
+                .max(Integer::compareTo);
+        String currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        model.addAttribute(FLIGHT, flight);
+        model.addAttribute(AIRPORT_SERVICES_MODEL_CHECK, airportServicesCheck);
+        model.addAttribute(GROUND_HANDLING_SERVICES_MODEL_CHECK, groundHandlingServicesCheck);
+        model.addAttribute(AIRPORT_SERVICES_MODEL, airportServices);
+        model.addAttribute(GROUND_HANDLING_SERVICES_MODEL, groundHandlingServices);
+        model.addAttribute(INVOICE, Invoice.builder()
+                .invoiceCreationDate(LocalDate.parse(currentDate))
+                .invoiceNumber(number.orElse(0) + 1)
+                .build()
+        );
+        return "invoice-views/formCreate";
+    }
+
+    private List<ProvidedService> filterByServiceType(List<ProvidedService> services, String serviceType) {
+        return services.stream()
+                .filter(providedService -> providedService.getService().getServiceType().equals(serviceType))
+                .collect(Collectors.toList());
+    }
+
+    private List<ProvidedService> filterAndMapServices(String serviceType, List<ProvidedService> servicesToCheck) {
+        return serviceService.fetchAll().stream()
+                .filter(service -> service.getServiceType().equals(serviceType))
+                .filter(service -> servicesToCheck.stream()
+                        .noneMatch(providedService -> providedService.getService().getId().equals(service.getId())))
+                .map(service -> ProvidedService.builder().service(service).build())
+                .collect(Collectors.toList());
     }
 
     @GetMapping(value = "/confirmForm")
@@ -204,12 +209,12 @@ public class InvoiceController {
     @PostMapping(value = "/filter")
     public String filter(Model model, Long airlineId, String paymentStatus, String date1, String date2) {
         List<InvoiceDTO> invoiceDTOList = invoiceService.fetchAll().stream()
-                        .filter(invoice -> (airlineId == null || invoice.getFlight().getAircraft().getAirline().getId().equals(airlineId)) &&
-                                (paymentStatus.isEmpty()|| invoice.getPaymentState().equals(paymentStatus)) &&
-                                (date1.isEmpty() || invoice.getInvoiceCreationDate().compareTo(LocalDate.parse(date1)) >= 0) &&
-                                (date2.isEmpty() || invoice.getInvoiceCreationDate().compareTo(LocalDate.parse(date2)) <= 0))
-                        .map(mappingUtils::mapToInvoiceDTO)
-                        .collect(Collectors.toList());
+                .filter(invoice -> (airlineId == null || invoice.getFlight().getAircraft().getAirline().getId().equals(airlineId)) &&
+                        (paymentStatus.isEmpty() || invoice.getPaymentState().equals(paymentStatus)) &&
+                        (date1.isEmpty() || invoice.getInvoiceCreationDate().compareTo(LocalDate.parse(date1)) >= 0) &&
+                        (date2.isEmpty() || invoice.getInvoiceCreationDate().compareTo(LocalDate.parse(date2)) <= 0))
+                .map(mappingUtils::mapToInvoiceDTO)
+                .collect(Collectors.toList());
         model.addAttribute(LIST_INVOICES, invoiceDTOList);
         model.addAttribute(LIST_AIRLINES, airlineService.fetchAll());
         return "invoice-views/invoices";
@@ -235,19 +240,9 @@ public class InvoiceController {
 
     @GetMapping(value = "/formUpdate")
     public String updateInvoice(Model model, int invoiceNumber) {
-        InvoiceDTO dto= invoiceService.findInvoiceDtoByInvoiceNumber(invoiceNumber);
-        List<ProvidedService> airportServices = serviceService.fetchAll().stream()
-                .filter(service -> service.getServiceType().equals(AIRPORT_SERVICES))
-                .filter(service -> dto.getAirportServices().stream()
-                        .noneMatch(providedService -> providedService.getService().getId().equals(service.getId())))
-                .map(service -> ProvidedService.builder().service(service).build())
-                .collect(Collectors.toList());
-        List<ProvidedService> groundHandlingServices = serviceService.fetchAll().stream()
-                .filter(service -> service.getServiceType().equals(GROUND_HANDLING_SERVICES))
-                .filter(service -> dto.getGroundHandlingServices().stream()
-                        .noneMatch(providedService -> providedService.getService().getId().equals(service.getId())))
-                .map(service -> ProvidedService.builder().service(service).build())
-                .collect(Collectors.toList());
+        InvoiceDTO dto = invoiceService.findInvoiceDtoByInvoiceNumber(invoiceNumber);
+        List<ProvidedService> airportServices = filterAndMapServices(AIRPORT_SERVICES, dto.getAirportServices());
+        List<ProvidedService> groundHandlingServices = filterAndMapServices(GROUND_HANDLING_SERVICES, dto.getGroundHandlingServices());
         model.addAttribute(INVOICE, dto);
         model.addAttribute(AIRPORT_SERVICES_MODEL, airportServices);
         model.addAttribute(GROUND_HANDLING_SERVICES_MODEL, groundHandlingServices);
@@ -258,5 +253,37 @@ public class InvoiceController {
     public String deleteInvoice(Long invoiceId) {
         invoiceService.removeInvoice(invoiceId);
         return "redirect:/invoices/index";
+    }
+
+    @GetMapping(value = "/formCreateFile")
+    public String createFile(int invoiceNumber, Model model) {
+        InvoicePaymentTermsDTO invoicePaymentTermsDTO= new InvoicePaymentTermsDTO();
+        invoicePaymentTermsDTO.setInvoiceNumber(invoiceNumber);
+        model.addAttribute(INVOICE_PAYMENT_TERMS, invoicePaymentTermsDTO);
+        return "invoice-views/createFileWithTermsPayment";
+    }
+
+    @PostMapping(value = "/createFile")
+    public String createFileWithTermsPayment(InvoicePaymentTermsDTO invoicePaymentTermsDTO) {
+        String templatePath = "D:/diploma/проект/aeroCalculations/src/main/resources/templates/invoice-views/termsOfPayment.html";
+        String htmlContent = readHtmlContent(templatePath);
+        String filledHtmlContent = fillTermsOfPaymentTemplateWithData(htmlContent, invoicePaymentTermsDTO);
+        String pdfOutputPath = "D:/diploma/проект/pdf/paymentTerms/payment_" + invoicePaymentTermsDTO.getInvoiceNumber() + ".pdf";
+        convertHtmlToPdf(filledHtmlContent, pdfOutputPath);
+        Invoice invoice = invoiceService.findInvoiceByInvoiceNumber(invoicePaymentTermsDTO.getInvoiceNumber());
+        invoice.setDueDate(invoicePaymentTermsDTO.getDueDate());
+        invoiceService.createOrUpdateInvoice(invoice);
+        return "redirect:/invoices/index";
+    }
+
+    private String fillTermsOfPaymentTemplateWithData(String htmlContent, InvoicePaymentTermsDTO invoicePaymentTermsDTO) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        String formattedDateInvoice = invoicePaymentTermsDTO.getDueDate().format(formatter);
+        Context context = new Context();
+        context.setVariable(FORMATTED_DATE_INVOICE, formattedDateInvoice);
+        context.setVariable(CURRENCY_SYMBOL, Currency.getInstance(invoicePaymentTermsDTO.getCurrency()).getSymbol());
+        context.setVariable(INVOICE_PAYMENT_TERMS, invoicePaymentTermsDTO);
+        TemplateEngine templateEngine = new TemplateEngine();
+        return templateEngine.process(htmlContent, context);
     }
 }

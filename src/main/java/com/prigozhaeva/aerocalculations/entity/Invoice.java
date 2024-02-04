@@ -22,6 +22,7 @@ public class Invoice {
     private LocalDate invoiceCreationDate;
     private String currency;
     private String paymentState;
+    private LocalDate dueDate;
     @ToString.Exclude
     @OneToOne
     @JoinColumn(name = "flight_id")

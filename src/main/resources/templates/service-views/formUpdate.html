@@ -25,8 +25,9 @@
             </div>
             <div class="mb-3 mt-3">
                 <label for="tariff" class="form-label">Тариф, BYN:</label>
-                <input id="tariff" type="text" name="tariff" class="form-control"
+                <input id="tariff" type="text" name="tariff" class="form-control" th:errorClass="error"
                        th:value="${service.getTariff()}">
+                <div class="text-danger" th:if="${#fields.hasErrors('tariff')}" th:errors="${service.tariff}">Error</div>
             </div>
             <button id="update" type="submit" class="btn btn-primary">Обновить</button>
         </form>
