@@ -323,6 +323,24 @@ form {
     position: relative;
     left: 15px;
 }
+#info:before{
+    content: '';
+    background-image: url("../images/info.png");
+    background-size: cover;
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    top: 2px;
+    left: 1px;
+}
+#info {
+    width: 39px;
+    height: 40px;
+    position: relative;
+}
+#info:hover {
+    background-color: rgba(166, 165, 165, 0.6);
+}
 #sendInvoice:before {
     content: "\f003";
     font-family: FontAwesome;

@@ -286,4 +286,9 @@ public class InvoiceController {
         TemplateEngine templateEngine = new TemplateEngine();
         return templateEngine.process(htmlContent, context);
     }
+
+    @GetMapping(value = "/formMoreDetails")
+    public String formMoreDetails(int invoiceNumber) {
+        return "redirect:/invoices/confirmForm?invoiceNumber=" + invoiceNumber;
+    }
 }

@@ -88,15 +88,15 @@
                     <thead class="line">
                     <tr class="text-center">
                         <th><a id="sortedFieldByInvoiceNumber" class="nav-link dropdown-toggle menu"
-                               th:href="@{/invoices/sortByInvoiceNumber}">Номер счета</a></th>
+                               th:href="@{/invoices/sortByInvoiceNumber}">№ счета</a></th>
                         <th style="width: 180px;"><a id="sortedFieldByInvoiceCreationDate" class="nav-link dropdown-toggle menu"
                                                      th:href="@{/invoices/sortByInvoiceCreationDate}">Дата создания счета</a></th>
                         <th>Номер рейса</th>
                         <th>Авиакомпания</th>
-                        <th>Сумма</th>
+                        <th  >Сумма</th>
                         <th style="width: 75px;">Валюта</th>
                         <th>Статус оплаты</th>
-                        <th class="actionWithMore">Действие</th>
+                        <th style="width: 265px;" class="actionWithMore">Действие</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -119,7 +119,7 @@
                             </form>
                         </td>
                         <td>
-                            <a class="btn btn-primary output"
+                            <a style="margin-left: 10px;" class="btn btn-primary output"
                                th:href="@{/invoices/formUpdate(invoiceNumber=${invoice.getInvoiceNumber()})}"></a>
                             <a class="btn btn-danger"
                                onclick="return confirm('Вы действительно хотите удалить выбранный счет?')"
@@ -131,6 +131,7 @@
                             </a>
                             <a class="btn createFile"
                                th:href="@{/invoices/formCreateFile(invoiceNumber=${invoice.getInvoiceNumber()})}"></a>
+                            <a id="info" class="btn" th:href="@{/invoices/formMoreDetails(invoiceNumber=${invoice.getInvoiceNumber()})}"></a>
                         </td>
                     </tr>
                     </tbody>
