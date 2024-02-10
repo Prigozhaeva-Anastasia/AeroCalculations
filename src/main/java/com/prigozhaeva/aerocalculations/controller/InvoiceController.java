@@ -1,10 +1,8 @@
 package com.prigozhaeva.aerocalculations.controller;
 
 import com.lowagie.text.pdf.BaseFont;
-import com.prigozhaeva.aerocalculations.dto.InvoiceCreateDTO;
 import com.prigozhaeva.aerocalculations.dto.InvoiceDTO;
 import com.prigozhaeva.aerocalculations.dto.InvoicePaymentTermsDTO;
-import com.prigozhaeva.aerocalculations.dto.InvoiceUpdateDTO;
 import com.prigozhaeva.aerocalculations.entity.*;
 import com.prigozhaeva.aerocalculations.service.AirlineService;
 import com.prigozhaeva.aerocalculations.service.FlightService;
@@ -12,7 +10,6 @@ import com.prigozhaeva.aerocalculations.service.InvoiceService;
 import com.prigozhaeva.aerocalculations.service.ServiceService;
 import com.prigozhaeva.aerocalculations.util.CityCodeMap;
 import com.prigozhaeva.aerocalculations.util.MappingUtils;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,17 +17,14 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
-import javax.validation.Valid;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -256,7 +250,7 @@ public class InvoiceController {
     }
 
     @GetMapping(value = "/formCreateFile")
-    public String createFile(int invoiceNumber, Model model) {
+    public String createFile(Integer invoiceNumber, Model model) {
         InvoicePaymentTermsDTO invoicePaymentTermsDTO= new InvoicePaymentTermsDTO();
         invoicePaymentTermsDTO.setInvoiceNumber(invoiceNumber);
         model.addAttribute(INVOICE_PAYMENT_TERMS, invoicePaymentTermsDTO);
@@ -268,7 +262,7 @@ public class InvoiceController {
         String templatePath = "D:/diploma/проект/aeroCalculations/src/main/resources/templates/invoice-views/termsOfPayment.html";
         String htmlContent = readHtmlContent(templatePath);
         String filledHtmlContent = fillTermsOfPaymentTemplateWithData(htmlContent, invoicePaymentTermsDTO);
-        String pdfOutputPath = "D:/diploma/проект/pdf/paymentTerms/payment_" + invoicePaymentTermsDTO.getInvoiceNumber() + ".pdf";
+        String pdfOutputPath = "D:/diploma/проект/pdf/payment_" + invoicePaymentTermsDTO.getInvoiceNumber() + ".pdf";
         convertHtmlToPdf(filledHtmlContent, pdfOutputPath);
         Invoice invoice = invoiceService.findInvoiceByInvoiceNumber(invoicePaymentTermsDTO.getInvoiceNumber());
         invoice.setDueDate(invoicePaymentTermsDTO.getDueDate());
@@ -290,5 +284,15 @@ public class InvoiceController {
     @GetMapping(value = "/formMoreDetails")
     public String formMoreDetails(int invoiceNumber) {
         return "redirect:/invoices/confirmForm?invoiceNumber=" + invoiceNumber;
+    }
+    @GetMapping(value = "/sendInvoiceForm")
+    public String sendInvoiceForm() {
+        return "invoice-views/formForSignDoc";
+    }
+    @GetMapping(value = "/signDocuments")
+    public String signDocuments(String invoiceDoc, String paymentTermsDoc) {
+        invoiceService.signDocument(invoiceDoc);
+        invoiceService.signDocument(paymentTermsDoc);
+        return "invoice-views/formForSendEmail";
     }
 }

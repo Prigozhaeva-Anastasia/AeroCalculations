@@ -1,0 +1,82 @@
+#divForEmail {
+    position: absolute;
+    left: 252px;
+    top: 62px;
+    width: 1282px;
+    height: 674px;
+    background-image: url("../images/fontForEmail.png");
+    background-size: 1270px 675px;
+}
+#divForEmailDark {
+    position: relative;
+    left: -2px;;
+    width: 1286px;
+    height: 674px;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+#mainDivForFiles {
+    margin-left: 380px;
+    position: relative;
+    top: 50px;
+    min-height: 560px;
+    background-color: white;
+    width: 500px;
+    padding: 25px;
+    margin-bottom: 20px;
+}
+#lblForDigitalSign {
+    font-size: 27px;
+    color: rgba(159, 190, 184);
+    margin-bottom: 10px;
+}
+.inputFileVisible {
+    display: block;
+    width: 290px;
+}
+.horizontal-line {
+    border-top: 1px solid #4A5A56;
+    width: 100%;
+}
+#sign {
+    background-color: #97BFB7;
+    font-size: 17px;
+    border-color: transparent;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0);
+    border-radius: 10px;
+    position: relative;
+    left: 150px;
+    top: 50px;
+}
+#sign:hover {
+    background-color: #708c87;
+}
+.lblForDocsName {
+    padding-top: 3px;
+    padding-left: 7px;
+    border-radius: 7px;
+    height: 34px;
+    background-color: #97BFB7;
+    color: white;
+    font-size: 18px;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+#flightIcon, #serviceIcon {
+    margin-left: 8px;
+}
+#invoiceIcon {
+    margin-left: 13px;
+}
+#archiveIcon {
+    margin-left: 9px;
+}
+.error {
+    box-shadow: 0 0 5px rgba(255, 63, 63, 0.7);
+}
+@charset "UTF-8";
+.errorLabelForFile {
+    color: rgba(255, 96, 96, 0.7);
+    font-size: 17px;
+    display: none;
+    width: 500px;
+}

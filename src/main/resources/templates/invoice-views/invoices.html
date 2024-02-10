@@ -25,26 +25,34 @@
                 <div></div>
                 <div id="inline">
                     <form id="formBtnsInvoice">
-                        <a id="createBtnInvoice" class="btn"  data-bs-toggle="modal" data-bs-target="#exampleModalCenterForCreate"></a>
-                        <div class="modal fade" id="exampleModalCenterForCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <a id="createBtnInvoice" class="btn" data-bs-toggle="modal"
+                           data-bs-target="#exampleModalCenterForCreate"></a>
+                        <div class="modal fade" id="exampleModalCenterForCreate" tabindex="-1" role="dialog"
+                             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content bg-dark">
                                     <div class="modal-header">
-                                        <h6 class="modal-title whiteColor" id="exampleModalLongTitle">Введите номер и дату рейса, для которого будет создан счет:</h6>
-                                        <button id="closeInvoice" type="button" class="close later" data-bs-dismiss="modal" aria-label="Close">
+                                        <h6 class="modal-title whiteColor" id="exampleModalLongTitle">Введите номер и
+                                            дату рейса, для которого будет создан счет:</h6>
+                                        <button id="closeInvoice" type="button" class="close later"
+                                                data-bs-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
                                         <div class="field">
                                             <label for="flightNumber" class="form-label">Номер рейса:</label>
-                                            <input id="flightNumber" type="text" name="flightNumberModal" class="form-control">
+                                            <input id="flightNumber" type="text" name="flightNumberModal"
+                                                   class="form-control">
                                         </div>
                                         <div class="field">
                                             <label for="depDate" class="form-label">Дата рейса:</label>
-                                            <input id="depDate" type="date" name="invoiceCreationDate" class="form-control">
+                                            <input id="depDate" type="date" name="invoiceCreationDate"
+                                                   class="form-control">
                                         </div>
-                                        <button id="okModalInvoice" type="submit" th:formaction="@{/invoices/formCreate}" class="btn btn-primary">Ок</button>
+                                        <button id="okModalInvoice" type="submit"
+                                                th:formaction="@{/invoices/formCreate}" class="btn btn-primary">Ок
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -56,9 +64,11 @@
                     <form id="formFilterForInvoices" method="post" th:action="@{/invoices/filter}">
                         <div class="cell">
                             <label id="airlineLabel">Авиакомпания:</label>
-                            <select id="airlines" class="form-select airlinesFilter" aria-label="Disabled select example" name="airlineId">
+                            <select id="airlines" class="form-select airlinesFilter"
+                                    aria-label="Disabled select example" name="airlineId">
                                 <option selected></option>
-                                <option th:each="airline :${listAirlines}" th:value="${airline.id}" th:text="${airline.name}"></option>
+                                <option th:each="airline :${listAirlines}" th:value="${airline.id}"
+                                        th:text="${airline.name}"></option>
                             </select>
                         </div>
                         <div class="cell">
@@ -70,7 +80,8 @@
                         </div>
                         <div class="cell">
                             <label id="paymentStatusLabel">Статус оплаты:</label>
-                            <select id="paymentStatuses" class="form-select paymentState" aria-label="Disabled select example" name="paymentStatus">
+                            <select id="paymentStatuses" class="form-select paymentState"
+                                    aria-label="Disabled select example" name="paymentStatus">
                                 <option selected></option>
                                 <option value="Оплачен">Оплачен</option>
                                 <option value="Не оплачен">Не оплачен</option>
@@ -89,11 +100,13 @@
                     <tr class="text-center">
                         <th><a id="sortedFieldByInvoiceNumber" class="nav-link dropdown-toggle menu"
                                th:href="@{/invoices/sortByInvoiceNumber}">№ счета</a></th>
-                        <th style="width: 180px;"><a id="sortedFieldByInvoiceCreationDate" class="nav-link dropdown-toggle menu"
-                                                     th:href="@{/invoices/sortByInvoiceCreationDate}">Дата создания счета</a></th>
+                        <th style="width: 180px;"><a id="sortedFieldByInvoiceCreationDate"
+                                                     class="nav-link dropdown-toggle menu"
+                                                     th:href="@{/invoices/sortByInvoiceCreationDate}">Дата создания
+                            счета</a></th>
                         <th>Номер рейса</th>
                         <th>Авиакомпания</th>
-                        <th  >Сумма</th>
+                        <th>Сумма</th>
                         <th style="width: 75px;">Валюта</th>
                         <th>Статус оплаты</th>
                         <th style="width: 265px;" class="actionWithMore">Действие</th>
@@ -103,15 +116,19 @@
                     <tr class="text-center" th:each="invoice, iterStat : ${listInvoices}">
                         <input type="text" class="paymentStateHid" th:value="${invoice.getPaymentState()}" hidden>
                         <td class="center" th:text="${invoice.getInvoiceNumber()}"></td>
-                        <td class="center" th:text="${#temporals.format(invoice.getInvoiceCreationDate(), 'dd.MM.yyyy')}"></td>
+                        <td class="center"
+                            th:text="${#temporals.format(invoice.getInvoiceCreationDate(), 'dd.MM.yyyy')}"></td>
                         <td class="center" th:text="${invoice.getFlight().getFlightNumber()}"></td>
                         <td class="center" th:text="${invoice.getFlight().getAircraft().getAirline().getName()}"></td>
                         <td class="center" th:text="${invoice.getTotalCost()}"></td>
                         <td class="center" th:text="${invoice.getCurrency()}"></td>
                         <td>
-                            <form th:id="'formPaymentState_' + ${iterStat.index}" th:action="@{/invoices/changePaymentStatus}" method="post">
-                                <input type="text" th:value="${invoice.getInvoiceNumber()}" name="invoiceNumber" hidden="hidden">
-                                <select th:id="'paymentState_' + ${iterStat.index}" class="form-select paymentState" aria-label="Disabled select example" name="paymentState">
+                            <form th:id="'formPaymentState_' + ${iterStat.index}"
+                                  th:action="@{/invoices/changePaymentStatus}" method="post">
+                                <input type="text" th:value="${invoice.getInvoiceNumber()}" name="invoiceNumber"
+                                       hidden="hidden">
+                                <select th:id="'paymentState_' + ${iterStat.index}" class="form-select paymentState pState"
+                                        aria-label="Disabled select example" name="paymentState">
                                     <option value="Оплачен">Оплачен</option>
                                     <option value="Не оплачен">Не оплачен</option>
                                     <option value="Отправлен">Отправлен</option>
@@ -129,9 +146,12 @@
                                th:attr="data-invoice-number=${invoice.getInvoiceNumber()}"
                                onclick="saveMsg(this)">
                             </a>
-                            <a class="btn createFile"
-                               th:href="@{/invoices/formCreateFile(invoiceNumber=${invoice.getInvoiceNumber()})}"></a>
-                            <a id="info" class="btn" th:href="@{/invoices/formMoreDetails(invoiceNumber=${invoice.getInvoiceNumber()})}"></a>
+                            <form style="display: inline;" method="get" th:action="@{/invoices/formCreateFile}">
+                                <input type="text" name="invoiceNumber" th:value="${invoice.invoiceNumber}" hidden="hidden">
+                                <button type="submit" class="btn createFile"></button>
+                            </form>
+                            <a id="info" class="btn"
+                               th:href="@{/invoices/formMoreDetails(invoiceNumber=${invoice.getInvoiceNumber()})}"></a>
                         </td>
                     </tr>
                     </tbody>

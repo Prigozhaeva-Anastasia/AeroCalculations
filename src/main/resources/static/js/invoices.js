@@ -9,6 +9,8 @@ window.onload = function () {
     let filterForInvoices = document.getElementById('filterForInvoices');
     let formFilterForInvoices = document.getElementById('formFilterForInvoices');
     let formBtnsInvoice = document.getElementById('formBtnsInvoice');
+    let statuses = document.getElementsByClassName('pState');
+    let createFiles = document.getElementsByClassName('createFile');
 
     for (let i = 0; i < arrPaymentStateHid.length; i++) {
         let formPaymentState = document.getElementById("formPaymentState_" + i);
@@ -27,6 +29,11 @@ window.onload = function () {
         state.addEventListener('change', function () {
             formPaymentState.submit();
         });
+    }
+    for (let i = 0; i < statuses.length; i++) {
+        if (statuses[i].value !== "Не оплачен") {
+            createFiles[i].disabled = true;
+        }
     }
     filterForInvoices.addEventListener('click', function (event) {
         formFilterForInvoices.style.display = 'block';

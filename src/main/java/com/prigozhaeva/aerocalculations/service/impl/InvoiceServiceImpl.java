@@ -1,5 +1,17 @@
 package com.prigozhaeva.aerocalculations.service.impl;
 
+import java.io.FileOutputStream;
+import java.security.cert.Certificate;
+import java.io.FileInputStream;
+import java.security.KeyStore;
+import java.security.PrivateKey;
+
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.PdfSignatureAppearance;
+import com.itextpdf.text.pdf.PdfStamper;
+import com.itextpdf.text.pdf.security.*;
 import com.prigozhaeva.aerocalculations.dto.InvoiceCreateDTO;
 import com.prigozhaeva.aerocalculations.dto.InvoiceDTO;
 import com.prigozhaeva.aerocalculations.dto.InvoiceUpdateDTO;
@@ -16,6 +28,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -85,7 +98,8 @@ public class InvoiceServiceImpl implements InvoiceService {
     public Invoice createInvoice(int invoiceNumber, LocalDate invoiceCreationDate, String currency, String paymentState, Long employeeId, Long flightId) {
         Employee employee = employeeRepository.findById(employeeId).orElseThrow(() -> new EntityNotFoundException("Employee with id " + employeeId + " Not Found"));
         Flight flight;
-        if (flightId != null) flight= flightRepository.findById(flightId).orElseThrow(() -> new EntityNotFoundException("Flight with id " + flightId + " Not Found"));//delete
+        if (flightId != null)
+            flight = flightRepository.findById(flightId).orElseThrow(() -> new EntityNotFoundException("Flight with id " + flightId + " Not Found"));//delete
         else flight = null;//delete
         return invoiceRepository.save(Invoice.builder()
                 .invoiceNumber(invoiceNumber)
@@ -101,8 +115,9 @@ public class InvoiceServiceImpl implements InvoiceService {
     public Invoice findInvoiceByInvoiceNumber(int invoiceNumber) {
         return invoiceRepository.findInvoiceByInvoiceNumber(invoiceNumber);
     }
+
     public Invoice createOrUpdateInvoice(Invoice invoice) {
-            return invoiceRepository.save(invoice);
+        return invoiceRepository.save(invoice);
     }
 
     @Override
@@ -110,4 +125,43 @@ public class InvoiceServiceImpl implements InvoiceService {
         invoiceRepository.deleteById(invoiceId);
     }
 
+    @Override
+    public void signDocument(String file) {
+        try {
+            String SRC_PDF = "D:/diploma/проект/pdf/" + file;
+            String KEYSTORE_PATH = "C:/Users/user/Folder/private-key.p12";
+            char[] PASSWORD = "1023712".toCharArray();
+            String DEST_PDF = "D:/diploma/проект/pdf/signed/" + file;
+            Rectangle rectangle = new Rectangle(66, 148, 150, 180);
+            KeyStore ks = KeyStore.getInstance("PKCS12");
+            ks.load(new FileInputStream(KEYSTORE_PATH), PASSWORD);
+            String alias = null;
+            Enumeration<String> aliases = ks.aliases();
+            while (aliases.hasMoreElements()) {
+                alias = aliases.nextElement();
+                if (ks.isKeyEntry(alias))
+                    break;
+            }
+            PrivateKey pk = (PrivateKey) ks.getKey(alias, PASSWORD);
+            Certificate[] chain = ks.getCertificateChain(alias);
+            PdfReader reader = new PdfReader(SRC_PDF);
+            FileOutputStream os = new FileOutputStream(DEST_PDF);
+            PdfStamper stamper = PdfStamper.createSignature(reader, os, '\0');
+            PdfContentByte canvas = stamper.getOverContent(1);
+            canvas.rectangle(rectangle.getLeft(), rectangle.getBottom(), rectangle.getWidth(), rectangle.getHeight());
+            canvas.stroke();
+            PdfSignatureAppearance appearance = stamper.getSignatureAppearance();
+            appearance.setReason("for payment");
+            appearance.setLocation("Minsk");
+            appearance.setVisibleSignature(rectangle, 1, "Signature");
+            ExternalDigest digest = new BouncyCastleDigest();
+            ExternalSignature signature = new PrivateKeySignature(pk, DigestAlgorithms.SHA256, null);
+            MakeSignature.signDetached(appearance, digest, signature, chain, null, null, null, 0, MakeSignature.CryptoStandard.CMS);
+            stamper.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
+
+

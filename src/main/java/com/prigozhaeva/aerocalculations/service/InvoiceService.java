@@ -21,4 +21,5 @@ public interface InvoiceService {
     Invoice findInvoiceByInvoiceNumber(int invoiceNumber);
     Invoice createOrUpdateInvoice(Invoice invoice);
     void removeInvoice(Long invoiceId);
+    void signDocument(String file);
 }
