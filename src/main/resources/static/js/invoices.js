@@ -20,10 +20,13 @@ window.onload = function () {
             state.style.backgroundColor = "#35D05F";
             state.style.color = "white";
         } else if (state.value == "Не оплачен") {
-            state.style.backgroundColor = "rgba(272, 77, 77)";
+            state.style.backgroundColor = "#8f8c8c";
             state.style.color = "white";
-        } else {
+        } else if (state.value == "Отправлен") {
             state.style.backgroundColor = "#FBF723";
+            state.style.color = "white";
+        } else if (state.value == "Просрочен") {
+            state.style.backgroundColor = "rgba(272, 77, 77)";
             state.style.color = "white";
         }
         state.addEventListener('change', function () {

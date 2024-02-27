@@ -14,14 +14,14 @@
 <div layout:fragment="content1">
     <div class="mainDivForInvoice">
         <form id="formCreateFile" method="post" th:action="@{createFile}">
-            <input class="form-control" type="text" name="invoiceNumber"
+            <input id="invoiceNumber" class="form-control" type="text" name="invoiceNumber"
                    th:value="${invoicePaymentTermsDTO.getInvoiceNumber()}" hidden="hidden">
             <div class="divForPaymentTerms">
                 <div class="lblTermsPayment">Срок оплаты</div>
                 <div class="paymentTerm">
                     <div id="lblForDueDate" class="inlineBlock">до</div>
                     <div class="inlineBlock">
-                        <input id="arrivalDate" type="date" class="form-control" th:field="${invoicePaymentTermsDTO.dueDate}">
+                        <input id="dueDate" type="date" class="form-control" th:field="${invoicePaymentTermsDTO.dueDate}">
                     </div>
                     <label id="dueDateError" class="errorLabelForFile">Поле не должно быть пустым</label>
                 </div>
@@ -61,7 +61,7 @@
             <div class="divForPaymentTerms">
                 <div class="lblTermsPayment">Особые условия</div>
                 <div class="paymentTerm">
-                    <textarea id="specialConditions" name="specialConditions"
+                    <textarea id="specialConditions" class="form-control" name="specialConditions"
                               th:field="${invoicePaymentTermsDTO.specialConditions}"></textarea>
                 </div>
             </div>

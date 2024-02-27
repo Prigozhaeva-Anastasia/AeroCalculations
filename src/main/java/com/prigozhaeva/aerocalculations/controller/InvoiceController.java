@@ -4,12 +4,10 @@ import com.lowagie.text.pdf.BaseFont;
 import com.prigozhaeva.aerocalculations.dto.InvoiceDTO;
 import com.prigozhaeva.aerocalculations.dto.InvoicePaymentTermsDTO;
 import com.prigozhaeva.aerocalculations.entity.*;
-import com.prigozhaeva.aerocalculations.service.AirlineService;
-import com.prigozhaeva.aerocalculations.service.FlightService;
-import com.prigozhaeva.aerocalculations.service.InvoiceService;
-import com.prigozhaeva.aerocalculations.service.ServiceService;
+import com.prigozhaeva.aerocalculations.service.*;
 import com.prigozhaeva.aerocalculations.util.CityCodeMap;
 import com.prigozhaeva.aerocalculations.util.MappingUtils;
+import com.sun.mail.smtp.SMTPSendFailedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +15,7 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
+import javax.mail.*;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -39,25 +38,27 @@ public class InvoiceController {
     private FlightService flightService;
     private ServiceService serviceService;
     private AirlineService airlineService;
+    private UserService userService;
     private MappingUtils mappingUtils;
 
-    public InvoiceController(InvoiceService invoiceService, FlightService flightService, ServiceService serviceService, MappingUtils mappingUtils, AirlineService airlineService) {
+    public InvoiceController(InvoiceService invoiceService, FlightService flightService, ServiceService serviceService, MappingUtils mappingUtils, AirlineService airlineService, UserService userService) {
         this.invoiceService = invoiceService;
         this.flightService = flightService;
         this.serviceService = serviceService;
         this.mappingUtils = mappingUtils;
         this.airlineService = airlineService;
+        this.userService = userService;
     }
 
     @GetMapping(value = "/index")
     public String invoices(Model model, @RequestParam(name = KEYWORD, defaultValue = "") String keyword) {
-        List<Invoice> invoices = invoiceService.fetchAll();  //delete
-        invoices.get(0).setFlight(flightService.findFlightById(2001399399L)); //delete
-        invoices.get(1).setFlight(flightService.findFlightById(2001406321L)); //delete
-        invoices.get(2).setFlight(flightService.findFlightById(2001406319L)); //delete
-        for (Invoice invoice : invoices) {
-            invoiceService.createOrUpdateInvoice(invoice);  //delete
-        }
+//        List<Invoice> invoices = invoiceService.fetchAll();  //delete
+//        invoices.get(0).setFlight(flightService.findFlightById(2001399399L)); //delete
+//        invoices.get(1).setFlight(flightService.findFlightById(2001406321L)); //delete
+//        invoices.get(2).setFlight(flightService.findFlightById(2001406319L)); //delete
+//        for (Invoice invoice : invoices) {
+//            invoiceService.createOrUpdateInvoice(invoice);  //delete
+//        }
         List<InvoiceDTO> invoiceList;
         if (keyword.isEmpty()) {
             invoiceList = new CopyOnWriteArrayList<>(invoiceService.fetchAllDto());
@@ -251,14 +252,14 @@ public class InvoiceController {
 
     @GetMapping(value = "/formCreateFile")
     public String createFile(Integer invoiceNumber, Model model) {
-        InvoicePaymentTermsDTO invoicePaymentTermsDTO= new InvoicePaymentTermsDTO();
+        InvoicePaymentTermsDTO invoicePaymentTermsDTO = new InvoicePaymentTermsDTO();
         invoicePaymentTermsDTO.setInvoiceNumber(invoiceNumber);
         model.addAttribute(INVOICE_PAYMENT_TERMS, invoicePaymentTermsDTO);
         return "invoice-views/createFileWithTermsPayment";
     }
 
     @PostMapping(value = "/createFile")
-    public String createFileWithTermsPayment(InvoicePaymentTermsDTO invoicePaymentTermsDTO) {
+    public  String createFileWithPaymentTerms(InvoicePaymentTermsDTO invoicePaymentTermsDTO) {
         String templatePath = "D:/diploma/проект/aeroCalculations/src/main/resources/templates/invoice-views/termsOfPayment.html";
         String htmlContent = readHtmlContent(templatePath);
         String filledHtmlContent = fillTermsOfPaymentTemplateWithData(htmlContent, invoicePaymentTermsDTO);
@@ -285,14 +286,38 @@ public class InvoiceController {
     public String formMoreDetails(int invoiceNumber) {
         return "redirect:/invoices/confirmForm?invoiceNumber=" + invoiceNumber;
     }
+
     @GetMapping(value = "/sendInvoiceForm")
     public String sendInvoiceForm() {
         return "invoice-views/formForSignDoc";
     }
+
     @GetMapping(value = "/signDocuments")
-    public String signDocuments(String invoiceDoc, String paymentTermsDoc) {
+    public String signDocuments(String invoiceDoc, String paymentTermsDoc, Model model) {
         invoiceService.signDocument(invoiceDoc);
         invoiceService.signDocument(paymentTermsDoc);
+        model.addAttribute(INVOICE_DOC, invoiceDoc);
+        model.addAttribute(PAYMENT_TERMS_DOC, paymentTermsDoc);
         return "invoice-views/formForSendEmail";
+    }
+
+    @PostMapping(value = "/sendByEmail")
+    public String sendByEmail(String recipientEmail, String msg, String invoiceDoc, String paymentTermsDoc, Model model) {
+        try {
+            invoiceService.sendByEmail(recipientEmail, "Счет на оплату", msg, invoiceDoc, paymentTermsDoc);
+            Invoice invoice = invoiceService.findInvoiceByInvoiceNumber(Integer.parseInt(invoiceDoc.replaceAll("\\.pdf$", "")));
+            invoice.setPaymentState(SENT_STATUS);
+            invoiceService.createOrUpdateInvoice(invoice);
+        } catch (SMTPSendFailedException e) {
+            model.addAttribute("errorMessage", "Пользователь с таким email не найден");
+            model.addAttribute("email", recipientEmail);
+            model.addAttribute("invoiceDoc", invoiceDoc);
+            model.addAttribute("paymentTermsDoc", paymentTermsDoc);
+            model.addAttribute("message", msg);
+            return "invoice-views/formForSendEmail";
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+        return "redirect:/invoices/index";
     }
 }

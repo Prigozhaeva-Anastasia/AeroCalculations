@@ -8,9 +8,10 @@ window.onload = function () {
     let phoneNumber = document.getElementById("phoneNumber");
     let phoneNumberError = document.getElementById("phoneNumberError");
     let formCreateFile = document.getElementById("formCreateFile");
+    let invoiceNumber = document.getElementById("invoiceNumber");
 
     finesAndPenalties.oninput = function () {
-        this.value = this.value.replace(/(\d+\.\d\d\d+)|[�-��-�A-za-z]/g, '');
+        this.value = this.value.replace(/(\d+\.\d\d\d+)|[А-Яа-яA-za-z]/g, '');
     }
 
     finesAndPenalties.addEventListener('invalid', function (event) {
@@ -54,5 +55,10 @@ window.onload = function () {
         FL.classList.remove("error");
         phoneNumberError.style.display = 'none';
         phoneNumber.classList.remove("error");
+    });
+
+    formCreateFile.addEventListener('submit', function (event) {
+        let alertMessage = 'Документ с условиями и сроками оплаты счета был создан и сохранен в pdf-формате: D:/diploma/проект/pdf/payment_' + invoiceNumber.value + '.pdf';
+        alert(alertMessage);
     });
 }

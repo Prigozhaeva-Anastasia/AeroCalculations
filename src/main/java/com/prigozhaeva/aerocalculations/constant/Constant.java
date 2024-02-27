@@ -45,6 +45,8 @@ public class Constant {
     public static final String MONTH_CUR = "monthCur";
     public static final String YEAR_CUR = "yearCur";
     public static final String NOT_PAID_STATUS = "Не оплачен";
+    public static final String SENT_STATUS = "Отправлен";
+    public static final String EXPIRED_STATUS = "Просрочен";
     public static final String BYN = "BYN";
     public static final String CHILDREN = "дети";
     public static final String PASSENGER = "пассажир";
@@ -59,4 +61,7 @@ public class Constant {
     public static final String DEP_CITY = "depCity";
     public static final String ARR_CITY = "arrCity";
     public static final String TOTAL_COST = "totalCost";
+    public static final String INVOICE_DOC = "invoiceDoc";
+    public static final String PAYMENT_TERMS_DOC = "paymentTermsDoc";
+    public static final String MSG_OF_NOT_PAYMENT_INVOICE = "Счет не оплачен. Информация о штрафах и пенях, которые будут начисляться, находится в документе о сроках и условиях оплаты счета.";
 }

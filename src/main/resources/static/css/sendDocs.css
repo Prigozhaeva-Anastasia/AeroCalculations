@@ -11,7 +11,7 @@
     position: relative;
     left: -2px;;
     width: 1286px;
-    height: 674px;
+    min-height: 674px;
     background-color: rgba(0, 0, 0, 0.8);
 }
 #mainDivForFiles {
@@ -23,6 +23,16 @@
     width: 500px;
     padding: 25px;
     margin-bottom: 20px;
+}
+#mainDivForEmail {
+    margin-left: 380px;
+    position: relative;
+    top: 20px;
+    min-height: 630px;
+    background-color: white;
+    width: 500px;
+    padding: 25px;
+    margin-bottom: 10px;
 }
 #lblForDigitalSign {
     font-size: 27px;
@@ -47,7 +57,21 @@
     left: 150px;
     top: 50px;
 }
+#sendBtn {
+    background-color: #97BFB7;
+    font-size: 17px;
+    border-color: transparent;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0);
+    border-radius: 10px;
+    position: relative;
+    left: 150px;
+    top: 20px;
+    margin-bottom: 10px;
+}
 #sign:hover {
+    background-color: #708c87;
+}
+#sendBtn:hover {
     background-color: #708c87;
 }
 .lblForDocsName {
@@ -78,5 +102,35 @@
     color: rgba(255, 96, 96, 0.7);
     font-size: 17px;
     display: none;
+    width: 500px;
+}
+#toWhom {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #97BFB7;
+    color: black;
+    font-size: 18px;
+    font-family: Georgia;
+    width: 445px;
+    height: 43px;
+}
+#message {
+    width: 445px;
+    height: 170px;
+    margin-top: 25px;
+}
+#fileIcon1, #fileIcon2 {
+    font-size: 40px;
+}
+@charset "UTF-8";
+.errorLabelForEmail {
+    color: rgba(255, 96, 96, 0.7);
+    font-size: 14px;
+    display: none;
+    width: 500px;
+}
+.errorLblForEmail {
+    color: rgba(255, 96, 96, 0.7);
+    font-size: 14px;
     width: 500px;
 }

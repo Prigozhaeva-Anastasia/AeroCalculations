@@ -5,6 +5,8 @@ import com.prigozhaeva.aerocalculations.dto.InvoiceDTO;
 import com.prigozhaeva.aerocalculations.dto.InvoiceUpdateDTO;
 import com.prigozhaeva.aerocalculations.entity.Invoice;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -22,4 +24,6 @@ public interface InvoiceService {
     Invoice createOrUpdateInvoice(Invoice invoice);
     void removeInvoice(Long invoiceId);
     void signDocument(String file);
+    void scheduledCheckAndSendPaymentReminder();
+    void sendByEmail(String recipientEmail, String themeOfMsg, String msg, String invoiceDoc, String paymentTermsDoc) throws MessagingException;
 }
