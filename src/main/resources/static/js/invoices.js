@@ -12,6 +12,11 @@ window.onload = function () {
     let statuses = document.getElementsByClassName('pState');
     let createFiles = document.getElementsByClassName('createFile');
 
+    filterForInvoices.addEventListener('click', function (event) {
+        formFilterForInvoices.style.display = 'block';
+        formBtnsInvoice.style.left = '-145px';
+    });
+
     for (let i = 0; i < arrPaymentStateHid.length; i++) {
         let formPaymentState = document.getElementById("formPaymentState_" + i);
         let state = document.getElementById("paymentState_" + i);
@@ -38,8 +43,4 @@ window.onload = function () {
             createFiles[i].disabled = true;
         }
     }
-    filterForInvoices.addEventListener('click', function (event) {
-        formFilterForInvoices.style.display = 'block';
-        formBtnsInvoice.style.left = '-145px';
-    });
 };

@@ -1,11 +1,8 @@
 package com.prigozhaeva.aerocalculations.controller;
 
-import com.itextpdf.text.pdf.PdfReader;
-import com.itextpdf.text.pdf.security.PdfPKCS7;
 import com.lowagie.text.pdf.BaseFont;
 import com.prigozhaeva.aerocalculations.dto.InvoiceDTO;
 import com.prigozhaeva.aerocalculations.dto.InvoicePaymentTermsDTO;
-import com.prigozhaeva.aerocalculations.dto.MessageDTO;
 import com.prigozhaeva.aerocalculations.entity.*;
 import com.prigozhaeva.aerocalculations.service.*;
 import com.prigozhaeva.aerocalculations.util.CityCodeMap;
@@ -19,7 +16,6 @@ import org.thymeleaf.context.Context;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import javax.mail.*;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -27,9 +23,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.security.Security;
-import java.security.cert.Certificate;
-import java.security.cert.X509Certificate;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -68,9 +61,13 @@ public class InvoiceController {
 //        }
         List<InvoiceDTO> invoiceList;
         if (keyword.isEmpty()) {
-            invoiceList = new CopyOnWriteArrayList<>(invoiceService.fetchAllDto());
+            invoiceList = new CopyOnWriteArrayList<>(invoiceService.fetchAllDto().stream()
+                    .filter(invoiceDTO -> !invoiceDTO.getPaymentState().equals(PAID_STATUS))
+                    .collect(Collectors.toList()));
         } else {
-            invoiceList = new CopyOnWriteArrayList<>(invoiceService.findInvoicesDtoByInvoiceNumber(Integer.parseInt(keyword)));
+            invoiceList = new CopyOnWriteArrayList<>(invoiceService.findInvoicesDtoByInvoiceNumber(Integer.parseInt(keyword)).stream()
+                    .filter(invoiceDTO -> !invoiceDTO.getPaymentState().equals(PAID_STATUS))
+                    .collect(Collectors.toList()));
         }
         model.addAttribute(LIST_INVOICES, invoiceList);
         model.addAttribute(KEYWORD, keyword);
@@ -222,6 +219,21 @@ public class InvoiceController {
         return "invoice-views/invoices";
     }
 
+    @PostMapping(value = "/filterArchive")
+    public String filterArchive(Model model, Long airlineId, String paymentStatus, String date1, String date2) {
+        List<InvoiceDTO> invoiceDTOList = invoiceService.fetchAll().stream()
+                .filter(invoice -> invoice.getPaymentState().equals(PAID_STATUS) &&
+                        (airlineId == null || invoice.getFlight().getAircraft().getAirline().getId().equals(airlineId)) &&
+                        (paymentStatus.isEmpty() || invoice.getPaymentState().equals(paymentStatus)) &&
+                        (date1.isEmpty() || invoice.getInvoiceCreationDate().compareTo(LocalDate.parse(date1)) >= 0) &&
+                        (date2.isEmpty() || invoice.getInvoiceCreationDate().compareTo(LocalDate.parse(date2)) <= 0))
+                .map(mappingUtils::mapToInvoiceDTO)
+                .collect(Collectors.toList());
+        model.addAttribute(LIST_INVOICES, invoiceDTOList);
+        model.addAttribute(LIST_AIRLINES, airlineService.fetchAll());
+        return "invoice-views/archive";
+    }
+
     @GetMapping(value = "/sortByInvoiceNumber")
     public String sortByInvoiceNumber(Model model) {
         List<InvoiceDTO> invoiceDTOList = invoiceService.fetchAllDto();
@@ -238,6 +250,28 @@ public class InvoiceController {
         model.addAttribute(LIST_INVOICES, invoiceDTOList);
         model.addAttribute(LIST_AIRLINES, airlineService.fetchAll());
         return "invoice-views/invoices";
+    }
+
+    @GetMapping(value = "/sortByInvoiceNumberArchive")
+    public String sortByInvoiceNumberArchive(Model model) {
+        List<InvoiceDTO> invoiceDTOList = invoiceService.fetchAllDto().stream()
+                .filter(invoiceDTO -> invoiceDTO.getPaymentState().equals(PAID_STATUS))
+                .collect(Collectors.toList());
+        Collections.sort(invoiceDTOList, Comparator.comparing(InvoiceDTO::getInvoiceNumber));
+        model.addAttribute(LIST_INVOICES, invoiceDTOList);
+        model.addAttribute(LIST_AIRLINES, airlineService.fetchAll());
+        return "invoice-views/archive";
+    }
+
+    @GetMapping(value = "/sortByInvoiceCreationDateArchive")
+    public String sortByInvoiceCreationDateArchive(Model model) {
+        List<InvoiceDTO> invoiceDTOList = invoiceService.fetchAllDto().stream()
+                .filter(invoiceDTO -> invoiceDTO.getPaymentState().equals(PAID_STATUS))
+                .collect(Collectors.toList());
+        Collections.sort(invoiceDTOList, Comparator.comparing(InvoiceDTO::getInvoiceCreationDate));
+        model.addAttribute(LIST_INVOICES, invoiceDTOList);
+        model.addAttribute(LIST_AIRLINES, airlineService.fetchAll());
+        return "invoice-views/archive";
     }
 
     @GetMapping(value = "/formUpdate")
@@ -326,5 +360,24 @@ public class InvoiceController {
             throw new RuntimeException(e);
         }
         return "redirect:/invoices/index";
+    }
+
+    @GetMapping(value = "/archive")
+    public String archive(Model model, @RequestParam(name = KEYWORD, defaultValue = "") String keyword) {
+        List<InvoiceDTO> invoiceList;
+        if (keyword.isEmpty()) {
+            invoiceList = new CopyOnWriteArrayList<>(invoiceService.fetchAllDto().stream()
+                    .filter(invoiceDTO -> invoiceDTO.getPaymentState().equals(PAID_STATUS))
+                    .collect(Collectors.toList()));
+        } else {
+            invoiceList = new CopyOnWriteArrayList<>(invoiceService.findInvoicesDtoByInvoiceNumber(Integer.parseInt(keyword)).stream()
+                    .filter(invoiceDTO -> invoiceDTO.getPaymentState().equals(PAID_STATUS))
+                    .collect(Collectors.toList()));
+        }
+        model.addAttribute(LIST_INVOICES, invoiceList);
+        model.addAttribute(KEYWORD, keyword);
+        List<Airline> airlines = airlineService.fetchAll();
+        model.addAttribute(LIST_AIRLINES, airlines);
+        return "invoice-views/archive";
     }
 }

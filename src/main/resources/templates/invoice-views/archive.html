@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="template">
+<head>
+  <meta charset="UTF-8">
+  <title>Архив счетов</title>
+  <link th:href="@{/css/genStyle.css}" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+  <script type="text/javascript" src="../js/invoices.js" th:src="@{/js/invoices.js}"></script>
+</head>
+<body>
+<div layout:fragment="content1">
+  <div class="container mt-3">
+    <div class="card mb">
+      <div class="card-header head">Список счетов</div>
+      <div class="card-body">
+        <div class="search">
+          <form id="formSearch" method="get" th:action="@{index}">
+            <input id="searchField" type="text" class="col-11" name="keyword"
+                   placeholder="   Введите номер счета" th:value="${keyword}">
+            <button type="submit"/>
+          </form>
+        </div>
+        <div></div>
+        <div id="inline">
+          <form id="formBtnsInvoice">
+            <a id="reloadInvoice" class="btn" th:href="@{/invoices/archive}"></a>
+            <button type="button" id="filterForInvoices" class="btn"></button>
+          </form>
+          <form id="formFilterForInvoices" method="post" th:action="@{/invoices/filterArchive}">
+            <div class="cell">
+              <label id="airlineLabel">Авиакомпания:</label>
+              <select id="airlines" class="form-select airlinesFilter"
+                      aria-label="Disabled select example" name="airlineId">
+                <option selected></option>
+                <option th:each="airline :${listAirlines}" th:value="${airline.id}"
+                        th:text="${airline.name}"></option>
+              </select>
+            </div>
+            <div class="cell">
+              <label id="ratingLabel">Дата создания счета:</label>
+              <div class="inputs">
+                <input id="date1" class="form-control" type="date" name="date1" placeholder="от">
+                <input id="date2" class="form-control" type="date" name="date2" placeholder="до">
+              </div>
+            </div>
+            <div class="cell">
+              <label id="paymentStatusLabel">Статус оплаты:</label>
+              <select id="paymentStatuses" class="form-select paymentState"
+                      aria-label="Disabled select example" name="paymentStatus">
+                <option selected></option>
+                <option value="Оплачен">Оплачен</option>
+                <option value="Не оплачен">Не оплачен</option>
+                <option value="Отправлен">Отправлен</option>
+                <option value="Просрочен">Просрочен</option>
+              </select>
+            </div>
+            <div>
+              <button id="applyBtn" type="submit">Применить</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table invoiceTable">
+          <thead class="line">
+          <tr class="text-center">
+            <th><a id="sortedFieldByInvoiceNumber" class="nav-link dropdown-toggle menu"
+                   th:href="@{/invoices/sortByInvoiceNumberArchive}">№ счета</a></th>
+            <th style="width: 180px;"><a id="sortedFieldByInvoiceCreationDate"
+                                         class="nav-link dropdown-toggle menu"
+                                         th:href="@{/invoices/sortByInvoiceCreationDateArchive}">Дата создания
+              счета</a></th>
+            <th>Номер рейса</th>
+            <th>Авиакомпания</th>
+            <th>Сумма</th>
+            <th>Валюта</th>
+            <th>Статус оплаты</th>
+            <th>Действие</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr class="text-center" th:each="invoice, iterStat : ${listInvoices}">
+            <input type="text" class="paymentStateHid" th:value="${invoice.getPaymentState()}" hidden>
+            <td class="center" th:text="${invoice.getInvoiceNumber()}"></td>
+            <td class="center"
+                th:text="${#temporals.format(invoice.getInvoiceCreationDate(), 'dd.MM.yyyy')}"></td>
+            <td class="center" th:text="${invoice.getFlight().getFlightNumber()}"></td>
+            <td class="center" th:text="${invoice.getFlight().getAircraft().getAirline().getName()}"></td>
+            <td class="center" th:text="${invoice.getTotalCost()}"></td>
+            <td class="center" th:text="${invoice.getCurrency()}"></td>
+            <td>
+              <form th:id="'formPaymentState_' + ${iterStat.index}"
+                    th:action="@{/invoices/changePaymentStatus}" method="post">
+                <input type="text" th:value="${invoice.getInvoiceNumber()}" name="invoiceNumber"
+                       hidden="hidden">
+                <select th:id="'paymentState_' + ${iterStat.index}" class="form-select paymentState pState"
+                        aria-label="Disabled select example" name="paymentState">
+                  <option value="Оплачен">Оплачен</option>
+                  <option value="Не оплачен">Не оплачен</option>
+                  <option value="Отправлен">Отправлен</option>
+                  <option value="Просрочен">Просрочен</option>
+                </select>
+              </form>
+            </td>
+            <td>
+              <a id="infoArchive" class="btn"
+                 th:href="@{/invoices/formMoreDetails(invoiceNumber=${invoice.getInvoiceNumber()})}"></a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</body>
+</html>

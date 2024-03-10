@@ -323,7 +323,7 @@ form {
     position: relative;
     left: 15px;
 }
-#info:before{
+#info:before, #infoArchive:before {
     content: '';
     background-image: url("../images/info.png");
     background-size: cover;
@@ -333,12 +333,18 @@ form {
     top: 2px;
     left: 1px;
 }
-#info {
+#info, #infoArchive {
     width: 39px;
     height: 40px;
+}
+#info {
     position: relative;
 }
-#info:hover {
+#infoArchive {
+    position: relative;
+    left: 45px;
+}
+#info:hover, #infoArchive:hover {
     background-color: rgba(166, 165, 165, 0.6);
 }
 #sendInvoice:before {
