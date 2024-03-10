@@ -120,8 +120,11 @@ hr.h-color{
 #invoiceIcon {
     margin-left: 13px;
 }
-#archiveIcon {
+#archiveIcon, #clockIcon {
     margin-left: 9px;
+}
+#clock {
+    font-size: 20px;
 }
 #proofOfPaymentIcon {
     margin-left: 9px;
