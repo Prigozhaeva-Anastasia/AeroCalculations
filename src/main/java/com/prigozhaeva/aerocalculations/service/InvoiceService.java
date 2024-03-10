@@ -26,4 +26,5 @@ public interface InvoiceService {
     void signDocument(String file);
     void scheduledCheckAndSendPaymentReminder();
     void sendByEmail(String recipientEmail, String themeOfMsg, String msg, String invoiceDoc, String paymentTermsDoc) throws MessagingException;
+    boolean signatureVerification(String filePath);
 }

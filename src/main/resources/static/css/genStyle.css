@@ -454,15 +454,6 @@ input[type="file"]{
 #payerNameTH{
     width: 290px;
 }
-#flightIcon, #serviceIcon {
-    margin-left: 8px;
-}
-#invoiceIcon {
-    margin-left: 13px;
-}
-#archiveIcon {
-    margin-left: 9px;
-}
 table td {
     text-align: left;
 }

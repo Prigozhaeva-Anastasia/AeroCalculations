@@ -47,6 +47,7 @@ public class Constant {
     public static final String NOT_PAID_STATUS = "Не оплачен";
     public static final String SENT_STATUS = "Отправлен";
     public static final String EXPIRED_STATUS = "Просрочен";
+    public static final String PAID_STATUS = "Оплачен";
     public static final String BYN = "BYN";
     public static final String CHILDREN = "дети";
     public static final String PASSENGER = "пассажир";
@@ -64,4 +65,10 @@ public class Constant {
     public static final String INVOICE_DOC = "invoiceDoc";
     public static final String PAYMENT_TERMS_DOC = "paymentTermsDoc";
     public static final String MSG_OF_NOT_PAYMENT_INVOICE = "Счет не оплачен. Информация о штрафах и пенях, которые будут начисляться, находится в документе о сроках и условиях оплаты счета.";
+    public static final String MESSAGES = "msgs";
+    public static final String MESSAGE = "message";
+    public static final String MINSK_AIRPORT_EMAIL = "minsk_airport@mail.ru";
+    public static final String MINSK_AIRPORT_PASSWORD_FOR_EMAIL = "TLmPGHXDcMHMt5mchmhC";
+    public static final String PATH_TO_DOWNLOADED_FILES = "D:/diploma/проект/download/";
+    public static final String CONFIRM_MESSAGE = "confirmMessage";
 }

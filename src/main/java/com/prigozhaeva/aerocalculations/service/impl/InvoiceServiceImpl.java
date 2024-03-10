@@ -2,6 +2,7 @@ package com.prigozhaeva.aerocalculations.service.impl;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.security.Security;
 import java.security.cert.Certificate;
 import java.io.FileInputStream;
 import java.security.KeyStore;
@@ -24,7 +25,6 @@ import com.prigozhaeva.aerocalculations.repository.FlightRepository;
 import com.prigozhaeva.aerocalculations.repository.InvoiceRepository;
 import com.prigozhaeva.aerocalculations.service.InvoiceService;
 import com.prigozhaeva.aerocalculations.util.MappingUtils;
-import com.sun.mail.smtp.SMTPSendFailedException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -182,17 +182,31 @@ public class InvoiceServiceImpl implements InvoiceService {
         properties.put("mail.smtp.host", "smtp.mail.ru");
         properties.put("mail.smtp.port", "587");
 
-        String senderEmail = "minsk_airportt@mail.ru";
-        String senderPassword = "tHtjXZTPvkDEwKUFHj7c";
-
         Session session = Session.getInstance(properties, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(senderEmail, senderPassword);
+                return new PasswordAuthentication(MINSK_AIRPORT_EMAIL, MINSK_AIRPORT_PASSWORD_FOR_EMAIL);
             }
         });
-        Message message = prepareMessage(session, senderEmail, recipientEmail, invoiceDoc, paymentTermsDoc, themeOfMsg, msg);
+        Message message = prepareMessage(session, MINSK_AIRPORT_EMAIL, recipientEmail, invoiceDoc, paymentTermsDoc, themeOfMsg, msg);
         Transport.send(message);
+    }
+
+    @Override
+    public boolean signatureVerification(String filePath) {
+        try {
+            Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
+            PdfReader reader = new PdfReader(new FileInputStream(filePath));
+            PdfPKCS7 pkcs7 = reader.getAcroFields().verifySignature("Signature");
+            if (pkcs7 != null) {
+                if (pkcs7.verify()) {
+                    return true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     private static Message prepareMessage(Session session, String senderEmail, String recipientEmail, String invoiceDoc, String paymentTermsDoc, String themeOfMsg, String msg) {
@@ -224,28 +238,19 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Scheduled(fixedRate = 86400000)
     @Override
     public void scheduledCheckAndSendPaymentReminder() {
-//        invoiceRepository.findAll().stream()
-//                .filter(invoice -> invoice.getPaymentState().equals(SENT_STATUS) && invoice.getDueDate() != null && invoice.getDueDate().isBefore(LocalDate.now()))
-//                .forEach(invoice -> {
-//                    try {
-//                        sendByEmail(invoice.getFlight().getAircraft().getAirline().getEmail(), "Уведомление о неуплате", MSG_OF_NOT_PAYMENT_INVOICE, invoice.getInvoiceNumber() + ".pdf", "payment_" + invoice.getInvoiceNumber() + ".pdf");
-//                        invoice.setPaymentState(EXPIRED_STATUS);
-//                        createOrUpdateInvoice(invoice);
-//                    } catch (MessagingException e) {
-//                        throw new RuntimeException(e);
-//                    }
-//                });
-        for (Invoice invoice : invoiceRepository.findAll()) {
-            if (invoice.getPaymentState().equals(SENT_STATUS) && invoice.getDueDate() != null && invoice.getDueDate().isBefore(LocalDate.now())) {
-                try {
-                    sendByEmail(invoice.getFlight().getAircraft().getAirline().getEmail(), "Уведомление о неуплате", MSG_OF_NOT_PAYMENT_INVOICE, invoice.getInvoiceNumber() + ".pdf", "payment_" + invoice.getInvoiceNumber() + ".pdf");
-                    invoice.setPaymentState(EXPIRED_STATUS);
-                    createOrUpdateInvoice(invoice);
-                } catch (MessagingException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
+        invoiceRepository.findAll().stream()
+                .filter(invoice -> invoice.getPaymentState().equals(SENT_STATUS))
+                .filter(invoice -> invoice.getDueDate() != null && invoice.getDueDate().isBefore(LocalDate.now()))
+                .forEach(invoice -> {
+                    try {
+                        String email = invoice.getFlight().getAircraft().getAirline().getEmail();
+                        sendByEmail(email, "Уведомление о неуплате", MSG_OF_NOT_PAYMENT_INVOICE, invoice.getInvoiceNumber() + ".pdf", "payment_" + invoice.getInvoiceNumber() + ".pdf");
+                        invoice.setPaymentState(EXPIRED_STATUS);
+                        createOrUpdateInvoice(invoice);
+                    } catch (MessagingException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
     }
 }
 

@@ -1,9 +1,6 @@
 package com.prigozhaeva.aerocalculations.util;
 
-import com.prigozhaeva.aerocalculations.dto.FlightDTO;
-import com.prigozhaeva.aerocalculations.dto.InvoiceCreateDTO;
-import com.prigozhaeva.aerocalculations.dto.InvoiceDTO;
-import com.prigozhaeva.aerocalculations.dto.InvoiceUpdateDTO;
+import com.prigozhaeva.aerocalculations.dto.*;
 import com.prigozhaeva.aerocalculations.entity.Flight;
 import com.prigozhaeva.aerocalculations.entity.Invoice;
 import com.prigozhaeva.aerocalculations.entity.ProvidedService;
@@ -12,8 +9,19 @@ import com.prigozhaeva.aerocalculations.service.FlightService;
 import lombok.Builder;
 import org.springframework.stereotype.Service;
 
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.time.*;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -142,5 +150,62 @@ public class  MappingUtils {
                 .filter(providedService -> providedService.getService().getServiceType().equals(GROUND_HANDLING_SERVICES))
                 .collect(Collectors.toList()));
         return dto;
+    }
+
+    public MessageDTO mapToMessageDTO(Message message) throws MessagingException, IOException {
+        MessageDTO messageDTO = new MessageDTO();
+        messageDTO.setMessageId(message.getHeader("Message-ID")[0]);
+        messageDTO.setSenderEmail(((InternetAddress) message.getFrom()[0]).getAddress());
+        messageDTO.setSubject(message.getSubject());
+        Date date = message.getReceivedDate();
+        Instant instant = date.toInstant();
+        messageDTO.setLocalDateTime(instant.atZone(ZoneId.systemDefault()).toLocalDateTime());
+        StringBuilder textBuilder = new StringBuilder();
+        processMessageContent(message, textBuilder);
+        messageDTO.setText(textBuilder.toString());
+        return messageDTO;
+    }
+
+    public MessageDTO mapToMessageDTOWithAttachment(Message message) throws MessagingException, IOException {
+        MessageDTO messageDTO = mapToMessageDTO(message);
+        if (message.getContent() instanceof Multipart) {
+            Multipart multipart = (Multipart) message.getContent();
+            for (int i = 0; i < multipart.getCount(); i++) {
+                BodyPart bodyPart = multipart.getBodyPart(i);
+                if (Part.ATTACHMENT.equalsIgnoreCase(bodyPart.getDisposition()) &&
+                        bodyPart.getContentType().toLowerCase().contains("application/pdf")) {
+                    String fileName = bodyPart.getFileName();
+                    String filePath = PATH_TO_DOWNLOADED_FILES + fileName;
+                    messageDTO.setFilePath(filePath);
+                    try (InputStream inputStream = bodyPart.getInputStream();
+                         FileOutputStream outputStream = new FileOutputStream(filePath)) {
+                        byte[] buffer = new byte[1024];
+                        int bytesRead;
+                        while ((bytesRead = inputStream.read(buffer)) != -1) {
+                            outputStream.write(buffer, 0, bytesRead);
+                        }
+                    }
+                }
+            }
+        }
+        return messageDTO;
+    }
+
+    private void processMessageContent(Part part, StringBuilder textBuilder) throws MessagingException, IOException {
+        if (part.isMimeType("text/plain")) {
+            String text = part.getContent().toString();
+            int endIndex = text.indexOf("--");
+            if (endIndex != -1) {
+                textBuilder.append(text.substring(0, endIndex));
+            } else {
+                textBuilder.append(text);
+            }
+        } else if (part.isMimeType("multipart/*")) {
+            Multipart multipart = (Multipart) part.getContent();
+            for (int i = 0; i < multipart.getCount(); i++) {
+                BodyPart bodyPart = multipart.getBodyPart(i);
+                processMessageContent(bodyPart, textBuilder);
+            }
+        }
     }
 }

@@ -1,12 +1,3 @@
-#flightIcon, #serviceIcon {
-    margin-left: 8px;
-}
-#invoiceIcon {
-    margin-left: 13px;
-}
-#archiveIcon {
-    margin-left: 9px;
-}
 #blackFont {
     border-radius: 20px;
     background-color: rgba(0, 0, 0, 0.9);

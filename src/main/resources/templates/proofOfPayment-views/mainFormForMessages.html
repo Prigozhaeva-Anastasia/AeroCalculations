@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="template">
+<head>
+    <meta charset="UTF-8">
+    <title>Сообщения</title>
+    <link th:href="@{/css/chat.css}" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script type="text/javascript" src="../js/chat.js" th:src="@{/js/chat.js}"></script>
+</head>
+<body>
+<div id="mainDiv" layout:fragment="content1">
+    <div class="container">
+        <div class="column1">
+            <div class="sidebar_chat" id="side_nav_chat">
+                <ul class="list-unstyled px-2">
+                    <li id="unreadable" class=""><a id="unreadableLabel" th:href="@{/messages/unreadMsgs}"
+                                                    class="text-decoration-none px-3 py-2 d-block">Непрочитанные</a>
+                    </li>
+                    <li id="readable" class=""><a id="readableLabel" th:href="@{/messages/readMsgs}"
+                                                  class="text-decoration-none px-3 py-2 d-block">Прочитанные</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="column2">
+            <div id="divForMsgs">
+                <div th:if="${msgs != null}" th:each="message : ${msgs}">
+                    <a th:href="@{'/messages/unreadMessage/' + ${message.getMessageId()}}">
+                        <div class="msg">
+                            <div th:text="${message.getSenderEmail()}"></div>
+                            <div class="containerOfSubject distance">
+                                <div class="text" th:text="${message.getSubject()}"></div>
+                            </div>
+                            <div class="containerOfTxt distance">
+                                <div class="text" th:text="${message.getText()}"></div>
+                            </div>
+                            <div class="dateTime">
+                                <label th:text="${message.getLocalDateTime().toLocalDate()}"></label>
+                                <label th:text="${message.getLocalDateTime().toLocalTime()}"></label>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -95,15 +95,6 @@
     font-family: Georgia;
     font-size: 16px;
 }
-#flightIcon, #serviceIcon {
-    margin-left: 8px;
-}
-#invoiceIcon {
-    margin-left: 13px;
-}
-#archiveIcon {
-    margin-left: 9px;
-}
 #okModalInfrastructure{
     background-color: #B8DAD3;
     color: white;

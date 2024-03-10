@@ -1,0 +1,217 @@
+#mainDiv {
+    margin: 0;
+    padding: 0;
+}
+.container {
+    display: flex;
+    width: 100%;
+}
+.column1 {
+    flex: 0 1 auto;
+    width: 200px;
+    background-color: white;
+    border-right: 2px solid black;
+    height: 635px;
+    padding-top: 10px
+}
+.column2 {
+    flex-grow: 3;
+    background-color: white;
+    height: 635px;
+}
+.column11 {
+    display: inline-block;
+}
+.column22 {
+    position: relative;
+    top: 15px;
+    left: 20px;
+    display: inline-block;
+
+}
+.side_nav_chat{
+    min-width: 250px;
+    max-width: 250px;
+    transition: all 0.3s;
+}
+.sidebar_chat li {
+    background-color: rgba(166, 165, 165, 0.6);
+    border-radius: 8px;
+    margin-top: 10px;
+}
+.sidebar_chat li:hover, .sidebar_chat li.active{
+    background: black;
+    border-radius: 8px;
+}
+.sidebar_chat li:hover a, .sidebar_chat li.active a, .sidebar_chat li.active a:hover {
+    color: white;
+}
+.sidebar_chat li a {
+    color: black;
+}
+#divForMsgs {
+    overflow: auto;
+}
+.msg {
+    cursor: pointer;
+    display:inline-flex;
+    background-color: rgba(166, 165, 165, 0.6);
+    border-radius: 8px;
+    margin: 20px;
+    height: 50px;
+    width: 990px;
+    padding: 12px;
+}
+#mainDiv {
+    margin: 0;
+    padding: 0;
+}
+.container {
+    display: flex;
+    width: 100%;
+}
+.column1 {
+    flex: 0 1 auto;
+    width: 200px;
+    background-color: white;
+    border-right: 2px solid black;
+    height: 638px;
+    padding-top: 10px
+}
+.column2 {
+    width: 500px;
+    flex-grow: 3;
+    background-color: white;
+    height: 638px;
+}
+.side_nav_chat{
+    min-width: 250px;
+    max-width: 250px;
+    transition: all 0.3s;
+}
+.sidebar_chat li {
+    background-color: rgba(166, 165, 165, 0.6);
+    border-radius: 8px;
+    margin-top: 10px;
+}
+.sidebar_chat li:hover, .sidebar_chat li.active{
+    background: black;
+    border-radius: 8px;
+}
+.sidebar_chat li:hover a, .sidebar_chat li.active a, .sidebar_chat li.active a:hover {
+    color: white;
+}
+.sidebar_chat li a {
+    color: black;
+}
+#divForMsgs {
+    overflow-y: auto;
+    height: 638px;
+}
+.msg {
+    cursor: pointer;
+    display:inline-flex;
+    background-color: rgba(166, 165, 165, 0.6);
+    border-radius: 8px;
+    margin: 20px 15px 0px;
+    height: 50px;
+    width: 980px;
+    padding: 12px;
+}
+.msg:hover {
+    background-color: rgba(166, 165, 165);
+}
+.distance {
+    margin-left: 30px;
+}
+.containerOfTxt {
+    width: 340px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.containerOfSubject {
+    width: 225px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.text {
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.dateTime {
+    margin-left: auto;
+}
+a {
+    color: inherit;
+    text-decoration: none;
+}
+a:hover {
+    color: inherit;
+}
+#returnBtn {
+    background: none;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+#returnBtn:hover {
+    background-color: rgba(166, 165, 165, 0.6);
+}
+#arrowIcon {
+    font-size: 22px;
+}
+#dateTimeLabel {
+    position: relative;
+    top: -8px;
+    left: 150px;
+}
+#message {
+    position: relative;
+    top: 50px;
+    left: 83px;
+    width: 750px;
+    height: 200px;
+}
+#paperclip {
+    font-size: 25px;
+}
+#doc {
+    font-size: 60px;
+}
+#paymentDoc {
+    margin-top: 60px;
+    margin-left: 83px;
+}
+#docLabel, #docName {
+    font-size: 16px;
+}
+#checkBtn{
+    background-color: transparent;
+    border-color: black;
+    border-radius: 7px;
+    margin-left: 250px;
+    margin-top: 30px;
+}
+#checkBtn:hover {
+    background-color: rgba(166, 165, 165, 0.6);
+}
+#confirmDiv {
+    display:inline-flex;
+}
+#confirmMessage {
+    margin-left: 40px;
+    visibility: hidden;
+}
+#doneIcon {
+    visibility: hidden;
+    color: green;
+}
+#notDoneIcon {
+    visibility: hidden;
+    color: red;
+}

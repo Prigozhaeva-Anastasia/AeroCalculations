@@ -1,8 +1,11 @@
 package com.prigozhaeva.aerocalculations.controller;
 
+import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.security.PdfPKCS7;
 import com.lowagie.text.pdf.BaseFont;
 import com.prigozhaeva.aerocalculations.dto.InvoiceDTO;
 import com.prigozhaeva.aerocalculations.dto.InvoicePaymentTermsDTO;
+import com.prigozhaeva.aerocalculations.dto.MessageDTO;
 import com.prigozhaeva.aerocalculations.entity.*;
 import com.prigozhaeva.aerocalculations.service.*;
 import com.prigozhaeva.aerocalculations.util.CityCodeMap;
@@ -16,6 +19,7 @@ import org.thymeleaf.context.Context;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import javax.mail.*;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -23,6 +27,9 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.Security;
+import java.security.cert.Certificate;
+import java.security.cert.X509Certificate;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;

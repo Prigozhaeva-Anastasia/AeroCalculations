@@ -114,3 +114,15 @@ hr.h-color{
 #out:hover{
     background-color: #97BFB7;
 }
+#flightIcon, #serviceIcon {
+    margin-left: 8px;
+}
+#invoiceIcon {
+    margin-left: 13px;
+}
+#archiveIcon {
+    margin-left: 9px;
+}
+#proofOfPaymentIcon {
+    margin-left: 9px;
+}
