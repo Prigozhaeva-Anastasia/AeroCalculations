@@ -8,4 +8,5 @@ import java.util.Map;
 public interface RushHourService {
     List<RushHour> findRushHoursByWeekDay(int weekDay);
     void removeRushHour(Long id);
+    RushHour createOrUpdateRushHour(RushHour rushHour);
 }

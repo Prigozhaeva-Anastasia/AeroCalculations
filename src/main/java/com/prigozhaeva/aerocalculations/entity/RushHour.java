@@ -1,6 +1,7 @@
 package com.prigozhaeva.aerocalculations.entity;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,10 +19,12 @@ public class RushHour {
     @Id
     @Column(name="id")
     private Long id;
-    @Column(name="from")
-    private LocalTime from;
-    @Column(name="to")
-    private LocalTime to;
+    @Column(name="from_time")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+    private LocalTime fromTime;
+    @Column(name="to_time")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+    private LocalTime toTime;
     @Column(name="week_day")
     private int weekDay;
 }

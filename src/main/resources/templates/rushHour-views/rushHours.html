@@ -29,11 +29,11 @@
                     <th></th>
                 </tr>
                 <tr th:each="rushHour:${listRushHours}">
-                    <form method="post" th:action="@{/rushHours/update}">
-                        <input type="text" th:value="${rushHour.getId()}" hidden="hidden">
-                        <input type="text" th:value="${rushHour.getWeekDay()}" hidden="hidden">
-                        <td><input type="time" class="form-control" th:value="${rushHour.getFrom()}"></td>
-                        <td><input type="time" class="form-control" th:value="${rushHour.getTo()}"></td>
+                    <form method="post" th:action="@{/rushHours/update}" th:object="${rushHour}">
+                        <input type="text" th:value="${rushHour.getId()}" name="id" hidden="hidden">
+                        <input type="text" th:value="${rushHour.getWeekDay()}" name="weekDay" hidden="hidden">
+                        <td><input type="time" class="form-control" name="fromTime" th:value="${rushHour.getFromTime()}"></td>
+                        <td><input type="time" class="form-control" name="toTime" th:value="${rushHour.getToTime()}"></td>
                         <td th:text="${rushHour.getWeekDay()}"></td>
                         <td>
                             <button th:formaction="@{'/rushHours/delete?id=' + ${rushHour.getId()} + '&weekDay=' + ${rushHour.getWeekDay()}}"

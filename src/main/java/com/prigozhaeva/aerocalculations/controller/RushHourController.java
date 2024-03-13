@@ -31,7 +31,7 @@ public class RushHourController {
     @GetMapping(value = "/index")
     public String rushHours(String weekDay, Model model) {
         List<RushHour> rushHours = rushHourService.findRushHoursByWeekDay(Integer.parseInt(weekDay));
-        Collections.sort(rushHours, Comparator.comparing(RushHour::getFrom));
+        Collections.sort(rushHours, Comparator.comparing(RushHour::getFromTime));
 //        Map<Integer, Long> flightOnWeekDay = reportService.flightDynamicsOnWeekDay(LocalDate.now().getYear(), LocalDate.now().getMonthValue() - 1, Integer.parseInt(weekDay)); это должно быть вместо следующей строки
         Map<Integer, Long> flightOnWeekDay = reportService.flightDynamicsOnWeekDay(2023, 10, Integer.parseInt(weekDay));
         Long maxAverageFlights = findMaxValue(flightOnWeekDay);
@@ -54,5 +54,11 @@ public class RushHourController {
     public String deleteInvoice(Long id, int weekDay) {
         rushHourService.removeRushHour(id);
         return "redirect:/rushHours/index?weekDay=" + weekDay;
+    }
+
+    @PostMapping(value = "/update")
+    public String update(RushHour rushHour) {
+        rushHourService.createOrUpdateRushHour(rushHour);
+        return "redirect:/rushHours/index?weekDay=" + rushHour.getWeekDay();
     }
 }

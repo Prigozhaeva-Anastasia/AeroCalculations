@@ -26,4 +26,9 @@ public class RushHourServiceImpl implements RushHourService {
     public void removeRushHour(Long id) {
         rushHourRepository.deleteById(id);
     }
+
+    @Override
+    public RushHour createOrUpdateRushHour(RushHour rushHour) {
+        return rushHourRepository.save(rushHour);
+    }
 }
