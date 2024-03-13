@@ -3,8 +3,10 @@ package com.prigozhaeva.aerocalculations.service.impl;
 import com.prigozhaeva.aerocalculations.entity.CurrencyRate;
 import com.prigozhaeva.aerocalculations.entity.Flight;
 import com.prigozhaeva.aerocalculations.entity.ProvidedService;
+import com.prigozhaeva.aerocalculations.entity.RushHour;
 import com.prigozhaeva.aerocalculations.repository.FlightRepository;
 import com.prigozhaeva.aerocalculations.repository.ProvideServiceRepository;
+import com.prigozhaeva.aerocalculations.repository.RushHourRepository;
 import com.prigozhaeva.aerocalculations.repository.ServiceRepository;
 import com.prigozhaeva.aerocalculations.service.ProvidedServiceService;
 import org.springframework.stereotype.Service;
@@ -34,6 +36,7 @@ public class ProvidedServiceServiceImpl implements ProvidedServiceService {
     private ServiceRepository serviceRepository;
     private FlightRepository flightRepository;
     private CurrencyRateService currencyRateService;
+    private RushHourRepository rushHourRepository;
 
     public ProvidedServiceServiceImpl(ProvideServiceRepository provideServiceRepository, ServiceRepository serviceRepository, FlightRepository flightRepository, CurrencyRateService currencyRateService) {
         this.provideServiceRepository = provideServiceRepository;
@@ -120,6 +123,9 @@ public class ProvidedServiceServiceImpl implements ProvidedServiceService {
         if (checkingIfTheFlightIsInWinterPeriod(providedService.getFlight())) {
             providedServiceValue = providedServiceValue.multiply(BigDecimal.valueOf(1.10));
         }
+        if (checkingIfTheFlightIsInRushHours(providedService.getFlight())) {
+            providedServiceValue = providedServiceValue.multiply(BigDecimal.valueOf(1.05));
+        }
         providedService.setValue(providedServiceValue);
         provideServiceRepository.save(providedService);
     }
@@ -131,6 +137,13 @@ public class ProvidedServiceServiceImpl implements ProvidedServiceService {
     private boolean checkingIfTheFlightIsInWinterPeriod(Flight flight) {
         return flight.getDepDate().getMonthValue() == 12 || flight.getDepDate().getMonthValue() == 1 || flight.getDepDate().getMonthValue() == 2;
     }
+
+    private boolean checkingIfTheFlightIsInRushHours(Flight flight) {
+        List<RushHour> rushHours = rushHourRepository.findRushHoursByWeekDay(flight.getDepDate().getDayOfWeek().getValue());
+        return rushHours.stream()
+                .anyMatch(rushHour -> flight.getDepTime().isAfter(rushHour.getFromTime()) && flight.getDepTime().isBefore(rushHour.getToTime()));
+    }
+
 
     public List<ProvidedService> parse(String path) {
         List<ProvidedService> providedServices;
