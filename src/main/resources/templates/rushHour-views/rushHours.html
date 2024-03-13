@@ -36,7 +36,7 @@
                         <td><input type="time" class="form-control" th:value="${rushHour.getTo()}"></td>
                         <td th:text="${rushHour.getWeekDay()}"></td>
                         <td>
-                            <button formmethod="post" th:formaction="@{'/rushHours/delete?id=' + ${rushHour.getId()}}"
+                            <button th:formaction="@{'/rushHours/delete?id=' + ${rushHour.getId()} + '&weekDay=' + ${rushHour.getWeekDay()}}"
                                     class="minus-btn" type="submit"><i class="fa fa-minus" aria-hidden="true"></i>
                             </button>
                             <button class="minus-btn" type="submit"><i class="fa fa-pencil" aria-hidden="true"></i>

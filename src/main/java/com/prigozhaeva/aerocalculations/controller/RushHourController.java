@@ -6,6 +6,7 @@ import com.prigozhaeva.aerocalculations.service.RushHourService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Collections;
@@ -47,5 +48,11 @@ public class RushHourController {
         return averageFlightsPerHour.values().stream()
                 .max(Long::compare)
                 .orElse(null);
+    }
+
+    @PostMapping(value = "/delete")
+    public String deleteInvoice(Long id, int weekDay) {
+        rushHourService.removeRushHour(id);
+        return "redirect:/rushHours/index?weekDay=" + weekDay;
     }
 }

@@ -21,4 +21,9 @@ public class RushHourServiceImpl implements RushHourService {
     public List<RushHour> findRushHoursByWeekDay(int weekDay) {
         return rushHourRepository.findRushHoursByWeekDay(weekDay);
     }
+
+    @Override
+    public void removeRushHour(Long id) {
+        rushHourRepository.deleteById(id);
+    }
 }
