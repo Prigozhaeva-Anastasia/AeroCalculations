@@ -73,4 +73,5 @@ public class Constant {
     public static final String PATH_TO_DOWNLOADED_FILES = "D:/diploma/проект/download/";
     public static final String CONFIRM_MESSAGE = "confirmMessage";
     public static final String WEEK_DAY = "weekDay";
+    public static final String RUSH_HOUR = "rushHour";
 }

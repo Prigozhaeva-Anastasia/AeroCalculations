@@ -32,8 +32,10 @@
                     <form method="post" th:action="@{/rushHours/update}" th:object="${rushHour}">
                         <input type="text" th:value="${rushHour.getId()}" name="id" hidden="hidden">
                         <input type="text" th:value="${rushHour.getWeekDay()}" name="weekDay" hidden="hidden">
-                        <td><input type="time" class="form-control" name="fromTime" th:value="${rushHour.getFromTime()}"></td>
-                        <td><input type="time" class="form-control" name="toTime" th:value="${rushHour.getToTime()}"></td>
+                        <td><input type="time" class="form-control" name="fromTime"
+                                   th:value="${rushHour.getFromTime()}"></td>
+                        <td><input type="time" class="form-control" name="toTime" th:value="${rushHour.getToTime()}">
+                        </td>
                         <td th:text="${rushHour.getWeekDay()}"></td>
                         <td>
                             <button th:formaction="@{'/rushHours/delete?id=' + ${rushHour.getId()} + '&weekDay=' + ${rushHour.getWeekDay()}}"
@@ -45,7 +47,47 @@
                     </form>
                 </tr>
             </table>
-            <button class="minus-btn" type="button">Добавить</button>
+            <button id="createBtn" class="minus-btn" type="button" data-bs-toggle="modal"
+                    data-bs-target="#exampleModalCenter">Добавить
+            </button>
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content bg-dark">
+                        <div class="modal-header">
+                            <h6 class="modal-title" id="exampleModalLongTitle">Добавление часа "пик"</h6>
+                            <button id="close" type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" th:action="@{/rushHours/create}">
+                                <div class="modalDiv">
+                                    <div>От:</div>
+                                    <input type="time" class="form-control modalInput" name="fromTime" step="1" th:field="${rushHour.fromTime}" required>
+                                </div>
+                                <div class="modalDiv">
+                                    <div>До:</div>
+                                    <input type="time" class="form-control modalInput" name="toTime" step="1" th:field="${rushHour.toTime}" required>
+                                </div>
+                                <div class="modalDiv">
+                                    <div>День:</div>
+                                    <select class="form-select modalInput" aria-label="Disabled select example" name="weekDay" th:field="${rushHour.weekDay}">
+                                        <option value="1">Понедельник</option>
+                                        <option value="2">Вторник</option>
+                                        <option value="3">Среда</option>
+                                        <option value="4">Четверг</option>
+                                        <option value="5">Пятница</option>
+                                        <option value="6">Суббота</option>
+                                        <option value="7">Воскресенье</option>
+                                    </select>
+                                </div>
+                                <button id="okModalRushHour" type="submit" class="btn btn-primary">Ок</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="column">
             <div th:if="${averageFlightsPerHour.values().size() != 0}" class="container">

@@ -41,6 +41,7 @@ public class RushHourController {
         model.addAttribute(AVERAGE_FLIGHTS_PER_HOUR, flightOnWeekDay);
         model.addAttribute(LIST_RUSH_HOURS, rushHours);
         model.addAttribute(WEEK_DAY, weekDay);
+        model.addAttribute(RUSH_HOUR, new RushHour());
         return "rushHour-views/rushHours";
     }
 
@@ -58,6 +59,12 @@ public class RushHourController {
 
     @PostMapping(value = "/update")
     public String update(RushHour rushHour) {
+        rushHourService.createOrUpdateRushHour(rushHour);
+        return "redirect:/rushHours/index?weekDay=" + rushHour.getWeekDay();
+    }
+
+    @PostMapping(value = "/create")
+    public String create(RushHour rushHour) {
         rushHourService.createOrUpdateRushHour(rushHour);
         return "redirect:/rushHours/index?weekDay=" + rushHour.getWeekDay();
     }

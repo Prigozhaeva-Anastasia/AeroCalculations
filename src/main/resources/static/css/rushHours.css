@@ -42,3 +42,37 @@ input[type="date"] {
 .column {
     flex: 1;
 }
+.close{
+    border: none;
+    background-color: transparent;
+    font-size: 24px;
+    color: white;
+    position:  relative;
+    top: -10px;
+}
+.close:hover {
+    background-color: rgba(166, 165, 165);
+}
+.modal-header {
+    color: white;
+    font-family: Georgia;
+    font-size: 16px;
+}
+.modalDiv {
+    margin-bottom: 10px;
+}
+.modalInput {
+    width: 160px;
+}
+#okModalRushHour{
+    background-color: #B8DAD3;
+    color: white;
+    font-family: Georgia;
+    border: none;
+    position: relative;
+    left: 405px;
+    width: 60px;
+}
+#okModalRushHour:hover {
+    background-color: #97BFB7;
+}
