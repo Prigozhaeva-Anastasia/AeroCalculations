@@ -3,11 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <title>Часы "пик"</title>
-    <link th:href="@{/css/genStyle.css}" rel="stylesheet">
+    <link th:href="@{/css/rushHours.css}" rel="stylesheet">
 </head>
 <body class="mainFont">
 <div layout:fragment="content1">
-
+    <div class="container">
+        <div class="column">
+            <form id="formForChooseWeekDay" th:action="@{/rushHours/index}">
+                <select id="weeksDays" class="form-select" aria-label="Disabled select example" name="weekDay">
+                    <option th:value="1">Понедельник</option>
+                    <option th:value="2">Вторник</option>
+                    <option th:value="3">Среда</option>
+                    <option th:value="4">Четверг</option>
+                    <option th:value="5">Пятница</option>
+                    <option th:value="6">Суббота</option>
+                    <option th:value="7">Воскресенье</option>
+                </select>
+                <input id="weekDay" th:value="${weekDay}" hidden="hidden">
+            </form>
+            <table id="editableTable">
+                <tr>
+                    <th>От</th>
+                    <th>До</th>
+                    <th>День</th>
+                    <th></th>
+                </tr>
+                <tr th:each="rushHour:${listRushHours}">
+                    <form method="post" th:action="@{/rushHours/update}">
+                        <input type="text" th:value="${rushHour.getId()}" hidden="hidden">
+                        <input type="text" th:value="${rushHour.getWeekDay()}" hidden="hidden">
+                        <td><input type="time" class="form-control" th:value="${rushHour.getFrom()}"></td>
+                        <td><input type="time" class="form-control" th:value="${rushHour.getTo()}"></td>
+                        <td th:text="${rushHour.getWeekDay()}"></td>
+                        <td>
+                            <button formmethod="post" th:formaction="@{'/rushHours/delete?id=' + ${rushHour.getId()}}"
+                                    class="minus-btn" type="submit"><i class="fa fa-minus" aria-hidden="true"></i>
+                            </button>
+                            <button class="minus-btn" type="submit"><i class="fa fa-pencil" aria-hidden="true"></i>
+                            </button>
+                        </td>
+                    </form>
+                </tr>
+            </table>
+            <button class="minus-btn" type="button">Добавить</button>
+        </div>
+        <div class="column">
+            <div th:if="${averageFlightsPerHour.values().size() != 0}" class="container">
+                <div id="container" style="width: 730px; height: 540px;"></div>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script th:inline="javascript">
+        $(function () {
+            Highcharts.chart('container', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Динамика рейсов в течении суток'
+                },
+                xAxis: {
+                    categories: [[${averageFlightsPerHour.keySet()}]],
+                    crosshair: true
+                },
+                yAxis: {
+                    min: 0,
+                    max: [[${maxAverageFlights}]],
+                    title: {
+                        text: 'Количество рейсов'
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size: 10px">{point.key}</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                        '<td style="padding:0"><b>{point.y:.1f} K</b></td></tr>',
+                    footerFormat: '</table>',
+                    shared: true,
+                    useHTML: true
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    }
+                },
+                series: [{
+                    name: 'Время',
+                    data: [[${averageFlightsPerHour.values()}]],
+                    color: "#95B7B1"
+                }]
+            });
+        });
+        let weeksDays = document.getElementById('weeksDays');
+        let form = document.getElementById('formForChooseWeekDay');
+        let weekDay = document.getElementById('weekDay');
+        let selectElement = document.getElementById('weeksDays');
+        for (let i = 0; i < selectElement.options.length; i++) {
+            if (selectElement.options[i].value == weekDay.value) {
+                selectElement.options[i].selected = true;
+                break;
+            }
+        }
+        weeksDays.addEventListener('change', function () {
+            form.submit();
+        });
+    </script>
 </div>
 </body>
 </html>

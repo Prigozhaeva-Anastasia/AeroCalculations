@@ -1,7 +1,7 @@
 #side_nav{
     background: #000;
-    min-width: 250px;
-    max-width: 250px;
+    min-width: 251px;
+    max-width: 251px;
     transition: all 0.3s;
 }
 .content{
@@ -11,6 +11,10 @@
 }
 hr.h-color{
     background: #eee;
+}
+
+.sidebar {
+    width: 800px;
 }
 
 .sidebar li:hover, .sidebar li.active{

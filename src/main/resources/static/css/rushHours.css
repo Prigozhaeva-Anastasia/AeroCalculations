@@ -1,0 +1,44 @@
+table {
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+th, td {
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: #a4a6a5;
+    color: black;
+    font-weight: 600;
+}
+
+input[type="date"] {
+    width: 100%;
+}
+.container {
+    width: 100%;
+    background-color: white;
+    padding: 25px;
+    min-height: 585px;
+    display: flex;
+}
+#weeksDays {
+    width: 200px;
+    background-color: #e6faf6;
+    margin-bottom: 20px;
+}
+.minus-btn {
+    border-radius: 5px;
+}
+.minus-btn:hover {
+    background-color: rgba(166, 165, 165, 0.6);
+}
+.column {
+    flex: 1;
+}

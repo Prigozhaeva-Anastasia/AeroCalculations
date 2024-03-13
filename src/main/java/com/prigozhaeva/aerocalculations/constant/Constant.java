@@ -10,6 +10,7 @@ public class Constant {
     public static final String LIST_EMPLOYEES = "listEmployees";
     public static final String LIST_ROLES = "listRoles";
     public static final String LIST_INVOICES = "listInvoices";
+    public static final String LIST_RUSH_HOURS = "listRushHours";
     public static final String AIRLINE = "airline";
     public static final String AIRCRAFT = "aircraft";
     public static final String FLIGHT = "flight";
@@ -71,4 +72,5 @@ public class Constant {
     public static final String MINSK_AIRPORT_PASSWORD_FOR_EMAIL = "TLmPGHXDcMHMt5mchmhC";
     public static final String PATH_TO_DOWNLOADED_FILES = "D:/diploma/проект/download/";
     public static final String CONFIRM_MESSAGE = "confirmMessage";
+    public static final String WEEK_DAY = "weekDay";
 }

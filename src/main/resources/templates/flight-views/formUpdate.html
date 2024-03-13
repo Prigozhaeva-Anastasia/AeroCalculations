@@ -96,7 +96,7 @@
             <div class="mb-3 mt-3">
                 <label for="aircrafts" class="form-label">Воздушное судно:</label>
                 <select id="aircrafts" class="form-select" aria-label="Disabled select example" th:field="${flight.aircraft}">
-                    <option th:each="aircraft :${listAircrafts}" th:value="${aircraft.tailNumber}" th:text="${aircraft.tailNumber}">hgjhg</option>
+                    <option th:each="aircraft :${listAircrafts}" th:value="${aircraft.tailNumber}" th:text="${aircraft.tailNumber}"></option>
                 </select>
             </div>
             <button id="update" type="submit" class="btn btn-primary">Обновить</button>
