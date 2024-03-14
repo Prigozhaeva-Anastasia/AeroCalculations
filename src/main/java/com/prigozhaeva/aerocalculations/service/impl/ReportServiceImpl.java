@@ -1,27 +1,38 @@
 package com.prigozhaeva.aerocalculations.service.impl;
 
+import com.prigozhaeva.aerocalculations.dto.InvoiceDTO;
 import com.prigozhaeva.aerocalculations.entity.Flight;
+import com.prigozhaeva.aerocalculations.entity.Invoice;
 import com.prigozhaeva.aerocalculations.repository.FlightRepository;
+import com.prigozhaeva.aerocalculations.repository.InvoiceRepository;
 import com.prigozhaeva.aerocalculations.service.ReportService;
+import com.prigozhaeva.aerocalculations.util.MappingUtils;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+import static com.prigozhaeva.aerocalculations.constant.Constant.PAID_STATUS;
 
 
 @Service
 @Transactional
 public class ReportServiceImpl implements ReportService {
     private FlightRepository flightRepository;
+    private InvoiceRepository invoiceRepository;
+    private MappingUtils mappingUtils;
     private static final Map<Integer, String> inftrastructureTypeMap = new HashMap<>();
 
-    public ReportServiceImpl(FlightRepository flightRepository) {
+    public ReportServiceImpl(FlightRepository flightRepository, InvoiceRepository invoiceRepository, MappingUtils mappingUtils) {
         this.flightRepository = flightRepository;
+        this.invoiceRepository = invoiceRepository;
+        this.mappingUtils = mappingUtils;
     }
 
     static {
@@ -78,6 +89,23 @@ public class ReportServiceImpl implements ReportService {
         List<Flight> flights = flightRepository.findAll();
         Map<LocalDate, Map<Integer, Long>> flightDynamics = analyzeFlightDynamics(flights, year, month, weekDay);
         return calculateAverageFlightsPerHour(flightDynamics);
+    }
+
+    @Override
+    public Map<Integer, BigDecimal> chartOfFeesChargedByAirlines(int year) {
+        List<InvoiceDTO> invoiceDTOList = invoiceRepository.findAll().stream()
+                .filter(invoice -> invoice.getPaymentState().equals(PAID_STATUS) && invoice.getInvoiceCreationDate().getYear() == year)
+                .map(mappingUtils::mapToInvoiceDTO)
+                .collect(Collectors.toList());
+        return IntStream.rangeClosed(1, 12)
+                .boxed()
+                .collect(Collectors.toMap(
+                        month -> month,
+                        month -> invoiceRepository.findAll().stream()
+                                .filter(invoice -> invoice.getPaymentState().equals(PAID_STATUS) && invoice.getInvoiceCreationDate().getYear() == year && invoice.getInvoiceCreationDate().getMonthValue() == month)
+                                .map(mappingUtils::mapToInvoiceDTO)
+                                .map(InvoiceDTO::getTotalCost)
+                                .reduce(BigDecimal.ZERO, BigDecimal::add)));
     }
 
     private Map<LocalDate, Map<Integer, Long>> analyzeFlightDynamics(List<Flight> flights, int year, int month, Integer weekDay) {

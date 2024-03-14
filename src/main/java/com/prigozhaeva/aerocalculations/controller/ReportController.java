@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.Month;
@@ -83,6 +84,18 @@ public class ReportController {
         return "report-views/changesInNumOfAirlinesDynamics";
     }
 
+    @GetMapping(value = "/chartOfFeesChargedByAirlines")
+    public String chartOfFeesChargedByAirlines(int year, Model model) {
+        Map<Integer, BigDecimal> totalCostOfProvidedServicesPerMonth = reportService.chartOfFeesChargedByAirlines(year);
+        BigDecimal maxAverageTotalCost = findMaxValueOfTotalCost(totalCostOfProvidedServicesPerMonth);
+        if (totalCostOfProvidedServicesPerMonth.size() != 0) {
+            model.addAttribute(MAX_TOTAL_COST, maxAverageTotalCost.intValue() + 1);
+        }
+        model.addAttribute(TOTAL_COST_OF_PROVIDED_SERVICES_PER_MONTH, totalCostOfProvidedServicesPerMonth);
+        model.addAttribute(YEAR, year);
+        return "report-views/chartOfFeesChargedByAirlines";
+    }
+
     private static List<Airline> findAirlinesByDepDate(List<Airline> airlines, int year, int month) {
         return airlines.stream()
                 .filter(airline -> airline.getAircrafts().stream()
@@ -95,6 +108,12 @@ public class ReportController {
     private static Long findMaxValue(Map<Integer, Long> averageFlightsPerHour) {
         return averageFlightsPerHour.values().stream()
                 .max(Long::compare)
+                .orElse(null);
+    }
+
+    private static BigDecimal findMaxValueOfTotalCost(Map<Integer, BigDecimal> totalCostOfProvidedServicesPerMonth) {
+        return totalCostOfProvidedServicesPerMonth.values().stream()
+                .max(BigDecimal::compareTo)
                 .orElse(null);
     }
 

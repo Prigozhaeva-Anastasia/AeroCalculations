@@ -160,9 +160,30 @@
             </div>
         </div>
         <div class="square">
-            <button id="contributionsSquare" type="submit" th:formaction="@{/airlines/index}"><label
+            <button id="contributionsSquare" type="button" data-bs-toggle="modal" data-bs-target="#exampleContributionsModalCenter"><label
                     class="squareLabel">
                 Диаграмма взносов и сборов, взимаемых с авиакомпаний</label></button>
+            <div class="modal fade" id="exampleContributionsModalCenter" tabindex="-1" role="dialog"
+                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content bg-dark">
+                        <div class="modal-header">
+                            <h6 class="modal-title" id="exampleContributionsModalLongTitle">Для того, чтобы
+                                продолжить, выберите год:</h6>
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form th:action="@{/reports/chartOfFeesChargedByAirlines}">
+                                <input style="width: 5rem;" type="number" name="year" class="form-control"
+                                       th:value="${year}" required/>
+                                <button id="okModalContributions" type="submit" class="btn btn-primary">Ок</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

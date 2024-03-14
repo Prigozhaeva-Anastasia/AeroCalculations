@@ -95,7 +95,7 @@
     font-family: Georgia;
     font-size: 16px;
 }
-#okModalInfrastructure{
+#okModalInfrastructure, #okModalContributions{
     background-color: #B8DAD3;
     color: white;
     font-family: Georgia;
@@ -105,7 +105,7 @@
     left: 405px;
     width: 60px;
 }
-#okModalInfrastructure:hover {
+#okModalInfrastructure:hover, #okModalContributions:hover {
     background-color: #97BFB7;
 }
 #inputModalInfrastructure {
