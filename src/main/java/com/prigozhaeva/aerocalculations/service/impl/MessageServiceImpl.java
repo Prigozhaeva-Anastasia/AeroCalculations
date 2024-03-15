@@ -3,15 +3,20 @@ package com.prigozhaeva.aerocalculations.service.impl;
 import com.prigozhaeva.aerocalculations.dto.MessageDTO;
 import com.prigozhaeva.aerocalculations.service.MessageService;
 import com.prigozhaeva.aerocalculations.util.MappingUtils;
+import com.sun.mail.smtp.SMTPSendFailedException;
 import org.springframework.stereotype.Service;
 
 import javax.mail.*;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.mail.search.FlagTerm;
 import javax.mail.search.MessageIDTerm;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.Random;
 
 import static com.prigozhaeva.aerocalculations.constant.Constant.MINSK_AIRPORT_EMAIL;
 import static com.prigozhaeva.aerocalculations.constant.Constant.MINSK_AIRPORT_PASSWORD_FOR_EMAIL;
@@ -96,5 +101,29 @@ public class MessageServiceImpl implements MessageService {
             throw new RuntimeException(e);
         }
         return messageList;
+    }
+
+    @Override
+    public void sendOTPToEmail(String email) throws MessagingException {
+        Random rand = new Random();
+        int otpValue = rand.nextInt(1255650);
+        String to = email;
+        Properties properties = new Properties();
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.host", "smtp.mail.ru");
+        properties.put("mail.smtp.port", "587");
+        Session session = Session.getInstance(properties, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(MINSK_AIRPORT_EMAIL, MINSK_AIRPORT_PASSWORD_FOR_EMAIL);
+            }
+        });
+        MimeMessage message = new MimeMessage(session);
+        message.setFrom(new InternetAddress(MINSK_AIRPORT_EMAIL));
+        message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+        message.setSubject("Восстановление пароля");
+        message.setText("Ваш OTP: " + otpValue);
+        Transport.send(message);
     }
 }

@@ -76,4 +76,5 @@ public class Constant {
     public static final String WEEK_DAY = "weekDay";
     public static final String RUSH_HOUR = "rushHour";
     public static final String TOTAL_COST_OF_PROVIDED_SERVICES_PER_MONTH = "totalCostOfProvidedServicesPerMonth";
+    public static final String EMAIL = "email";
 }

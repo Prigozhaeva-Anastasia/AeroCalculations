@@ -21,7 +21,7 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.formLogin().loginPage("/login").usernameParameter("email").passwordParameter("password").permitAll();
-        http.authorizeRequests().antMatchers("/registration", "/images/**").permitAll();
+        http.authorizeRequests().antMatchers("/registration", "/images/**", "/forgotPasswordForm", "/forgotPassword").permitAll();
         http.authorizeRequests().anyRequest().authenticated();
         http.exceptionHandling().accessDeniedPage("/403");
         return http.build();

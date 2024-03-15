@@ -2,6 +2,8 @@ package com.prigozhaeva.aerocalculations.service;
 
 import com.prigozhaeva.aerocalculations.dto.MessageDTO;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 import java.util.List;
 
 public interface MessageService {
@@ -9,4 +11,5 @@ public interface MessageService {
     MessageDTO findById(String messageId);
     void markMessageAsSeen(String messageId);
     List<MessageDTO> showReadMsgs();
+    void sendOTPToEmail(String email) throws MessagingException;
 }
