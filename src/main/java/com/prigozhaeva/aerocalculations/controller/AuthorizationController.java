@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpSession;
 
 import static com.prigozhaeva.aerocalculations.constant.Constant.EMAIL;
 import static com.prigozhaeva.aerocalculations.constant.Constant.MESSAGE;
@@ -36,9 +37,11 @@ public class AuthorizationController {
     }
 
     @PostMapping(value = "/forgotPassword")
-    public String forgotPassword(String email, Model model) {
+    public String forgotPassword(String email, HttpSession session, Model model) {
         try {
-            messageService.sendOTPToEmail(email);
+            int otpValue = messageService.sendOTPToEmail(email);
+            session.setAttribute("otp", otpValue);
+            session.setAttribute("email", email);
         } catch (SMTPSendFailedException e) {
             model.addAttribute(MESSAGE, "Пользователь с таким email не найден");
             model.addAttribute(EMAIL, email);
@@ -46,6 +49,21 @@ public class AuthorizationController {
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
+        model.addAttribute(MESSAGE, "OTP отправлен на ваш email");
         return "authorization-views/enterOtp";
+    }
+
+    @PostMapping(value = "/validateOtp")
+    public String validateOtp(String otp, HttpSession session, Model model) {
+        int otpFromEmail = (int)session.getAttribute("otp");
+        if (Integer.parseInt(otp) == otpFromEmail)
+        {
+            return "authorization-views/newPassword";
+        }
+        else
+        {
+            model.addAttribute(MESSAGE,"неверный otp");
+            return "authorization-views/enterOtp";
+        }
     }
 }

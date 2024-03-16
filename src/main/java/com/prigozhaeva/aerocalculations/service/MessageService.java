@@ -11,5 +11,5 @@ public interface MessageService {
     MessageDTO findById(String messageId);
     void markMessageAsSeen(String messageId);
     List<MessageDTO> showReadMsgs();
-    void sendOTPToEmail(String email) throws MessagingException;
+    int sendOTPToEmail(String email) throws MessagingException;
 }

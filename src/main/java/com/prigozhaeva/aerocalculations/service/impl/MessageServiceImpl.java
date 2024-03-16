@@ -104,7 +104,7 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public void sendOTPToEmail(String email) throws MessagingException {
+    public int sendOTPToEmail(String email) throws MessagingException {
         Random rand = new Random();
         int otpValue = rand.nextInt(1255650);
         String to = email;
@@ -125,5 +125,6 @@ public class MessageServiceImpl implements MessageService {
         message.setSubject("Восстановление пароля");
         message.setText("Ваш OTP: " + otpValue);
         Transport.send(message);
+        return otpValue;
     }
 }
