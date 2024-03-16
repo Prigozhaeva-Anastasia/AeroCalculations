@@ -46,4 +46,11 @@ public class UserServiceImpl implements UserService {
     public User findUserByEmail(String email) {
         return userRepository.findUserByEmail(email);
     }
+
+    @Override
+    public void resetPassword(String email, String newPassword) {
+        User user = findUserByEmail(email);
+        user.setPassword(passwordEncoder.encode(newPassword));
+        createOrUpdateUser(user);
+    }
 }

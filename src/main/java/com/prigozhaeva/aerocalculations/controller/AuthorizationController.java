@@ -1,6 +1,8 @@
 package com.prigozhaeva.aerocalculations.controller;
 
+import com.prigozhaeva.aerocalculations.entity.User;
 import com.prigozhaeva.aerocalculations.service.MessageService;
+import com.prigozhaeva.aerocalculations.service.UserService;
 import com.sun.mail.smtp.SMTPSendFailedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,9 +18,11 @@ import static com.prigozhaeva.aerocalculations.constant.Constant.MESSAGE;
 @Controller
 public class AuthorizationController {
     private MessageService messageService;
+    private UserService userService;
 
-    public AuthorizationController(MessageService messageService) {
+    public AuthorizationController(MessageService messageService, UserService userService) {
         this.messageService = messageService;
+        this.userService = userService;
     }
 
     @PostMapping(value = "/login")
@@ -65,5 +69,12 @@ public class AuthorizationController {
             model.addAttribute(MESSAGE,"неверный otp");
             return "authorization-views/enterOtp";
         }
+    }
+
+    @PostMapping(value = "/newPassword")
+    public String newPassword(String password, HttpSession session) {
+        String email = (String) session.getAttribute("email");
+        userService.resetPassword(email, password);
+        return "authorization-views/authorization";
     }
 }

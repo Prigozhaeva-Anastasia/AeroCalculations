@@ -7,4 +7,5 @@ public interface UserService {
     User createUser(String email, String password, String roleName);
     User createOrUpdateUser(User user);
     User findUserByEmail(String email);
+    void resetPassword(String email, String newPassword);
 }
