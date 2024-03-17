@@ -2,6 +2,7 @@ package com.prigozhaeva.aerocalculations.controller;
 
 import com.prigozhaeva.aerocalculations.entity.Airline;
 import com.prigozhaeva.aerocalculations.service.AirlineService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,6 +27,7 @@ public class AirlineController {
     public AirlineController(AirlineService airlineService) {this.airlineService = airlineService;}
 
     @GetMapping(value = "/index")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant', 'Finance department employee')")
     public String airlines(Model model, @RequestParam(name = KEYWORD, defaultValue = "") String keyword) {
         List<Airline> airlineList = new CopyOnWriteArrayList<>(airlineService.findAirlinesByAirlineName(keyword));
         model.addAttribute(LIST_AIRLINES, airlineList);
@@ -34,6 +36,7 @@ public class AirlineController {
     }
 
     @GetMapping(value = "/formUpdate")
+    @PreAuthorize("hasAuthority('Admin')")
     public String updateAirline(Model model, Long airlineId) {
         Airline airline = airlineService.findAirlineById(airlineId);
         model.addAttribute(AIRLINE, airline);
@@ -41,6 +44,7 @@ public class AirlineController {
     }
 
     @PostMapping(value = "/update")
+    @PreAuthorize("hasAuthority('Admin')")
     public String update(@Valid Airline airline, BindingResult bindingResult) {
         if (!airline.getName().equals(airlineService.findAirlineById(airline.getId()).getName())) {
             Airline airlineDB = airlineService.findAirlineByAirlineName(airline.getName());
@@ -54,6 +58,7 @@ public class AirlineController {
     }
 
     @GetMapping(value = "/sortByName")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant', 'Finance department employee')")
     public String sortByAirlineName(Model model) {
         List<Airline> airlines = airlineService.fetchAll();
         Collections.sort(airlines, Comparator.comparing(Airline::getName));
@@ -62,6 +67,7 @@ public class AirlineController {
     }
 
     @GetMapping(value = "/sortByPayerName")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant', 'Finance department employee')")
     public String sortByPayerName(Model model) {
         List<Airline> airlines = airlineService.fetchAll();
         Collections.sort(airlines, Comparator.comparing(Airline::getPayerName));
