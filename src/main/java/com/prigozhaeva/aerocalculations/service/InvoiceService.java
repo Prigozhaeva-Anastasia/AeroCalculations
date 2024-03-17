@@ -18,7 +18,7 @@ public interface InvoiceService {
     void changePaymentStatus(int invoiceNumber, String paymentState);
     Invoice findInvoiceById(Long id);
     List<Invoice> fetchAll();
-    Invoice createInvoice(InvoiceCreateDTO invoiceCreateDTO);
+    Invoice createInvoice(InvoiceCreateDTO invoiceCreateDTO, String employeeEmail);
     Invoice createInvoice(int invoiceNumber, LocalDate invoiceCreationDate, String currency, String paymentState, Long employeeId,Long flightId);
     Invoice findInvoiceByInvoiceNumber(int invoiceNumber);
     Invoice createOrUpdateInvoice(Invoice invoice);

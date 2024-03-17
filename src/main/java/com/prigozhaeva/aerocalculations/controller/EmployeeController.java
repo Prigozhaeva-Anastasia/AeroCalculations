@@ -7,6 +7,7 @@ import com.prigozhaeva.aerocalculations.entity.User;
 import com.prigozhaeva.aerocalculations.service.EmployeeService;
 import com.prigozhaeva.aerocalculations.service.RoleService;
 import com.prigozhaeva.aerocalculations.service.UserService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,20 +37,21 @@ public class EmployeeController {
     }
 
     @GetMapping(value = "/index")
+    @PreAuthorize("hasAuthority('Admin')")
     public String employees(Model model, @RequestParam(name = KEYWORD, defaultValue = "") String keyword) {
         List<Employee> employees = new CopyOnWriteArrayList<>(employeeService.findEmployeesByFioOrEmail(keyword));
-        List<Role> roles = roleService.fetchAll();
         model.addAttribute(LIST_EMPLOYEES, employees);
-        model.addAttribute(LIST_ROLES, roles);
         model.addAttribute(KEYWORD, keyword);
         return "employee-views/employees";
     }
     @GetMapping(value = "/delete")
+    @PreAuthorize("hasAuthority('Admin')")
     public String deleteEmployee(Long employeeId) {
         employeeService.deleteEmployee(employeeId);
         return "redirect:/employees/index";
     }
     @GetMapping(value = "/formCreate")
+    @PreAuthorize("hasAuthority('Admin')")
     public String formEmployees(Model model) {
         model.addAttribute(USER, new User());
         model.addAttribute(LIST_ROLES, roleService.fetchAll());
@@ -57,6 +59,7 @@ public class EmployeeController {
     }
 
     @PostMapping(value = "/registration")
+    @PreAuthorize("hasAuthority('Admin')")
     public String registration(@Valid User user, BindingResult bindingResult) {
         User userDB = userService.findUserByEmail(user.getEmail());
         if (userDB != null) bindingResult.rejectValue("email", null, "Сотрудник с таким email уже был зарегистрирован");
@@ -67,6 +70,7 @@ public class EmployeeController {
     }
 
     @GetMapping(value = "/sortByLastName")
+    @PreAuthorize("hasAuthority('Admin')")
     public String sortByLastName(Model model) {
         List<Employee> employees = employeeService.fetchAll();
         Collections.sort(employees, Comparator.comparing(Employee::getLastName));
@@ -75,24 +79,27 @@ public class EmployeeController {
     }
 
     @PostMapping(value = "/filterByPosition")
-    public String filterByPosition(Model model, String roleId) {
+    @PreAuthorize("hasAuthority('Admin')")
+    public String filterByPosition(Model model, String position) {
         List<Employee> employees = employeeService.fetchAll().stream()
-                .filter(element->element.getUser().getRoles().stream().anyMatch(role->role.getId().equals(Long.parseLong(roleId))))
+                .filter(element->element.getPosition().equals(position))
                 .collect(Collectors.toList());
         model.addAttribute(LIST_EMPLOYEES, employees);
         return "employee-views/employees";
     }
 
     @GetMapping(value = "/personalData")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant', 'Finance department employee')")
     public String personalData(Model model, Principal principal) {
-        Employee employee = employeeService.findEmployeeByEmail("astapovich@gmail.com");//change_this
+        Employee employee = employeeService.findEmployeeByEmail(principal.getName());
         model.addAttribute(EMPLOYEE, employee);
         return "employee-views/personalData";
     }
 
     @GetMapping(value = "/formUpdate")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant', 'Finance department employee')")
     public String updatePersonalData(Model model, Principal principal) {
-        Employee employee = employeeService.findEmployeeByEmail("astapovich@gmail.com");//change_this
+        Employee employee = employeeService.findEmployeeByEmail(principal.getName());
         List<Role> roles = roleService.fetchAll();
         model.addAttribute("confirmation", "");
         model.addAttribute(EMPLOYEE, employee);
@@ -101,6 +108,7 @@ public class EmployeeController {
     }
 
     @PostMapping(value = "/update")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant', 'Finance department employee')")
     public String update(@ModelAttribute("employee") Employee employee, @RequestParam("confirmation") String confirmation) {
         employeeService.updatePersonalData(employee, confirmation);
         return "redirect:/employees/personalData";

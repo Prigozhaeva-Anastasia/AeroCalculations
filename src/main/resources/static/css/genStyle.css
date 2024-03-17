@@ -772,8 +772,8 @@ option {
     border: none;
     position: relative;
     top: 8px;
-    left: 405px;
-    width: 150px;
+    left: 395px;
+    width: 70px;
 }
 #okModalInvoice:hover {
     background-color: #97BFB7;

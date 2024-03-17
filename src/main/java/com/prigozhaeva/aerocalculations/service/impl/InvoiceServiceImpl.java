@@ -101,8 +101,8 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public Invoice createInvoice(InvoiceCreateDTO invoiceCreateDTO) {
-        return invoiceRepository.save(mappingUtils.mapToInvoice(invoiceCreateDTO));
+    public Invoice createInvoice(InvoiceCreateDTO invoiceCreateDTO, String employeeEmail) {
+        return invoiceRepository.save(mappingUtils.mapToInvoice(invoiceCreateDTO, employeeEmail));
     }
 
     @Override

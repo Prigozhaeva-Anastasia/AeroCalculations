@@ -10,6 +10,7 @@ import com.prigozhaeva.aerocalculations.service.ProvidedServiceService;
 import com.prigozhaeva.aerocalculations.util.MappingUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 import static com.prigozhaeva.aerocalculations.constant.Constant.*;
@@ -28,13 +29,13 @@ public class InvoiceRestController {
     }
 
     @PostMapping(value = "/create")
-    public void createInvoice(@RequestBody InvoiceCreateDTO invoiceCreateDTO) {
+    public void createInvoice(@RequestBody InvoiceCreateDTO invoiceCreateDTO, Principal principal) {
         invoiceCreateDTO.setAirportServices(providedServiceService.updateProvidedServices(invoiceCreateDTO.getAirportServices(), invoiceCreateDTO.getFlightId()));
         invoiceCreateDTO.setGroundHandlingServices(providedServiceService.updateProvidedServices(invoiceCreateDTO.getGroundHandlingServices(), invoiceCreateDTO.getFlightId()));
-        Invoice invoice = mappingUtils.mapToInvoice(invoiceCreateDTO);
+        Invoice invoice = mappingUtils.mapToInvoice(invoiceCreateDTO, principal.getName());
         updateProvidedServices(invoiceCreateDTO.getAirportServices(), invoice);
         updateProvidedServices(invoiceCreateDTO.getGroundHandlingServices(), invoice);
-        invoiceService.createInvoice(invoiceCreateDTO);
+        invoiceService.createInvoice(invoiceCreateDTO, principal.getName());
     }
 
     @PostMapping(value = "/update")

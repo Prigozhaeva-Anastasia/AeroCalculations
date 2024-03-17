@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
     <link th:href="@{/css/template.css}" rel="stylesheet">
@@ -21,7 +22,7 @@
             <li class=""><a th:href="@{/aircrafts/index}" class="text-decoration-none px-3 py-2 d-block"><i class="fal fa-plane"></i> Воздушные судна</a></li>
             <li class=""><a th:href="@{/flights/index}" class="text-decoration-none px-3 py-2 d-block"><i class="fab fa-fantasy-flight-games"></i><span id="flightIcon">Рейсы</span></a></li>
             <li class=""><a th:href="@{/services/index}" class="text-decoration-none px-3 py-2 d-block"><i class="fal fa-list"></i><span id="serviceIcon">Услуги</span></a></li>
-            <li class=""><a th:href="@{/employees/index}" class="text-decoration-none px-3 py-2 d-block"><i class="fal fa-users"></i>
+            <li sec:authorize="hasAuthority('Admin')" class=""><a th:href="@{/employees/index}" class="text-decoration-none px-3 py-2 d-block"><i class="fal fa-users"></i>
                 Сотрудники</a></li>
             <li class=""><a th:href="@{/invoices/index}" class="text-decoration-none px-3 py-2 d-block"><i class="fal fa-file-invoice"></i><span id="invoiceIcon">Счета</span></a></li>
             <li class=""><a th:href="@{/invoices/archive}" class="text-decoration-none px-3 py-2 d-block"><i class="fal fa-folder"></i><span id="archiveIcon">Архив счетов</span></a></li>

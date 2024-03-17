@@ -106,14 +106,14 @@ public class  MappingUtils {
         return flights.size() >= FLIGHT_PLAN;
     }
 
-    public Invoice mapToInvoice(InvoiceCreateDTO dto){
+    public Invoice mapToInvoice(InvoiceCreateDTO dto, String employeeEmail){
         Invoice invoice = new Invoice();
         invoice.setInvoiceNumber(dto.getInvoiceNumber());
         invoice.setInvoiceCreationDate(dto.getInvoiceCreationDate());
         invoice.setCurrency(dto.getCurrency());
         invoice.setPaymentState(NOT_PAID_STATUS);
         invoice.setFlight(flightService.findFlightById(dto.getFlightId()));
-        invoice.setEmployee(employeeService.findEmployeeByEmail("astapovich@gmail.com"));//change_this
+        invoice.setEmployee(employeeService.findEmployeeByEmail(employeeEmail));
         return invoice;
     }
 
@@ -126,14 +126,14 @@ public class  MappingUtils {
         return invoice;
     }
 
-    public Invoice mapToInvoice(InvoiceDTO dto){
+    public Invoice mapToInvoice(InvoiceDTO dto, String employeeEmail){
         Invoice invoice = new Invoice();
         invoice.setInvoiceNumber(dto.getInvoiceNumber());
         invoice.setInvoiceCreationDate(dto.getInvoiceCreationDate());
         invoice.setCurrency(dto.getCurrency());
         invoice.setPaymentState(NOT_PAID_STATUS);
         invoice.setFlight(dto.getFlight());
-        invoice.setEmployee(employeeService.findEmployeeByEmail("astapovich@gmail.com"));//change_this
+        invoice.setEmployee(employeeService.findEmployeeByEmail(employeeEmail));
         return invoice;
     }
 

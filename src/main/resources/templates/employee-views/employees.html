@@ -31,8 +31,10 @@
                     </form>
                     <form id="formFilter" method="post" th:action="@{/employees/filterByPosition}">
                         <label id="positionLabel">Должность:</label>
-                        <select id="positions" class="form-select" aria-label="Disabled select example" name="roleId">
-                            <option th:each="role :${listRoles}" th:value="${role.id}" th:text="${role.name}"}></option>
+                        <select id="positions" class="form-select" aria-label="Disabled select example" name="position">
+                            <option value="cистемный администратор">cистемный администратор</option>
+                            <option value="бухгалтер">бухгалтер</option>
+                            <option value="сотрудник финансового отдела">сотрудник финансового отдела</option>
                         </select>
                         <div><button id="applyBtn" type="submit">Применить</button></div>
                     </form>

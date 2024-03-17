@@ -1,6 +1,5 @@
 package com.prigozhaeva.aerocalculations.controller;
 
-import com.prigozhaeva.aerocalculations.entity.User;
 import com.prigozhaeva.aerocalculations.service.MessageService;
 import com.prigozhaeva.aerocalculations.service.UserService;
 import com.sun.mail.smtp.SMTPSendFailedException;
