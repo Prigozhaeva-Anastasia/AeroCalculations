@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="template">
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"layout:decorate="template">
 <head>
   <meta charset="UTF-8">
   <title>Воздушные судна</title>
@@ -24,19 +25,23 @@
         </div>
         <div></div>
         <div id="inline">
-          <form id="formBtns">
-            <input id="importBtn" type="file" accept="import/*, .xml" name="path" class="btn" onchange="getPathOfImportFile(this.files)">
-            <label for="importBtn" class="importLabel">Импортировать</label>
-            <a id="reload" class="btn" th:href="@{/aircrafts/index}"></a>
-            <button type="button" id="filterForAircrafts" class="btn"></button>
-          </form>
-          <form id="formFilter" method="post" th:action="@{/aircrafts/filterByAirline}">
-            <label id="airlineLabel">Авиакомпания:</label>
-            <select id="airlines" class="form-select" aria-label="Disabled select example" name="airlineId">
-              <option th:each="airline :${listAirlines}" th:value="${airline.id}" th:text="${airline.name}"}></option>
-            </select>
-            <div><button id="applyBtn" type="submit">Применить</button></div>
-          </form>
+          <div>
+            <form>
+              <input sec:authorize="hasAuthority('Admin')" id="importBtn" type="file" accept="import/*, .xml" name="path" class="btn" onchange="getPathOfImportFile(this.files)">
+              <label sec:authorize="hasAuthority('Admin')" for="importBtn" class="importLabel">Импортировать</label>
+              <a id="reload" class="btn" th:href="@{/aircrafts/index}"></a>
+              <button type="button" id="filterForAircrafts" class="btn"></button>
+            </form>
+          </div>
+          <div>
+            <form id="formFilterAircraft" method="post" th:action="@{/aircrafts/filterByAirline}">
+              <label id="airlineLabel">Авиакомпания:</label>
+              <select id="airlines" class="form-select" aria-label="Disabled select example" name="airlineId">
+                <option th:each="airline :${listAirlines}" th:value="${airline.id}" th:text="${airline.name}"}></option>
+              </select>
+              <div><button id="applyBtn" type="submit">Применить</button></div>
+            </form>
+          </div>
         </div>
         <div class="table-responsive">
           <table class="table aircraft">
@@ -49,7 +54,7 @@
               <th><a id="sortedFieldByMTOW" class="nav-link dropdown-toggle menu"
                      th:href="@{/aircrafts/sortByMTOW}">MTOW</a></th>
               <th>Авиакомпания</th>
-              <th id="actionTH">Действие</th>
+              <th id="actionTH" sec:authorize="hasAuthority('Admin')">Действие</th>
             </tr>
             </thead>
             <tbody>
@@ -59,7 +64,7 @@
               <td class="center" th:text="${aircraft.getPassengerCapacity()}"></td>
               <td class="center" th:text="${aircraft.getMTOW()}"></td>
               <td th:text="${aircraft.getAirline().getName()}"></td>
-              <td class="center">
+              <td class="center" sec:authorize="hasAuthority('Admin')">
                 <a class="btn btn-primary output" th:href="@{/aircrafts/formUpdate(tailNumber=${aircraft.getTailNumber()})}" onclick="clearLocalStorage()"></a>
               </td>
             </tr>

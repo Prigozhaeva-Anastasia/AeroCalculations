@@ -17,8 +17,8 @@ class RoleRepositoryTest {
     private RoleRepository roleRepository;
     @Test
     void getRoleByName() {
-        String FLIGHT_NUMBER = "Бухгалтер";
-        Role role = roleRepository.getRoleByName(FLIGHT_NUMBER);
+        String ROLE_NAME = "Accountant";
+        Role role = roleRepository.getRoleByName(ROLE_NAME);
         assertNotNull(role);
     }
 }

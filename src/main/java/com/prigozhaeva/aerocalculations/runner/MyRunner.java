@@ -25,9 +25,9 @@
 //    @Autowired
 //    private InvoiceService invoiceService;
 //
-//    public static final String ADMIN = "Администратор";
-//    public static final String ACCOUNTANT = "Бухгалтер";
-//    public static final String FINANCE = "Сотрудник финансового отдела";
+//    public static final String ADMIN = "Admin";
+//    public static final String ACCOUNTANT = "Accountant";
+//    public static final String FINANCE = "Finance department employee";
 //    @Override
 //    public void run(String... args) throws Exception {
 //
@@ -35,9 +35,9 @@
 //        roleService.createRole(ACCOUNTANT);
 //        roleService.createRole(FINANCE);
 //
-//        User user1 = userService.createUser("astapovich@gmail.com", "AdminA1111", ADMIN);
-//        User user2 = userService.createUser( "bondarenko@gmail.com", "margoPR2003", ACCOUNTANT);
-//        User user3 = userService.createUser( "gromov@gmail.com", "olgGR2003", FINANCE);
+//        User user1 = userService.createUser("astapovich_ch@mail.ru", "AdminA1111", ADMIN);
+//        User user2 = userService.createUser( "bondarenko_b97@mail.ru", "margoPR2003", ACCOUNTANT);
+//        User user3 = userService.createUser( "gromov_v90@mail.ru", "olgGR2003", FINANCE);
 //
 //        Employee employee1 = employeeService.createEmployee(user1.getId(), "Астапович", "Александра", "Владимировна", "+375448965214", "cистемный администратор", "/images/employees/Astapovich Aleksandra.jpg");
 //        Employee employee2 = employeeService.createEmployee(user2.getId(), "Бондаренко", "Маргарита", "Александровна", "+375293514265", "бухгалтер", "/images/employees/Bondarenko Margarita.jpg");

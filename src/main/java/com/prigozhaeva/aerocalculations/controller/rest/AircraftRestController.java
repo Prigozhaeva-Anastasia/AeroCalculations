@@ -1,6 +1,7 @@
 package com.prigozhaeva.aerocalculations.controller.rest;
 
 import com.prigozhaeva.aerocalculations.service.AircraftService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,6 +17,7 @@ public class AircraftRestController {
     }
 
     @PostMapping(value = "/import")
+    @PreAuthorize("hasAuthority('Admin')")
     public void importAircrafts(@RequestParam String path) {
         aircraftService.importAircrafts(path);
     }

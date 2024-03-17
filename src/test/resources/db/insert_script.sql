@@ -3402,9 +3402,9 @@ INSERT INTO aero_calculations.provided_services (id, amount, value, flight_id, s
 INSERT INTO aero_calculations.provided_services (id, amount, value, flight_id, service_id) VALUES (2255, 0, 0, 2001413508, 840);
 INSERT INTO aero_calculations.provided_services (id, amount, value, flight_id, service_id) VALUES (2256, 0, 0, 2001413508, 973);
 
-INSERT INTO aero_calculations.roles (id, name) VALUES (1, 'Администратор');
-INSERT INTO aero_calculations.roles (id, name) VALUES (2, 'Бухгалтер');
-INSERT INTO aero_calculations.roles (id, name) VALUES (3, 'Сотрудник финансового отдела');
+INSERT INTO aero_calculations.roles (id, name) VALUES (1, 'Admin');
+INSERT INTO aero_calculations.roles (id, name) VALUES (2, 'Accountant');
+INSERT INTO aero_calculations.roles (id, name) VALUES (3, 'Finance department employee');
 
 INSERT INTO aero_calculations.users_roles (user_id, role_id) VALUES (1, 1);
 INSERT INTO aero_calculations.users_roles (user_id, role_id) VALUES (2, 2);

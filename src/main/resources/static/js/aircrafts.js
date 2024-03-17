@@ -19,9 +19,8 @@ function clearLocalStorage() {
     localStorage.removeItem("airline");
 }
 window.onload = function () {
-    let formFilter = document.getElementById('formFilter');
+    let formFilter = document.getElementById('formFilterAircraft');
     let filterForAircrafts = document.getElementById('filterForAircrafts');
-    let formBtns = document.getElementById('formBtns');
     let airlines = document.querySelector("select");
 
     formFilter.addEventListener('click', function (e) {
@@ -51,6 +50,5 @@ window.onload = function () {
 
     filterForAircrafts.addEventListener('click', function (event) {
         formFilter.style.display = 'block';
-        formBtns.style.left = '-20px';
     });
 }

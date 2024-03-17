@@ -4,6 +4,7 @@ import com.prigozhaeva.aerocalculations.entity.Aircraft;
 import com.prigozhaeva.aerocalculations.entity.Airline;
 import com.prigozhaeva.aerocalculations.service.AircraftService;
 import com.prigozhaeva.aerocalculations.service.AirlineService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,6 +32,7 @@ public class AircraftController {
     }
 
     @GetMapping(value = "/index")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant', 'Finance department employee')")
     public String aircrafts(Model model, @RequestParam(name = KEYWORD, defaultValue = "") String keyword) {
         List<Aircraft> aircraftList = new CopyOnWriteArrayList<>(aircraftService.findAircraftsByTailNumber(keyword));
         List<Airline> airlines = airlineService.fetchAll();
@@ -41,6 +43,7 @@ public class AircraftController {
     }
 
     @GetMapping(value = "/formUpdate")
+    @PreAuthorize("hasAuthority('Admin')")
     public String updateAircraft(Model model, String tailNumber) {
         List<Airline> airlines = airlineService.fetchAll();
         Aircraft aircraft = aircraftService.findAircraftByTailNumber(tailNumber);
@@ -50,6 +53,7 @@ public class AircraftController {
     }
 
     @PostMapping(value = "/update")
+    @PreAuthorize("hasAuthority('Admin')")
     public String update(@Valid Aircraft aircraft, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "aircraft-views/formUpdate";
@@ -59,6 +63,7 @@ public class AircraftController {
     }
 
     @GetMapping(value = "/sortByPassengerCapacity")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant', 'Finance department employee')")
     public String sortByPassengerCapacity(Model model) {
         List<Aircraft> aicrafts = aircraftService.fetchAll();
         Collections.sort(aicrafts, Comparator.comparing(Aircraft::getPassengerCapacity));
@@ -67,6 +72,7 @@ public class AircraftController {
     }
 
     @GetMapping(value = "/sortByMTOW")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant', 'Finance department employee')")
     public String sortByMTOW(Model model) {
         List<Aircraft> aicrafts = aircraftService.fetchAll();
         Collections.sort(aicrafts, Comparator.comparing(Aircraft::getMTOW));
@@ -75,6 +81,7 @@ public class AircraftController {
     }
 
     @PostMapping(value = "/filterByAirline")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant', 'Finance department employee')")
     public String filterByAirline(Model model, String airlineId) {
         List<Aircraft> aircrafts;
         aircrafts = aircraftService.fetchAll().stream()

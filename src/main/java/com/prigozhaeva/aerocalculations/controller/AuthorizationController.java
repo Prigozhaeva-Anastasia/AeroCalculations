@@ -60,12 +60,10 @@ public class AuthorizationController {
     @PostMapping(value = "/validateOtp")
     public String validateOtp(String otp, HttpSession session, Model model) {
         int otpFromEmail = (int)session.getAttribute("otp");
-        if (Integer.parseInt(otp) == otpFromEmail)
-        {
+        if (Integer.parseInt(otp) == otpFromEmail) {
             return "authorization-views/newPassword";
         }
-        else
-        {
+        else {
             model.addAttribute(MESSAGE,"неверный otp");
             return "authorization-views/enterOtp";
         }
