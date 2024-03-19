@@ -26,7 +26,7 @@
                 Сотрудники</a></li>
             <li class=""><a th:href="@{/invoices/index}" class="text-decoration-none px-3 py-2 d-block"><i class="fal fa-file-invoice"></i><span id="invoiceIcon">Счета</span></a></li>
             <li class=""><a th:href="@{/invoices/archive}" class="text-decoration-none px-3 py-2 d-block"><i class="fal fa-folder"></i><span id="archiveIcon">Архив счетов</span></a></li>
-            <li class=""><a th:href="@{/messages/unreadMsgs}" class="text-decoration-none px-3 py-2 d-block"><i class="fa fa-credit-card"></i><span id="proofOfPaymentIcon">Подтверждение оплаты</span></a></li>
+            <li sec:authorize="hasAnyAuthority('Admin', 'Accountant')" class=""><a th:href="@{/messages/unreadMsgs}" class="text-decoration-none px-3 py-2 d-block"><i class="fa fa-credit-card"></i><span id="proofOfPaymentIcon">Подтверждение оплаты</span></a></li>
             <li class=""><a th:href="@{/rushHours/index?weekDay=1}" class="text-decoration-none px-3 py-2 d-block"><i class="fa fa-clock"></i><span id="clockIcon">Часы "пик"</span></a></li>
         </ul>
 

@@ -5,6 +5,7 @@ import com.prigozhaeva.aerocalculations.dto.MessageDTO;
 import com.prigozhaeva.aerocalculations.entity.Invoice;
 import com.prigozhaeva.aerocalculations.service.InvoiceService;
 import com.prigozhaeva.aerocalculations.service.MessageService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +32,7 @@ public class MessageController {
     }
 
     @GetMapping(value = "/unreadMsgs")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant')")
     public String unreadMsgs(Model model) {
         List<MessageDTO> messages = messageService.showUnreadMsgs();
         Collections.sort(messages, Comparator.comparing(MessageDTO::getLocalDateTime).reversed());
@@ -39,6 +41,7 @@ public class MessageController {
     }
 
     @GetMapping(value = "/unreadMessage/{messageId}")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant')")
     public String showMessage(@PathVariable String messageId, Model model) {
         MessageDTO messageDTO = messageService.findById(messageId);
         messageService.markMessageAsSeen(messageId);
@@ -48,6 +51,7 @@ public class MessageController {
     }
 
     @PostMapping(value = "/unreadMessage/signatureVerification")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant')")
     public String signatureVerification(MessageDTO messageDTO, Model model) {
         if (invoiceService.signatureVerification(messageDTO.getFilePath())) {
             try {
@@ -66,6 +70,7 @@ public class MessageController {
     }
 
     @GetMapping(value = "/readMsgs")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant')")
     public String readMsgs(Model model) {
         List<MessageDTO> messages = messageService.showReadMsgs();
         Collections.sort(messages, Comparator.comparing(MessageDTO::getLocalDateTime).reversed());
