@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="template">
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="template">
 <head>
     <meta charset="UTF-8">
     <title>Рейcы</title>
@@ -24,51 +25,56 @@
                 </div>
                 <div></div>
                 <div id="inline">
-                    <form id="formBtns">
-                        <input id="importBtn" type="file" accept="import/*, .xml" name="path" class="btn"
-                               onchange="getPathOfImportFile(this.files)">
-                        <label for="importBtn" class="importLabel">Импортировать</label>
-                        <a id="reload" class="btn" th:href="@{/flights/index}"></a>
-                        <button type="button" id="filterForFlights" class="btn"></button>
-                    </form>
-                    <form id="formFilterForFlights" method="post" th:action="@{/flights/filter}">
-                        <div class="cell">
-                            <label id="flightDirectionLabel">Направление:</label>
-                            <select id="directions" class="form-select" aria-label="Disabled select example"
-                                    name="flightDirection">
-                                <option selected></option>
-                                <option value="В">вылет</option>
-                                <option value="П">посадка</option>
-                            </select>
-                        </div>
-                        <div class="cell">
-                            <label id="flightTypeLabel">Тип:</label>
-                            <select id="types" class="form-select" aria-label="Disabled select example"
-                                    name="flightType">
-                                <option selected></option>
-                                <option value="Чартерный рейс">Чартерный рейс</option>
-                                <option value="Регулярный рейс">Регулярный рейс</option>
-                                <option value="Прочие нерегулярные рейсы">Прочие нерегулярные рейсы</option>
-                            </select>
-                        </div>
-                        <div class="cell">
-                            <label id="ratingLabel">Дата:</label>
-                            <div class="inputs">
-                                <input id="date1" class="form-control" type="date" name="date1" placeholder="от">
-                                <input id="date2" class="form-control" type="date" name="date2" placeholder="до">
+                    <div>
+                        <form>
+                            <input sec:authorize="hasAuthority('Admin')" id="importBtn" type="file"
+                                   accept="import/*, .xml" name="path" class="btn"
+                                   onchange="getPathOfImportFile(this.files)">
+                            <label sec:authorize="hasAuthority('Admin')" for="importBtn" class="importLabel">Импортировать</label>
+                            <a id="reload" class="btn" th:href="@{/flights/index}"></a>
+                            <button type="button" id="filterForFlights" class="btn"></button>
+                        </form>
+                    </div>
+                    <div>
+                        <form id="formFilterForFlights" method="post" th:action="@{/flights/filter}">
+                            <div class="cell">
+                                <label id="flightDirectionLabel">Направление:</label>
+                                <select id="directions" class="form-select" aria-label="Disabled select example"
+                                        name="flightDirection">
+                                    <option selected></option>
+                                    <option value="В">вылет</option>
+                                    <option value="П">посадка</option>
+                                </select>
                             </div>
-                        </div>
-                        <div class="cell">
-                            <label id="ratingLabel2">Время:</label>
-                            <div class="inputs">
-                                <input id="time1" class="form-control" type="time" name="time1" placeholder="от">
-                                <input id="time2" class="form-control" type="time" name="time2" placeholder="до">
+                            <div class="cell">
+                                <label id="flightTypeLabel">Тип:</label>
+                                <select id="types" class="form-select" aria-label="Disabled select example"
+                                        name="flightType">
+                                    <option selected></option>
+                                    <option value="Чартерный рейс">Чартерный рейс</option>
+                                    <option value="Регулярный рейс">Регулярный рейс</option>
+                                    <option value="Прочие нерегулярные рейсы">Прочие нерегулярные рейсы</option>
+                                </select>
                             </div>
-                        </div>
-                        <div>
-                            <button id="applyBtn" type="submit">Применить</button>
-                        </div>
-                    </form>
+                            <div class="cell">
+                                <label id="ratingLabel">Дата:</label>
+                                <div class="inputs">
+                                    <input id="date1" class="form-control" type="date" name="date1" placeholder="от">
+                                    <input id="date2" class="form-control" type="date" name="date2" placeholder="до">
+                                </div>
+                            </div>
+                            <div class="cell">
+                                <label id="ratingLabel2">Время:</label>
+                                <div class="inputs">
+                                    <input id="time1" class="form-control" type="time" name="time1" placeholder="от">
+                                    <input id="time2" class="form-control" type="time" name="time2" placeholder="до">
+                                </div>
+                            </div>
+                            <div>
+                                <button id="applyBtn" type="submit">Применить</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
             <div class="table-responsive">
@@ -81,7 +87,7 @@
                         <th>Город взлета</th>
                         <th>Город посадки</th>
                         <th class="tdDate"><a id="sortedFieldByDate" class="nav-link dropdown-toggle menu"
-                               th:href="@{/flights/sortByDate}">Дата</a></th>
+                                              th:href="@{/flights/sortByDate}">Дата</a></th>
                         <th>Время</th>
                         <th class="actionWithMore">Действие</th>
                     </tr>
@@ -96,7 +102,7 @@
                         <td class="center" th:text="${#temporals.format(flight.getDepDate(), 'dd.MM.yyyy')}"></td>
                         <td class="center" th:text="${#temporals.format(flight.getDepTime(), 'HH:mm')}"></td>
                         <td>
-                            <a class="btn btn-primary output"
+                            <a sec:authorize="hasAuthority('Admin')" class="btn btn-primary output"
                                th:href="@{/flights/formUpdate(flightId=${flight.getId()})}"
                                onclick="clearLocalStorage()"></a>
                             <a class="btn btn-outline-dark"

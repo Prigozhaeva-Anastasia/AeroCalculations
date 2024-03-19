@@ -38,11 +38,12 @@ public class ProvidedServiceServiceImpl implements ProvidedServiceService {
     private CurrencyRateService currencyRateService;
     private RushHourRepository rushHourRepository;
 
-    public ProvidedServiceServiceImpl(ProvideServiceRepository provideServiceRepository, ServiceRepository serviceRepository, FlightRepository flightRepository, CurrencyRateService currencyRateService) {
+    public ProvidedServiceServiceImpl(ProvideServiceRepository provideServiceRepository, ServiceRepository serviceRepository, FlightRepository flightRepository, CurrencyRateService currencyRateService, RushHourRepository rushHourRepository) {
         this.provideServiceRepository = provideServiceRepository;
         this.serviceRepository = serviceRepository;
         this.flightRepository = flightRepository;
         this.currencyRateService = currencyRateService;
+        this.rushHourRepository = rushHourRepository;
     }
 
     @Override

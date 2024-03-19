@@ -6,6 +6,7 @@ import com.prigozhaeva.aerocalculations.entity.Flight;
 import com.prigozhaeva.aerocalculations.service.AircraftService;
 import com.prigozhaeva.aerocalculations.service.FlightService;
 import com.prigozhaeva.aerocalculations.util.CityCodeMap;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -37,6 +38,7 @@ public class FlightController {
     }
 
     @GetMapping(value = "/index")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant', 'Finance department employee')")
     public String flights(Model model, @RequestParam(name = KEYWORD, defaultValue = "") String keyword) {
         List<FlightDTO> flightList = new CopyOnWriteArrayList<>(flightService.findFlightsDtoByFlightNumber(keyword));
         model.addAttribute(LIST_FLIGHTS, flightList);
@@ -45,6 +47,7 @@ public class FlightController {
     }
 
     @GetMapping(value = "/formUpdate")
+    @PreAuthorize("hasAuthority('Admin')")
     public String updateFlight(Model model, Long flightId) {
         List<Aircraft> aircrafts = aircraftService.fetchAll();
         Flight flight = flightService.findFlightById(flightId);
@@ -55,6 +58,7 @@ public class FlightController {
     }
 
     @PostMapping(value = "/update")
+    @PreAuthorize("hasAuthority('Admin')")
     public String update(@Valid Flight flight, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "flight-views/formUpdate";
@@ -64,6 +68,7 @@ public class FlightController {
     }
 
     @GetMapping(value = "/sortByDate")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant', 'Finance department employee')")
     public String sortByDate(Model model) {
         List<Flight> flights = flightService.fetchAll();
         Collections.sort(flights, Comparator.comparing(Flight::getDepDate));
@@ -72,6 +77,7 @@ public class FlightController {
     }
 
     @PostMapping(value = "/filter")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant', 'Finance department employee')")
     public String filter(Model model, String flightDirection, String flightType, String date1, String date2, String time1,
                          String time2) {
         List<Flight> flights = flightService.fetchAll().stream()
@@ -88,6 +94,7 @@ public class FlightController {
     }
 
     @GetMapping(value = "/formMoreDetails")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant', 'Finance department employee')")
     public String fetchMoreDetails(Model model, Long flightId) {
         FlightDTO flightDTO = flightService.findFlightDtoById(flightId);
         model.addAttribute(FLIGHT, flightDTO);

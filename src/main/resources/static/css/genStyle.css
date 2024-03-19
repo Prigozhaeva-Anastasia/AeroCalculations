@@ -290,13 +290,13 @@ form {
     display: table-cell;
     padding-right: 10px;
 }
-#formFilter, #formFilter2, #formFilterForFlights {
+#formFilter, #formFilter2 {
     display: none;
     position: relative;
     top: -5px;
     left: -490px;
 }
-#formFilterAircraft {
+#formFilterAircraft, #formFilterForFlights {
     display: none;
 }
 #formFilterForInvoices {
