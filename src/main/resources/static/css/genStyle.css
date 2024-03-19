@@ -984,3 +984,6 @@ option {
 #formCreateFile {
     margin-left: 00px;
 }
+.centered {
+    text-align: center;
+}

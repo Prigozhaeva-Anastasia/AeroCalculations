@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="template">
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="template">
 <head>
     <meta charset="UTF-8">
     <title>Счета</title>
@@ -25,7 +26,8 @@
                 <div></div>
                 <div id="inline">
                     <form id="formBtnsInvoice">
-                        <a id="createBtnInvoice" class="btn" data-bs-toggle="modal"
+                        <a sec:authorize="hasAnyAuthority('Admin', 'Accountant')" id="createBtnInvoice" class="btn"
+                           data-bs-toggle="modal"
                            data-bs-target="#exampleModalCenterForCreate"></a>
                         <div class="modal fade" id="exampleModalCenterForCreate" tabindex="-1" role="dialog"
                              aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -59,7 +61,8 @@
                         </div>
                         <a id="reloadInvoice" class="btn" th:href="@{/invoices/index}"></a>
                         <button type="button" id="filterForInvoices" class="btn"></button>
-                        <a id="sendInvoice" class="btn" th:href="@{/invoices/sendInvoiceForm}"></a>
+                        <a sec:authorize="hasAnyAuthority('Admin', 'Finance department employee')" id="sendInvoice"
+                           class="btn" th:href="@{/invoices/sendInvoiceForm}"></a>
                     </form>
                     <form id="formFilterForInvoices" method="post" th:action="@{/invoices/filter}">
                         <div class="cell">
@@ -128,8 +131,19 @@
                                   th:action="@{/invoices/changePaymentStatus}" method="post">
                                 <input type="text" th:value="${invoice.getInvoiceNumber()}" name="invoiceNumber"
                                        hidden="hidden">
-                                <select th:id="'paymentState_' + ${iterStat.index}" class="form-select paymentState pState"
+                                <select sec:authorize="hasAnyAuthority('Admin', 'Accountant')"
+                                        th:id="'paymentState_' + ${iterStat.index}"
+                                        class="form-select paymentState pState"
                                         aria-label="Disabled select example" name="paymentState">
+                                    <option value="Оплачен">Оплачен</option>
+                                    <option value="Не оплачен">Не оплачен</option>
+                                    <option value="Отправлен">Отправлен</option>
+                                    <option value="Просрочен">Просрочен</option>
+                                </select>
+                                <select sec:authorize="hasAuthority('Finance department employee')"
+                                        th:id="'paymentState_' + ${iterStat.index}"
+                                        class="form-select paymentState pState"
+                                        aria-label="Disabled select example" name="paymentState" disabled>
                                     <option value="Оплачен">Оплачен</option>
                                     <option value="Не оплачен">Не оплачен</option>
                                     <option value="Отправлен">Отправлен</option>
@@ -138,22 +152,27 @@
                             </form>
                         </td>
                         <td>
-                            <a style="margin-left: 10px;" class="btn btn-primary output"
-                               th:href="@{/invoices/formUpdate(invoiceNumber=${invoice.getInvoiceNumber()})}"></a>
-                            <a class="btn btn-danger"
-                               onclick="return confirm('Вы действительно хотите удалить выбранный счет?')"
-                               th:href="@{/invoices/delete(invoiceId=${invoice.getId()})}"></a>
-                            <a class="btn download"
-                               th:href="@{/invoices/saveToPdf(invoiceNumber=${invoice.getInvoiceNumber()})}"
-                               th:attr="data-invoice-number=${invoice.getInvoiceNumber()}"
-                               onclick="saveMsg(this)">
-                            </a>
-                            <form style="display: inline;" method="get" th:action="@{/invoices/formCreateFile}">
-                                <input type="text" name="invoiceNumber" th:value="${invoice.invoiceNumber}" hidden="hidden">
-                                <button type="submit" class="btn createFile"></button>
-                            </form>
-                            <a id="info" class="btn"
-                               th:href="@{/invoices/formMoreDetails(invoiceNumber=${invoice.getInvoiceNumber()})}"></a>
+                            <div class="centered">
+                                <a sec:authorize="hasAnyAuthority('Admin', 'Accountant')" style="margin-left: 10px;"
+                                   class="btn btn-primary output"
+                                   th:href="@{/invoices/formUpdate(invoiceNumber=${invoice.getInvoiceNumber()})}"></a>
+                                <a sec:authorize="hasAnyAuthority('Admin', 'Accountant')" class="btn btn-danger"
+                                   onclick="return confirm('Вы действительно хотите удалить выбранный счет?')"
+                                   th:href="@{/invoices/delete(invoiceId=${invoice.getId()})}"></a>
+                                <a class="btn download"
+                                   th:href="@{/invoices/saveToPdf(invoiceNumber=${invoice.getInvoiceNumber()})}"
+                                   th:attr="data-invoice-number=${invoice.getInvoiceNumber()}"
+                                   onclick="saveMsg(this)">
+                                </a>
+                                <form sec:authorize="hasAnyAuthority('Admin', 'Finance department employee')"
+                                      style="display: inline;" method="get" th:action="@{/invoices/formCreateFile}">
+                                    <input type="text" name="invoiceNumber" th:value="${invoice.invoiceNumber}"
+                                           hidden="hidden">
+                                    <button type="submit" class="btn createFile"></button>
+                                </form>
+                                <a id="info" class="btn"
+                                   th:href="@{/invoices/formMoreDetails(invoiceNumber=${invoice.getInvoiceNumber()})}"></a>
+                            </div>
                         </td>
                     </tr>
                     </tbody>

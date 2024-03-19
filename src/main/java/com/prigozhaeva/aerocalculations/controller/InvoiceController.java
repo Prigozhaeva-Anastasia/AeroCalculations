@@ -8,6 +8,7 @@ import com.prigozhaeva.aerocalculations.service.*;
 import com.prigozhaeva.aerocalculations.util.CityCodeMap;
 import com.prigozhaeva.aerocalculations.util.MappingUtils;
 import com.sun.mail.smtp.SMTPSendFailedException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -51,6 +52,7 @@ public class InvoiceController {
     }
 
     @GetMapping(value = "/index")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant', 'Finance department employee')")
     public String invoices(Model model, @RequestParam(name = KEYWORD, defaultValue = "") String keyword) {
 //        List<Invoice> invoices = invoiceService.fetchAll();  //delete
 //        invoices.get(0).setFlight(flightService.findFlightById(2001399399L)); //delete
@@ -77,12 +79,14 @@ public class InvoiceController {
     }
 
     @PostMapping(value = "/changePaymentStatus")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant')")
     public String changePaymentStatus(int invoiceNumber, String paymentState) {
         invoiceService.changePaymentStatus(invoiceNumber, paymentState);
         return "redirect:/invoices/index";
     }
 
     @GetMapping(value = "/formCreate")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant')")
     public String formCreate(Model model, String flightNumberModal, String invoiceCreationDate) {
         if (flightNumberModal.isEmpty() || invoiceCreationDate.isEmpty()) {
             return "invoice-views/msgPage";
@@ -128,6 +132,7 @@ public class InvoiceController {
     }
 
     @GetMapping(value = "/confirmForm")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant', 'Finance department employee')")
     public String confirmForm(int invoiceNumber, Model model) {
         Invoice invoiceDB = invoiceService.findInvoiceByInvoiceNumber(invoiceNumber);
         InvoiceDTO invoiceDTO = mappingUtils.mapToInvoiceDTO(invoiceDB);
@@ -146,6 +151,7 @@ public class InvoiceController {
     }
 
     @GetMapping(value = "/saveToPdf")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant', 'Finance department employee')")
     public String saveToPdf(int invoiceNumber) {
         Invoice invoiceDB = invoiceService.findInvoiceByInvoiceNumber(invoiceNumber);
         InvoiceDTO invoiceDTO = mappingUtils.mapToInvoiceDTO(invoiceDB);
@@ -206,6 +212,7 @@ public class InvoiceController {
     }
 
     @PostMapping(value = "/filter")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant', 'Finance department employee')")
     public String filter(Model model, Long airlineId, String paymentStatus, String date1, String date2) {
         List<InvoiceDTO> invoiceDTOList = invoiceService.fetchAll().stream()
                 .filter(invoice -> (airlineId == null || invoice.getFlight().getAircraft().getAirline().getId().equals(airlineId)) &&
@@ -220,6 +227,7 @@ public class InvoiceController {
     }
 
     @PostMapping(value = "/filterArchive")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant', 'Finance department employee')")
     public String filterArchive(Model model, Long airlineId, String paymentStatus, String date1, String date2) {
         List<InvoiceDTO> invoiceDTOList = invoiceService.fetchAll().stream()
                 .filter(invoice -> invoice.getPaymentState().equals(PAID_STATUS) &&
@@ -235,6 +243,7 @@ public class InvoiceController {
     }
 
     @GetMapping(value = "/sortByInvoiceNumber")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant', 'Finance department employee')")
     public String sortByInvoiceNumber(Model model) {
         List<InvoiceDTO> invoiceDTOList = invoiceService.fetchAllDto();
         Collections.sort(invoiceDTOList, Comparator.comparing(InvoiceDTO::getInvoiceNumber));
@@ -244,6 +253,7 @@ public class InvoiceController {
     }
 
     @GetMapping(value = "/sortByInvoiceCreationDate")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant', 'Finance department employee')")
     public String sortByCreationDate(Model model) {
         List<InvoiceDTO> invoiceDTOList = invoiceService.fetchAllDto();
         Collections.sort(invoiceDTOList, Comparator.comparing(InvoiceDTO::getInvoiceCreationDate));
@@ -253,6 +263,7 @@ public class InvoiceController {
     }
 
     @GetMapping(value = "/sortByInvoiceNumberArchive")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant', 'Finance department employee')")
     public String sortByInvoiceNumberArchive(Model model) {
         List<InvoiceDTO> invoiceDTOList = invoiceService.fetchAllDto().stream()
                 .filter(invoiceDTO -> invoiceDTO.getPaymentState().equals(PAID_STATUS))
@@ -264,6 +275,7 @@ public class InvoiceController {
     }
 
     @GetMapping(value = "/sortByInvoiceCreationDateArchive")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant', 'Finance department employee')")
     public String sortByInvoiceCreationDateArchive(Model model) {
         List<InvoiceDTO> invoiceDTOList = invoiceService.fetchAllDto().stream()
                 .filter(invoiceDTO -> invoiceDTO.getPaymentState().equals(PAID_STATUS))
@@ -275,6 +287,7 @@ public class InvoiceController {
     }
 
     @GetMapping(value = "/formUpdate")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant')")
     public String updateInvoice(Model model, int invoiceNumber) {
         InvoiceDTO dto = invoiceService.findInvoiceDtoByInvoiceNumber(invoiceNumber);
         List<ProvidedService> airportServices = filterAndMapServices(AIRPORT_SERVICES, dto.getAirportServices());
@@ -286,12 +299,14 @@ public class InvoiceController {
     }
 
     @GetMapping(value = "/delete")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant')")
     public String deleteInvoice(Long invoiceId) {
         invoiceService.removeInvoice(invoiceId);
         return "redirect:/invoices/index";
     }
 
     @GetMapping(value = "/formCreateFile")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Finance department employee')")
     public String createFile(Integer invoiceNumber, Model model) {
         InvoicePaymentTermsDTO invoicePaymentTermsDTO = new InvoicePaymentTermsDTO();
         invoicePaymentTermsDTO.setInvoiceNumber(invoiceNumber);
@@ -300,6 +315,7 @@ public class InvoiceController {
     }
 
     @PostMapping(value = "/createFile")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Finance department employee')")
     public  String createFileWithPaymentTerms(InvoicePaymentTermsDTO invoicePaymentTermsDTO) {
         String templatePath = "D:/diploma/проект/aeroCalculations/src/main/resources/templates/invoice-views/termsOfPayment.html";
         String htmlContent = readHtmlContent(templatePath);
@@ -324,16 +340,19 @@ public class InvoiceController {
     }
 
     @GetMapping(value = "/formMoreDetails")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant', 'Finance department employee')")
     public String formMoreDetails(int invoiceNumber) {
         return "redirect:/invoices/confirmForm?invoiceNumber=" + invoiceNumber;
     }
 
     @GetMapping(value = "/sendInvoiceForm")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Finance department employee')")
     public String sendInvoiceForm() {
         return "invoice-views/formForSignDoc";
     }
 
     @GetMapping(value = "/signDocuments")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Finance department employee')")
     public String signDocuments(String invoiceDoc, String paymentTermsDoc, Model model) {
         invoiceService.signDocument(invoiceDoc);
         invoiceService.signDocument(paymentTermsDoc);
@@ -343,6 +362,7 @@ public class InvoiceController {
     }
 
     @PostMapping(value = "/sendByEmail")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Finance department employee')")
     public String sendByEmail(String recipientEmail, String msg, String invoiceDoc, String paymentTermsDoc, Model model) {
         try {
             invoiceService.sendByEmail(recipientEmail, "Счет на оплату", msg, invoiceDoc, paymentTermsDoc);
@@ -363,6 +383,7 @@ public class InvoiceController {
     }
 
     @GetMapping(value = "/archive")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant', 'Finance department employee')")
     public String archive(Model model, @RequestParam(name = KEYWORD, defaultValue = "") String keyword) {
         List<InvoiceDTO> invoiceList;
         if (keyword.isEmpty()) {

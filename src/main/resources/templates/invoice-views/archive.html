@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="template">
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="template">
 <head>
   <meta charset="UTF-8">
   <title>Архив счетов</title>
@@ -95,8 +96,19 @@
                     th:action="@{/invoices/changePaymentStatus}" method="post">
                 <input type="text" th:value="${invoice.getInvoiceNumber()}" name="invoiceNumber"
                        hidden="hidden">
-                <select th:id="'paymentState_' + ${iterStat.index}" class="form-select paymentState pState"
+                <select sec:authorize="hasAnyAuthority('Admin', 'Accountant')"
+                        th:id="'paymentState_' + ${iterStat.index}"
+                        class="form-select paymentState pState"
                         aria-label="Disabled select example" name="paymentState">
+                  <option value="Оплачен">Оплачен</option>
+                  <option value="Не оплачен">Не оплачен</option>
+                  <option value="Отправлен">Отправлен</option>
+                  <option value="Просрочен">Просрочен</option>
+                </select>
+                <select sec:authorize="hasAuthority('Finance department employee')"
+                        th:id="'paymentState_' + ${iterStat.index}"
+                        class="form-select paymentState pState"
+                        aria-label="Disabled select example" name="paymentState" disabled>
                   <option value="Оплачен">Оплачен</option>
                   <option value="Не оплачен">Не оплачен</option>
                   <option value="Отправлен">Отправлен</option>

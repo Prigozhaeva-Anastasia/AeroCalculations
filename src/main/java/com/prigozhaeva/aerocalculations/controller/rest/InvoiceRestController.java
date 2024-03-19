@@ -8,6 +8,7 @@ import com.prigozhaeva.aerocalculations.entity.ProvidedService;
 import com.prigozhaeva.aerocalculations.service.InvoiceService;
 import com.prigozhaeva.aerocalculations.service.ProvidedServiceService;
 import com.prigozhaeva.aerocalculations.util.MappingUtils;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -29,6 +30,7 @@ public class InvoiceRestController {
     }
 
     @PostMapping(value = "/create")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant')")
     public void createInvoice(@RequestBody InvoiceCreateDTO invoiceCreateDTO, Principal principal) {
         invoiceCreateDTO.setAirportServices(providedServiceService.updateProvidedServices(invoiceCreateDTO.getAirportServices(), invoiceCreateDTO.getFlightId()));
         invoiceCreateDTO.setGroundHandlingServices(providedServiceService.updateProvidedServices(invoiceCreateDTO.getGroundHandlingServices(), invoiceCreateDTO.getFlightId()));
@@ -39,6 +41,7 @@ public class InvoiceRestController {
     }
 
     @PostMapping(value = "/update")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant')")
     public void updateInvoice(@RequestBody InvoiceUpdateDTO invoiceDTO) {
         Invoice invoiceDB = invoiceService.findInvoiceById(invoiceDTO.getId());
         invoiceDTO.setAirportServices(providedServiceService.updateProvidedServices(invoiceDTO.getAirportServices(), invoiceDTO.getId()));
