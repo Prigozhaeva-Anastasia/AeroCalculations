@@ -5,6 +5,7 @@ import com.prigozhaeva.aerocalculations.entity.Flight;
 import com.prigozhaeva.aerocalculations.service.AirlineService;
 import com.prigozhaeva.aerocalculations.service.FlightService;
 import com.prigozhaeva.aerocalculations.service.ReportService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,6 +39,7 @@ public class ReportController {
     }
 
     @GetMapping(value = "/flightDynamics")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant', 'Finance department employee')")
     public String flightDynamics(Model model, int year, int month) {
         Map<Integer, Long> averageFlightsPerHour = reportService.flightDynamics(year, month);
         model.addAttribute(AVERAGE_FLIGHTS_PER_HOUR, averageFlightsPerHour);
@@ -49,6 +51,7 @@ public class ReportController {
     }
 
     @GetMapping(value = "/airportInfrastructureDynamics")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant', 'Finance department employee')")
     public String airportInfrastructureDynamics(Model model, String date) {
         Map<String, Long> countMap = reportService.airportInfrastructureDynamics(date);
         model.addAttribute(DATE, LocalDate.parse(date).format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
@@ -61,6 +64,7 @@ public class ReportController {
     }
 
     @GetMapping(value = "/changesInNumOfAirlinesDynamics")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant', 'Finance department employee')")
     public String changesInNumOfAirlinesDynamics(Model model, int year, int month) {
         List<Airline> airlines = airlineService.fetchAll();
         List<Airline> result = findAirlinesByDepDate(airlines, year, month);
@@ -85,6 +89,7 @@ public class ReportController {
     }
 
     @GetMapping(value = "/chartOfFeesChargedByAirlines")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant', 'Finance department employee')")
     public String chartOfFeesChargedByAirlines(int year, Model model) {
         Map<Integer, BigDecimal> totalCostOfProvidedServicesPerMonth = reportService.chartOfFeesChargedByAirlines(year);
         BigDecimal maxAverageTotalCost = findMaxValueOfTotalCost(totalCostOfProvidedServicesPerMonth);

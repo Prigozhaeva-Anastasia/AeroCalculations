@@ -4,6 +4,7 @@ import com.prigozhaeva.aerocalculations.entity.Flight;
 import com.prigozhaeva.aerocalculations.entity.ProvidedService;
 import com.prigozhaeva.aerocalculations.entity.Service;
 import com.prigozhaeva.aerocalculations.service.ProvidedServiceService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,6 +27,7 @@ public class ProvidedServiceController {
     }
 
     @GetMapping(value = "/index")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant', 'Finance department employee')")
     public String providedServices(Model model, Long flightId) {
         List<ProvidedService> providedServices = providedServiceService.findProvidedServicesByFlightId(flightId);
         model.addAttribute(LIST_PROVIDED_SERVICES, providedServices);
@@ -33,6 +35,7 @@ public class ProvidedServiceController {
     }
 
     @GetMapping(value = "/formUpdate")
+    @PreAuthorize("hasAuthority('Admin')")
     public String updateProvidedService(Model model, Long providedServiceId) {
         ProvidedService providedService = providedServiceService.findProvidedServiceById(providedServiceId);
         model.addAttribute(PROVIDED_SERVICE, providedService);
@@ -40,6 +43,7 @@ public class ProvidedServiceController {
     }
 
     @PostMapping(value = "/update")
+    @PreAuthorize("hasAuthority('Admin')")
     public String update(ProvidedService providedService) {
         ProvidedService result = providedServiceService.createOrUpdateProvidedService(providedService.getId(), providedService.getAmount());
         return "redirect:/providedServices/index?flightId=" + result.getFlight().getId();
