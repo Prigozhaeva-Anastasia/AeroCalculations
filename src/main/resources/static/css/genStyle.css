@@ -296,7 +296,7 @@ form {
     top: -5px;
     left: -490px;
 }
-#formFilterAircraft, #formFilterForFlights {
+#formFilterAircraft, #formFilterForFlights, #formFilterForServices {
     display: none;
 }
 #formFilterForInvoices {

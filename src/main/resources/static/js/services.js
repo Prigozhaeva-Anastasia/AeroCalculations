@@ -17,10 +17,8 @@ function getPathOfImportFile() {
 
 window.onload = function () {
     let filterForServices = document.getElementById('filterForServices');
-    let formFilter = document.getElementById('formFilter');
-    let formBtns = document.getElementById('formBtns');
+    let formFilter = document.getElementById('formFilterForServices');
     filterForServices.addEventListener('click', function (event) {
         formFilter.style.display = 'block';
-        formBtns.style.left = '-20px';
     });
 }

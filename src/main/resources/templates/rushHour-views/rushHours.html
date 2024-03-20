@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="template">
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="template">
 <head>
     <meta charset="UTF-8">
     <title>Часы "пик"</title>
@@ -26,7 +27,7 @@
                     <th>От</th>
                     <th>До</th>
                     <th>День</th>
-                    <th></th>
+                    <th sec:authorize="hasAuthority('Admin')"></th>
                 </tr>
                 <tr th:each="rushHour:${listRushHours}">
                     <form method="post" th:action="@{/rushHours/update}" th:object="${rushHour}">
@@ -37,7 +38,7 @@
                         <td><input type="time" class="form-control" name="toTime" th:value="${rushHour.getToTime()}">
                         </td>
                         <td th:text="${rushHour.getWeekDay()}"></td>
-                        <td>
+                        <td sec:authorize="hasAuthority('Admin')">
                             <button th:formaction="@{'/rushHours/delete?id=' + ${rushHour.getId()} + '&weekDay=' + ${rushHour.getWeekDay()}}"
                                     class="minus-btn" type="submit"><i class="fa fa-minus" aria-hidden="true"></i>
                             </button>
@@ -47,7 +48,7 @@
                     </form>
                 </tr>
             </table>
-            <button id="createBtn" class="minus-btn" type="button" data-bs-toggle="modal"
+            <button sec:authorize="hasAuthority('Admin')" id="createBtn" class="minus-btn" type="button" data-bs-toggle="modal"
                     data-bs-target="#exampleModalCenter">Добавить
             </button>
             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"

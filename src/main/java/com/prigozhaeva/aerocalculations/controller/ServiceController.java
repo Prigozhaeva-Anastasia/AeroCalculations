@@ -2,6 +2,7 @@ package com.prigozhaeva.aerocalculations.controller;
 
 import com.prigozhaeva.aerocalculations.entity.Service;
 import com.prigozhaeva.aerocalculations.service.ServiceService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,6 +30,7 @@ public class ServiceController {
     }
 
     @GetMapping(value = "/index")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant', 'Finance department employee')")
     public String services(Model model, @RequestParam(name = KEYWORD, defaultValue = "") String keyword) {
         List<Service> services = new CopyOnWriteArrayList<>(serviceService.findServicesByServiceName(keyword));
         model.addAttribute(LIST_SERVICES, services);
@@ -37,6 +39,7 @@ public class ServiceController {
     }
 
     @GetMapping(value = "/formUpdate")
+    @PreAuthorize("hasAuthority('Admin')")
     public String updateService(Model model, Long serviceId) {
         Service service = serviceService.findServiceById(serviceId);
         model.addAttribute(SERVICE, service);
@@ -44,6 +47,7 @@ public class ServiceController {
     }
 
     @PostMapping(value = "/update")
+    @PreAuthorize("hasAuthority('Admin')")
     public String update(@Valid Service service, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "service-views/formUpdate";
@@ -53,6 +57,7 @@ public class ServiceController {
     }
 
     @GetMapping(value = "/sortByName")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant', 'Finance department employee')")
     public String sortByName(Model model) {
         List<Service> services = serviceService.fetchAll();
         Collections.sort(services, Comparator.comparing(Service::getName));
@@ -61,6 +66,7 @@ public class ServiceController {
     }
 
     @PostMapping(value = "/filterByServiceType")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant', 'Finance department employee')")
     public String filterByServiceType(Model model, String serviceType) {
         List<Service> services = serviceService.fetchAll().stream()
                 .filter(element->element.getServiceType().equals(serviceType))

@@ -3,6 +3,7 @@ package com.prigozhaeva.aerocalculations.controller;
 import com.prigozhaeva.aerocalculations.entity.RushHour;
 import com.prigozhaeva.aerocalculations.service.ReportService;
 import com.prigozhaeva.aerocalculations.service.RushHourService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +30,7 @@ public class RushHourController {
     }
 
     @GetMapping(value = "/index")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Accountant', 'Finance department employee')")
     public String rushHours(String weekDay, Model model) {
         List<RushHour> rushHours = rushHourService.findRushHoursByWeekDay(Integer.parseInt(weekDay));
         Collections.sort(rushHours, Comparator.comparing(RushHour::getFromTime));
@@ -52,18 +54,21 @@ public class RushHourController {
     }
 
     @PostMapping(value = "/delete")
+    @PreAuthorize("hasAuthority('Admin')")
     public String deleteInvoice(Long id, int weekDay) {
         rushHourService.removeRushHour(id);
         return "redirect:/rushHours/index?weekDay=" + weekDay;
     }
 
     @PostMapping(value = "/update")
+    @PreAuthorize("hasAuthority('Admin')")
     public String update(RushHour rushHour) {
         rushHourService.createOrUpdateRushHour(rushHour);
         return "redirect:/rushHours/index?weekDay=" + rushHour.getWeekDay();
     }
 
     @PostMapping(value = "/create")
+    @PreAuthorize("hasAuthority('Admin')")
     public String create(RushHour rushHour) {
         rushHourService.createOrUpdateRushHour(rushHour);
         return "redirect:/rushHours/index?weekDay=" + rushHour.getWeekDay();
